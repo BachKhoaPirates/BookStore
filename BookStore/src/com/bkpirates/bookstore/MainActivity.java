@@ -1,14 +1,14 @@
 package com.bkpirates.bookstore;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
+@SuppressLint("NewApi")
 public class MainActivity extends ActionBarActivity {
 
 	private ImageView homeButton;
@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		divider1 = (ImageView) findViewById(R.id.divider1);
 		divider3 = (ImageView) findViewById(R.id.divider3);
-		setDivider(divider1);
+		// setDivider(divider1);
 		// ------------------------------------------------------
 		homeButton = (ImageView) findViewById(R.id.home);
 		searchButton = (ImageView) findViewById(R.id.search);
