@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 20, 2015 at 07:12 PM
+-- Generation Time: Oct 20, 2015 at 07:49 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -81,30 +81,30 @@ CREATE TABLE IF NOT EXISTS `Favorite` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Order_Book`
+-- Table structure for table `Genre_Book`
 --
 
-CREATE TABLE IF NOT EXISTS `Order_Book` (
-  `OID` int(11) NOT NULL,
-  `Phonenumber` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Genre_Book` (
   `BID` int(11) NOT NULL,
-  `Quantity` int(11) DEFAULT '0',
-  `Payment` int(11) DEFAULT '0',
-  PRIMARY KEY (`OID`),
-  KEY `Phonenumber` (`Phonenumber`),
-  KEY `BID` (`BID`)
+  `PID` int(11) NOT NULL,
+  PRIMARY KEY (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `The_Loai_Sach`
+-- Table structure for table `Order_Book`
 --
 
-CREATE TABLE IF NOT EXISTS `The_Loai_Sach` (
+CREATE TABLE IF NOT EXISTS `Order_Book` (
+  `OID` int(11) NOT NULL,
+  `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `PID` int(11) NOT NULL,
-  PRIMARY KEY (`BID`)
+  `Quantity` int(11) NOT NULL DEFAULT '0',
+  `Payment` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`OID`),
+  KEY `UID` (`UID`),
+  KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -114,12 +114,11 @@ CREATE TABLE IF NOT EXISTS `The_Loai_Sach` (
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
-  `Phonenumber` int(11) NOT NULL COMMENT 'Ten dang nhap',
-  `UID` int(11) NOT NULL,
+  `UID` int(11) NOT NULL COMMENT 'Ten dang nhap',
   `Password` varchar(40) NOT NULL,
   `Name` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Address` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`Phonenumber`)
+  PRIMARY KEY (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -127,17 +126,17 @@ CREATE TABLE IF NOT EXISTS `User` (
 --
 
 --
+-- Constraints for table `Genre_Book`
+--
+ALTER TABLE `Genre_Book`
+  ADD CONSTRAINT `Genre_Book_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
+
+--
 -- Constraints for table `Order_Book`
 --
 ALTER TABLE `Order_Book`
-  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`Phonenumber`) REFERENCES `User` (`Phonenumber`),
+  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
   ADD CONSTRAINT `Order_Book_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
-
---
--- Constraints for table `The_Loai_Sach`
---
-ALTER TABLE `The_Loai_Sach`
-  ADD CONSTRAINT `The_Loai_Sach_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
