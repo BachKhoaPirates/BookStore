@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 16, 2015 at 10:58 PM
+-- Generation Time: Oct 20, 2015 at 07:12 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -23,48 +23,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Books`
+-- Table structure for table `Book`
 --
 
-CREATE TABLE IF NOT EXISTS `Books` (
-  `BID` int(11) NOT NULL,
-  `Name_Book` varchar(40) NOT NULL,
-  `NXB` varchar(100) NOT NULL,
-  `Tac_Gia` varchar(50) NOT NULL,
-  `Gia` int(11) NOT NULL,
-  `PLID` int(11) NOT NULL,
-  PRIMARY KEY (`BID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `Book` (
+  `BID` int(11) NOT NULL COMMENT 'book id',
+  `Name_Book` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `Publisher` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `Author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `Price` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  PRIMARY KEY (`BID`),
+  UNIQUE KEY `BID_2` (`BID`),
+  KEY `BID` (`BID`),
+  KEY `BID_3` (`BID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Don_Hang`
+-- Table structure for table `Cart`
 --
 
-CREATE TABLE IF NOT EXISTS `Don_Hang` (
-  `OID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Cart` (
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `So_Luong` int(11) NOT NULL,
-  PRIMARY KEY (`OID`),
-  KEY `UID` (`UID`),
-  KEY `BID` (`BID`)
+  `Quantity` int(11) NOT NULL,
+  `Buy` int(11) DEFAULT '0',
+  PRIMARY KEY (`UID`,`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Even`
+-- Table structure for table `Distribute`
 --
 
-CREATE TABLE IF NOT EXISTS `Even` (
-  `EID` int(11) NOT NULL,
-  `BID` int(11) NOT NULL,
-  `sale` int(11) DEFAULT NULL,
-  `start` date DEFAULT NULL,
-  `end` date DEFAULT NULL,
-  PRIMARY KEY (`EID`)
+CREATE TABLE IF NOT EXISTS `Distribute` (
+  `PID` int(11) NOT NULL,
+  `Sort` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`PID`),
+  UNIQUE KEY `Loai` (`Sort`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -82,27 +81,30 @@ CREATE TABLE IF NOT EXISTS `Favorite` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Gio`
+-- Table structure for table `Order_Book`
 --
 
-CREATE TABLE IF NOT EXISTS `Gio` (
-  `UID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Order_Book` (
+  `OID` int(11) NOT NULL,
+  `Phonenumber` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `So_Luong` int(11) NOT NULL,
-  `Mua` int(11) DEFAULT '0',
-  PRIMARY KEY (`UID`,`BID`)
+  `Quantity` int(11) DEFAULT '0',
+  `Payment` int(11) DEFAULT '0',
+  PRIMARY KEY (`OID`),
+  KEY `Phonenumber` (`Phonenumber`),
+  KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Phan_Loai`
+-- Table structure for table `The_Loai_Sach`
 --
 
-CREATE TABLE IF NOT EXISTS `Phan_Loai` (
-  `PLID` int(11) NOT NULL,
-  `Loai` varchar(50) NOT NULL,
-  PRIMARY KEY (`PLID`)
+CREATE TABLE IF NOT EXISTS `The_Loai_Sach` (
+  `BID` int(11) NOT NULL,
+  `PID` int(11) NOT NULL,
+  PRIMARY KEY (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -112,12 +114,12 @@ CREATE TABLE IF NOT EXISTS `Phan_Loai` (
 --
 
 CREATE TABLE IF NOT EXISTS `User` (
+  `Phonenumber` int(11) NOT NULL COMMENT 'Ten dang nhap',
   `UID` int(11) NOT NULL,
-  `pass` varchar(40) NOT NULL,
-  `Ho_Ten` varchar(40) NOT NULL,
-  `Dia_Chi` varchar(100) NOT NULL,
-  `SDT` int(11) NOT NULL,
-  PRIMARY KEY (`UID`)
+  `Password` varchar(40) NOT NULL,
+  `Name` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Address` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`Phonenumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -125,11 +127,17 @@ CREATE TABLE IF NOT EXISTS `User` (
 --
 
 --
--- Constraints for table `Don_Hang`
+-- Constraints for table `Order_Book`
 --
-ALTER TABLE `Don_Hang`
-  ADD CONSTRAINT `Don_Hang_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
-  ADD CONSTRAINT `Don_Hang_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Books` (`BID`);
+ALTER TABLE `Order_Book`
+  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`Phonenumber`) REFERENCES `User` (`Phonenumber`),
+  ADD CONSTRAINT `Order_Book_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
+
+--
+-- Constraints for table `The_Loai_Sach`
+--
+ALTER TABLE `The_Loai_Sach`
+  ADD CONSTRAINT `The_Loai_Sach_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
