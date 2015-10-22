@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/phoneNumber"
+        android:id="@+id/phoneNumberCrt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -17,29 +17,37 @@
     </EditText>
 
     <EditText
-        android:id="@+id/passWord"
+        android:id="@+id/passWordCrt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/phoneNumber"
-        android:hint="PassWord"
+        android:layout_below="@+id/phoneNumberCrt"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:hint="PassWord" />
+
+    <EditText
+        android:id="@+id/nameCrt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passWordCrt"
+        android:hint="Name" />
+    <EditText
+        android:id="@+id/addressCrt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameCrt"
+        android:hint="Address" >
+    </EditText>
 
     <Button
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passWord"
+        android:layout_below="@+id/addressCrt"
         android:layout_centerInParent="true"
-        android:text="Sign In" />
+        android:text="REGISTER" />
 
-    <Button
-        android:id="@+id/btnCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
-        android:text="Create Account" />
+    
+
 
 </RelativeLayout>

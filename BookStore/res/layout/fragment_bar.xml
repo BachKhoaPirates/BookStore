@@ -8,38 +8,38 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
 
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="3dp"        
-        android:orientation="horizontal"
-        android:weightSum="4"
-        >
-        
-        <ImageView
-            android:id="@+id/divider1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:orientation="horizontal"
+            android:weightSum="4" >
 
-        <ImageView
-            android:id="@+id/divider2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/divider3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/divider4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
-<LinearLayout
+            <ImageView
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/divider4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
