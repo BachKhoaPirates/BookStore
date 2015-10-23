@@ -9,27 +9,27 @@
 		if(!empty($result)){
 			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-			$response['Success'] = 1;
-			$Product = array();
-			$Product['Name_Book'] = $result['Name_Book'];
-			$Product['Publisher'] = $result['Publisher'];
-			$Product['Author'] = $result['Author'];
-			$Product['Price'] = $result['Price'];
-			$Product['Quantity'] = $result['Quantity'];
+			$response['success'] = 1;
+            $Product = array();
+			$Product['name'] = $result['Name_Book'];
+			$Product['publisher'] = $result['Publisher'];
+			$Product['author'] = $result['Author'];
+			$Product['price'] = $result['Price'];
+			$Product['quantity'] = $result['Quantity'];
 
 			$response['Product'] = array();
-			array_push($response['Product'], $Product);
+			array_push($response['product'], $Product);
 
 			echo json_encode($response);
 		}
 		else{
-			$response["Success"] = 0;
+			$response["success"] = 0;
 			echo json_encode($response);
 		}
 		mysqli_close($con);
 	}
 	else{
-		$response['Success'] = 0;
+		$response['success'] = 0;
 		echo json_encode($response);
-	}			
+	}
 ?>

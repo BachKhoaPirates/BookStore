@@ -5,11 +5,11 @@
 	$sql = "SELECT DISTINCT Sort FROM Distribute";
 	$result = mysqli_query($con, $sql);
 	if(!empty($result)){
-		$response['Success'] = 1;
-		$response['Distributes'] = array();
+		$response['success'] = 1;
+		$response['distributes'] = array();
 		while ($row = mysqli_fetch_array($result)) {
-			$Distribute['Distribute'] = $row['Sort'];
-			array_push($response['Distributes'], $Distribute);
+			$Distribute['distribute'] = $row['Sort'];
+			array_push($response['distributes'], $Distribute);
 		}
 		echo json_encode($response);
 	}

@@ -1,7 +1,7 @@
 <?php
 	$response = array();
-	if(isset($_REQUEST['user']) && isset($_REQUEST['pass'])){
-		$user = $_REQUEST['user'];
+	if(isset($_REQUEST['uid']) && isset($_REQUEST['pass'])){
+		$user = $_REQUEST['uid'];
 		$pass = $_REQUEST['pass'];
 		$name = $_REQUEST['name'];
 		$add = $_REQUEST['add'];
@@ -27,5 +27,5 @@
 		$response["success"] = 0;
 		echo json_encode($response);
 	}
-	
-?>	
+
+?>
