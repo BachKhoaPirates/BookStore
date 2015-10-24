@@ -1,6 +1,7 @@
 package com.bkpirates.fragment;
 
 import com.bkpirates.bookstore.R;
+import com.bkpirates.entity.AccountEntity;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
@@ -21,10 +22,7 @@ public class Fragment_CrtAccount extends Fragment {
 	private EditText passWordCrt;
 	private Button register;
 	
-	private String phone;
-	private String name;
-	private String address;
-	private String pass;
+	AccountEntity account = new AccountEntity();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -35,6 +33,10 @@ public class Fragment_CrtAccount extends Fragment {
 		passWordCrt = (EditText) view.findViewById(R.id.passWordCrt);
 		register = (Button) view.findViewById(R.id.btnRegister);
 		
+		account.setPhone(phoneNumberCrt.getText().toString());
+		account.setPassword(passWordCrt.getText().toString());
+		account.setName(nameCrt.getText().toString());
+		account.setAddress(addressCrt.getText().toString());
 		
 		return view;
 	}
