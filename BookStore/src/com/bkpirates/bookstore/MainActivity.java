@@ -1,85 +1,55 @@
-package com.bkpirates.bookstore;
+package com.bkpirates.bookstore;																																																																																																																																																																																																																																																																																																																																					
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
+import com.bkpirates.fragment.*;
 
-@SuppressLint("NewApi")
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
-	private ImageView homeButton;
-	private ImageView searchButton;
-	private ImageView orderButton;
-	private ImageView accButton;
-
-	private ImageView divider1;
-	private ImageView divider2;
-	private ImageView divider3;
-	private ImageView divider4;
+	private ImageView bt1;
+	private ImageView bt2, bt3, bt4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		divider1 = (ImageView) findViewById(R.id.divider1);
-		divider3 = (ImageView) findViewById(R.id.divider3);
-		// setDivider(divider1);
-		// ------------------------------------------------------
-		homeButton = (ImageView) findViewById(R.id.home);
-		searchButton = (ImageView) findViewById(R.id.search);
-		orderButton = (ImageView) findViewById(R.id.order);
-		accButton = (ImageView) findViewById(R.id.user);
 
-		homeButton.setOnClickListener(new View.OnClickListener() {
+		bt1 = (ImageView) findViewById(R.id.bt1);
+		bt2 = (ImageView) findViewById(R.id.bt2);
+		bt3 = (ImageView) findViewById(R.id.bt3);
+		bt4 = (ImageView) findViewById(R.id.bt4);
+		// FragmentManager fm = getSupportFragmentManager();
+		// FragmentTransaction ft = fm.beginTransaction();
+		final Home fg1 = new Home();														
+		final Search fg2 = new Search();
+		getSupportFragmentManager().beginTransaction().add(R.id.container, fg1)
+				.commit();
 
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		searchButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-		orderButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-			}
-		});
-		accButton.setOnClickListener(new View.OnClickListener() {
+		bt1.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
+				// TODO Auto-generated method stub
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.container, fg1).commit();
 			}
 		});
 
+		bt2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getSupportFragmentManager().beginTransaction()
+						.replace(R.id.container, fg2).commit();
+			}
+
+		});
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	
+	private onClickButtion(ImageView btn) {
+		
 	}
 }
