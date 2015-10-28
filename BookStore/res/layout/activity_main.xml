@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/home"
             />
         
         <ImageView
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/search"
             />
         
         <ImageView
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/order"
             />
         
         <ImageView
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/user"
             />
     </LinearLayout>
     

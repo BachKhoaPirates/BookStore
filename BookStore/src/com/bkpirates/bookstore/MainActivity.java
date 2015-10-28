@@ -1,4 +1,4 @@
-package com.bkpirates.bookstore;																																																																																																																																																																																																																																																																																																																																					
+package com.bkpirates.bookstore;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,10 +22,9 @@ public class MainActivity extends FragmentActivity {
 		bt4 = (ImageView) findViewById(R.id.bt4);
 		// FragmentManager fm = getSupportFragmentManager();
 		// FragmentTransaction ft = fm.beginTransaction();
-		final Home fg1 = new Home();														
+		final Home fg1 = new Home();
 		final Search fg2 = new Search();
-		getSupportFragmentManager().beginTransaction().add(R.id.container, fg1)
-				.commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.container, fg1).commit();
 
 		bt1.setOnClickListener(new View.OnClickListener() {
 
@@ -34,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.container, fg1).commit();
+				.replace(R.id.container, fg1).commit();
 			}
 		});
 
@@ -43,13 +42,33 @@ public class MainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.container, fg2).commit();
+				.replace(R.id.container, fg2).commit();
 			}
 
 		});
+
+		bt3.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, new Fragment_Cart()).commit();
+			}
+		});
+
+		bt4.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				getSupportFragmentManager().beginTransaction()
+				.replace(R.id.container, new Fragment_CrtAccount()).commit();
+			}
+		});
 	}
-	
-	private onClickButtion(ImageView btn) {
-		
-	}
+
+	// private onClickButtion(ImageView btn) {
+	//
+	// }
 }
