@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 26, 2015 at 08:23 PM
+-- Generation Time: Oct 29, 2015 at 02:43 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -74,12 +74,20 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Publisher`, `Author`, `Price`, `Quantit
 CREATE TABLE IF NOT EXISTS `Cart` (
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `So_Luong` int(11) NOT NULL,
   `Buy` int(11) DEFAULT '0',
-  `Quantity` int(11) DEFAULT '0',
   PRIMARY KEY (`UID`,`BID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Cart`
+--
+
+INSERT INTO `Cart` (`UID`, `BID`, `Buy`) VALUES
+(195842465, 1, 1),
+(195842465, 2, 0),
+(195842465, 3, 1),
+(195875456, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -118,8 +126,26 @@ INSERT INTO `Distribute` (`PID`, `Sort`) VALUES
 CREATE TABLE IF NOT EXISTS `Favorite` (
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  PRIMARY KEY (`UID`,`BID`)
+  PRIMARY KEY (`UID`,`BID`),
+  KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Favorite`
+--
+
+INSERT INTO `Favorite` (`UID`, `BID`) VALUES
+(195842465, 1),
+(195842465, 2),
+(195842465, 3),
+(1672483929, 3),
+(195875465, 4),
+(195875456, 5),
+(1672483929, 6),
+(195875465, 7),
+(195875456, 8),
+(195875456, 9),
+(195875656, 10);
 
 -- --------------------------------------------------------
 
@@ -178,14 +204,25 @@ INSERT INTO `Genre_Book` (`PID`, `BID`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Order_Book` (
-  `OID` int(11) NOT NULL,
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `Quantity` int(11) NOT NULL DEFAULT '0',
-  `Payment` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`OID`),
-  KEY `UID` (`UID`),
+  `Quantity` int(11) DEFAULT '0',
+  PRIMARY KEY (`UID`,`BID`),
   KEY `BID` (`BID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Order_User`
+--
+
+CREATE TABLE IF NOT EXISTS `Order_User` (
+  `OID` int(11) NOT NULL,
+  `UID` int(11) NOT NULL,
+  `Payment` int(11) DEFAULT '0',
+  PRIMARY KEY (`OID`),
+  KEY `UID` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -211,7 +248,7 @@ INSERT INTO `User` (`UID`, `Password`, `Name`, `Address`) VALUES
 (195875456, '124430', 'Phạm Việt Thanh', 'Nghệ An'),
 (195875465, '124460', 'Phạm Ngọc Thành', 'Hà Nội'),
 (195875656, '124430', 'Nguyễn Việt Anh', 'Nam Định'),
-(1672483929, '1234567', 'Nguyễn Văn Quanh', 'Thanh Hóa');
+(1672483929, '1234567', 'Nguyễn Văn Quang', 'Thanh Hóa');
 
 --
 -- Constraints for dumped tables
@@ -228,7 +265,8 @@ ALTER TABLE `Cart`
 -- Constraints for table `Favorite`
 --
 ALTER TABLE `Favorite`
-  ADD CONSTRAINT `Favorite_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`);
+  ADD CONSTRAINT `Favorite_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
+  ADD CONSTRAINT `Favorite_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 --
 -- Constraints for table `Genre_Book`
@@ -241,8 +279,14 @@ ALTER TABLE `Genre_Book`
 -- Constraints for table `Order_Book`
 --
 ALTER TABLE `Order_Book`
-  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
+  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `Order_User` (`UID`),
   ADD CONSTRAINT `Order_Book_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
+
+--
+-- Constraints for table `Order_User`
+--
+ALTER TABLE `Order_User`
+  ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
