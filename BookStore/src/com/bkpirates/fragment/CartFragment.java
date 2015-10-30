@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class Fragment_Cart extends Fragment {
+public class CartFragment extends Fragment {
 	
 	private TextView subTotal;
 	private Button payment;

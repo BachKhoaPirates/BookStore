@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 @SuppressLint("NewApi")
-public class Fragment_Login extends Fragment {
+public class LoginFragment extends Fragment {
 
 	private Button signIn;
 	private Button crtAccount;
@@ -46,7 +46,7 @@ public class Fragment_Login extends Fragment {
 							.getSystemService(Activity.INPUT_METHOD_SERVICE);
 					imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY,
 							0);
-					Fragment_Account fa = new Fragment_Account();
+					AccountFragment fa = new AccountFragment();
 					FragmentTransaction ft = getFragmentManager().beginTransaction();
 					ft.replace(R.id.container, fa);
 					ft.addToBackStack(null);
@@ -61,7 +61,7 @@ public class Fragment_Login extends Fragment {
 			public void onClick(View v) {
 				FragmentManager fm = getFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
-				Fragment_CrtAccount fca = new Fragment_CrtAccount();
+				CrtAccountFragment fca = new CrtAccountFragment();
 				ft.commit();
 			}
 		});

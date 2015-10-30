@@ -53,7 +53,7 @@ public class MainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, new Fragment_Cart()).commit();
+				.replace(R.id.container, new CartFragment()).commit();
 			}
 		});
 
@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, new Fragment_Login()).commit();
+				.replace(R.id.container, new CrtAccountFragment()).commit();
 			}
 		});
 	}

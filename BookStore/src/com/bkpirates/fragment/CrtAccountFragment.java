@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 @SuppressLint("NewApi")
-public class Fragment_CrtAccount extends Fragment {
+public class CrtAccountFragment extends Fragment {
 
 	private EditText phoneNumberCrt;
 	private EditText nameCrt;

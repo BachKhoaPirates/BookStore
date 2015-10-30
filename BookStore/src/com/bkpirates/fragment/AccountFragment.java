@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class Fragment_Account extends Fragment {
+public class AccountFragment extends Fragment {
 
 	private Button favoriteBook;
 	private Button listOrder;
