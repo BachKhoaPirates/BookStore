@@ -1,0 +1,34 @@
+package com.bkpirates.fragment;
+
+import com.bkpirates.bookstore.R;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+public class BannerFragment extends Fragment {
+
+	private int url;
+	private int position;
+
+	public BannerFragment(int url, int position) {
+		this.url = url;
+		this.position = position;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View view = inflater.inflate(R.layout.banner, container, false);
+
+		ImageView image = (ImageView) view.findViewById(R.id.image);
+
+		// image.setImageResource(getResources().getd);
+		image.setImageResource(R.drawable.banner1);
+
+		return view;
+	}
+}

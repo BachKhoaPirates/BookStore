@@ -1,20 +1,13 @@
-package com.bkpirates.HorizontalListView;
+package com.bkpirates.entity;
 
-public class HorizontalListViewData {
-	private String name;
+public class BookEntity {
 	private int price;
 	private String author;
 	
-	public HorizontalListViewData() {
+	public BookEntity() {
 		// TODO Auto-generated constructor stub
 	};
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public int getPrice() {
 		return price;
 	}
