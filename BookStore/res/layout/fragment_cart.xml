@@ -1,37 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
+	
 
     <ListView
-        android:id="@+id/listviewProduct"
-        android:layout_width="wrap_content"
+        android:id="@+id/listBooks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_weight="0.9"/>
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
-    </ListView>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listviewProduct"
-        android:layout_alignParentBottom="true"
+        android:layout_weight="0.2"
         android:orientation="horizontal"
-        android:weightSum="2" >
+        >
 
         <TextView
             android:id="@+id/subTotal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.84" 
+            android:textSize="30sp"/>
 
         <Button 
             android:id="@+id/payment"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Payment" >
-        </Button>
+            android:layout_weight="0.26"
+            android:text="Payment"/>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
