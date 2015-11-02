@@ -1,20 +1,25 @@
 package com.bkpirates.bookstore;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.bkpirates.fragment.*;
 
 public class MainActivity extends FragmentActivity {
 
 	private ImageView bt1;
 	private ImageView bt2, bt3, bt4;
+	private TextView topBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setTopBar(topBar);
 
 		bt1 = (ImageView) findViewById(R.id.bt1);
 		bt2 = (ImageView) findViewById(R.id.bt2);
@@ -33,7 +38,7 @@ public class MainActivity extends FragmentActivity {
 
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, fg1).commit();
+				.replace(R.id.container, new Home()).commit();
 			}
 		});
 
@@ -42,7 +47,7 @@ public class MainActivity extends FragmentActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, fg2).commit();
+				.replace(R.id.container, new Search()).commit();
 			}
 
 		});
@@ -68,7 +73,9 @@ public class MainActivity extends FragmentActivity {
 		});
 	}
 
-	// private onClickButtion(ImageView btn) {
-	//
-	// }
+	private void setTopBar(TextView topBar) {
+		topBar = (TextView) findViewById(R.id.top_bar);
+		Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Nabila.ttf");
+		topBar.setTypeface(face);
+	}
 }

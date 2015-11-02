@@ -22,10 +22,10 @@ import android.widget.Toast;
 
 public class Home extends Fragment {
 
-	private HorizontalListView listView;
+	private HorizontalListView hotBookList, newBookList, favoriteBookList;
 	private ViewPager banner;
 
-	private ArrayList<BookEntity> array;
+	private ArrayList<BookEntity> hotBookArray, newBookArray, favoriteBookArray;
 	private ArrayList<BannerEntity> bannerArray;
 
 	@Override
@@ -33,11 +33,19 @@ public class Home extends Fragment {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-		listView = (HorizontalListView) view.findViewById(R.id.list1);
-		array = new ArrayList<BookEntity>();
-		setData(array);
-		setAdapter(listView, array);
-
+		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
+		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
+		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
+		hotBookArray = new ArrayList<BookEntity>();
+		newBookArray = new ArrayList<BookEntity>();
+		favoriteBookArray = new ArrayList<BookEntity>();
+		setData(hotBookArray);
+		setData(newBookArray);
+		setData(favoriteBookArray);
+		setAdapter(hotBookList, hotBookArray);
+		setAdapter(newBookList, newBookArray);
+		setAdapter(favoriteBookList, favoriteBookArray);
+		
 		banner = (ViewPager) view.findViewById(R.id.banner);
 		bannerArray = new ArrayList<BannerEntity>();
 		for (int i = 0; i < 5; i++) {
@@ -69,9 +77,6 @@ public class Home extends Fragment {
 				array.add(data);
 			}
 		}
-
-		Log.d("KKKKKKKKK", "KKKKKKKKKKKK");
-		Log.d("KKKKKKKKKKKKKK", "" + array.size());
 	}
 
 	private void controlBanner(final View view, ViewPager banner) {

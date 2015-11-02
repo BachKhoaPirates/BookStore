@@ -6,55 +6,65 @@
     android:divider="?android:dividerVertical"
     android:orientation="vertical"
     android:showDividers="middle"
-    android:weightSum="10" >
+    android:weightSum="11" >
 
-    <FrameLayout 
-        android:layout_weight="9"
-		android:layout_height="0dp"
-		android:layout_width="match_parent"
-		android:id="@+id/container"
-        >
-    </FrameLayout>
-
-    <LinearLayout 
-        android:layout_weight="1"
-        android:layout_height="0dp"
+    <TextView 
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:weightSum="4"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:background="@color/app_color"
+        />
+    
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
-        >
-        
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle"
+        android:weightSum="4" >
+
         <ImageView
             android:id="@+id/bt1"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/home"
-            />
-        
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:src="@drawable/home" />
+
         <ImageView
             android:id="@+id/bt2"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/search"
-            />
-        
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:src="@drawable/search" />
+
         <ImageView
             android:id="@+id/bt3"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/order"
-            />
-        
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:src="@drawable/order" />
+
         <ImageView
             android:id="@+id/bt4"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:src="@drawable/user"
-            />
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:src="@drawable/user" />
     </LinearLayout>
-    
+
 </LinearLayout>
