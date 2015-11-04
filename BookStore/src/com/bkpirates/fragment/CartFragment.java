@@ -2,7 +2,7 @@ package com.bkpirates.fragment;
 
 import java.util.ArrayList;
 
-import com.bkpirates.adapter.ListBookAdapter;
+import com.bkpirates.adapter.ListCartAdapter;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
 
@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 public class CartFragment extends Fragment {
 
-	private TextView subTotal;
+	public static TextView subTotal;
 	private Button payment;
 	private ListView listview;
 	int total;
-	private ArrayList<BookEntity> arrList = new ArrayList<BookEntity>();
+	public static ArrayList<BookEntity> arrList = new ArrayList<BookEntity>();
+	public static ListCartAdapter adapter = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,17 +34,20 @@ public class CartFragment extends Fragment {
 		payment = (Button) view.findViewById(R.id.payment);
 
 		setData(arrList);
-		for(int i = 0 ;i < arrList.size(); i++)
-		{
-			total += arrList.get(i).getPrice();
-		}
+		total = total_money();
 		subTotal.setText(total + "");
-		ListBookAdapter adapter = new ListBookAdapter(getContext(), arrList);
+		adapter = new ListCartAdapter(getContext(), arrList);
 		listview.setAdapter(adapter);
 		return view;
 
 	}
-
+	public static int total_money(){
+		int total = 0;
+		for(int i = 0; i< arrList.size(); i++)
+			total += arrList.get(i).getPrice();
+		return total;
+	}
+	
 	private void setData(ArrayList<BookEntity> array) {
 		for (int i = 0; i < 20; i++) {
 			if (i % 2 == 0) {

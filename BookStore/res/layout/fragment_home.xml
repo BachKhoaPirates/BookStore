@@ -59,25 +59,22 @@
                 android:src="@drawable/unselected_banner" />
         </LinearLayout>
 
-        
-        
-        
         <View
-    		android:layout_height="1dp"
-    		android:layout_width="match_parent"
-    		android:background="@color/divider_color"
-    		android:layout_above="@+id/hotbooktext" />
-        
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/hotbooktext"
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/hotbooktext"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@+id/banner"
             android:layout_marginBottom="5dp"
-            android:paddingLeft="10dp"
             android:gravity="center_vertical"
-            android:text="Sách Mua Nhiều" 
-            android:textSize="20sp"/>
+            android:paddingLeft="10dp"
+            android:text="Sách Mua Nhiều"
+            android:textSize="20sp" />
 
         <com.bkpirates.HorizontalListView.HorizontalListView
             android:id="@+id/hotbooklist"
@@ -86,22 +83,20 @@
             android:layout_below="@+id/hotbooktext"
             android:layout_marginBottom="30dp" />
 
-        
-        
         <View
-    		android:layout_height="1dp"
-    		android:layout_width="match_parent"
-    		android:background="@color/divider_color"
-    		android:layout_above="@+id/newbooktext" />
-        
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/newbooktext"
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/newbooktext"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@+id/hotbooklist"
             android:layout_marginBottom="5dp"
-            android:paddingLeft="10dp"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:text="Sách Mới"
             android:textSize="20sp" />
 
@@ -112,23 +107,20 @@
             android:layout_below="@+id/newbooktext"
             android:layout_marginBottom="30dp" />
 
-        
-        
-        
         <View
-    		android:layout_height="1dp"
-    		android:layout_width="match_parent"
-    		android:background="@color/divider_color"
-    		android:layout_above="@+id/favoritebooktext" />
-        
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/favoritebooktext"
+            android:background="@color/divider_color" />
+
         <TextView
             android:id="@+id/favoritebooktext"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@+id/newbooklist"
             android:layout_marginBottom="5dp"
-            android:paddingLeft="10dp"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:text="Sách Được Yêu Thích"
             android:textSize="20sp" />
 

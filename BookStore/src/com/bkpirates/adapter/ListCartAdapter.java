@@ -18,14 +18,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListBookAdapter extends ArrayAdapter<BookEntity> {
+public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 
 	Context context;
 	ArrayList<BookEntity> listBook;
 	LayoutInflater inflater;
 
-	public ListBookAdapter(Context context, ArrayList<BookEntity> list_product) {
-		super(context, R.layout.item_books, list_product);
+	public ListCartAdapter(Context context, ArrayList<BookEntity> list_product) {
+		super(context, R.layout.cart_books, list_product);
 		this.context = context;
 		this.listBook = list_product;
 	}
@@ -51,12 +51,13 @@ public class ListBookAdapter extends ArrayAdapter<BookEntity> {
 		ViewHolder holder;
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.item_books, parent, false);
+			convertView = inflater.inflate(R.layout.cart_books, parent, false);
 			holder = new ViewHolder();
 			holder.image = (ImageView) convertView.findViewById(R.id.imageBook);
 			holder.name = (TextView) convertView.findViewById(R.id.nameBook);
 			holder.author = (TextView) convertView.findViewById(R.id.authorBook);
 			holder.price = (TextView) convertView.findViewById(R.id.priceBook);
+			holder.deleteButton = (Button) convertView.findViewById(R.id.deleteBtn);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -72,6 +73,15 @@ public class ListBookAdapter extends ArrayAdapter<BookEntity> {
 		holder.author.setText(listBook.get(position).getAuthor());
 		holder.price.setText(Integer.toString(listBook.get(position).getPrice()));
 		holder.name.setText(listBook.get(position).getName());
+		holder.deleteButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CartFragment.arrList.remove(position);
+				CartFragment.adapter.notifyDataSetChanged();
+				//Intent intent = new Intent(MainActivity.ACTio);
+				CartFragment.subTotal.setText(CartFragment.total_money() + "");
+			}
+		});
 		return convertView;
 	}
 
@@ -80,6 +90,7 @@ public class ListBookAdapter extends ArrayAdapter<BookEntity> {
 		TextView name;
 		TextView author;
 		TextView price;
+		Button deleteButton;
 	}
 
 }

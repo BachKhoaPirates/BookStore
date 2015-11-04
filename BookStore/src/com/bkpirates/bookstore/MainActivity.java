@@ -3,6 +3,8 @@ package com.bkpirates.bookstore;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,8 +69,15 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				getSupportFragmentManager().beginTransaction()
-				.replace(R.id.container, new LoginFragment()).commit();
+				if(LoginFragment.accEntity.getPhone() == null){
+
+					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.container, new LoginFragment()).commit();	
+				} else{
+
+					getSupportFragmentManager().beginTransaction()
+					.replace(R.id.container, new AccountFragment()).commit();	
+				}
 			}
 		});
 	}
