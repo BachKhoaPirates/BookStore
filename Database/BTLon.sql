@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2015 at 02:43 PM
+-- Generation Time: Nov 05, 2015 at 01:32 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -211,6 +211,13 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Order_Book`
+--
+
+INSERT INTO `Order_Book` (`UID`, `BID`, `Quantity`) VALUES
+(195842465, 1, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -279,14 +286,14 @@ ALTER TABLE `Genre_Book`
 -- Constraints for table `Order_Book`
 --
 ALTER TABLE `Order_Book`
-  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `Order_User` (`UID`),
+  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
   ADD CONSTRAINT `Order_Book_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 --
 -- Constraints for table `Order_User`
 --
 ALTER TABLE `Order_User`
-  ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`);
+  ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `Order_Book` (`UID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
