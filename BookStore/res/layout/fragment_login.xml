@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bookstore"
+    android:background="@drawable/books2"
     android:orientation="vertical" >
 
     <EditText
@@ -10,7 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="PhoneNumber"
+        android:hint="Phone Number"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        
         android:inputType="phone" >
 
         <requestFocus />
@@ -23,6 +28,10 @@
         android:layout_below="@+id/phoneNumber"
         android:hint="PassWord"
         android:ems="10"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:inputType="textPassword" />
 
     <Button

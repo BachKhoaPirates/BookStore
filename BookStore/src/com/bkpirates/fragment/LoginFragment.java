@@ -41,6 +41,7 @@ public class LoginFragment extends Fragment {
 		crtAccount = (Button) view.findViewById(R.id.btnCreateAccount);
 		phoneNumber = (EditText) view.findViewById(R.id.phoneNumber);
 		passWord = (EditText) view.findViewById(R.id.passWord);
+		//phoneNumber.setHintTextColor(getResources().getColor(R.color.white));
 		signIn.setEnabled(false);
 
 		phoneNumber.addTextChangedListener(new TextWatcher() {

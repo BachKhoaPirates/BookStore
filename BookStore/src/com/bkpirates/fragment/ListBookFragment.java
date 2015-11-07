@@ -19,14 +19,11 @@ public class ListBookFragment extends Fragment {
 	public static TextView nameList;
 	public static ListView listview;
 	public static ArrayList<BookEntity> arrBooks = new ArrayList<BookEntity>();
-	
  	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_listbooks, container, false);
 		nameList = (TextView )view.findViewById(R.id.nameList);
 		listview = (ListView) view.findViewById(R.id.listBooks);
-		
-		
 		ListBookAdapter adapter = new ListBookAdapter(getContext(), arrBooks);
 		listview.setAdapter(adapter);
 		return view;

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/bookstore"
+    android:background="@drawable/books2"
     android:orientation="vertical" >
 
     <EditText
@@ -10,6 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
         android:hint="PhoneNumber"
         android:inputType="phone" >
 
@@ -21,21 +25,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/phoneNumberCrt"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
         android:ems="10"
         android:inputType="textPassword"
         android:hint="PassWord" />
 
     <EditText
         android:id="@+id/nameCrt"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_below="@+id/passWordCrt"
         android:hint="Name" />
     <EditText
         android:id="@+id/addressCrt"
+        android:textColor="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameCrt"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColorHint="#ffffff"
         android:hint="Address" >
     </EditText>
 

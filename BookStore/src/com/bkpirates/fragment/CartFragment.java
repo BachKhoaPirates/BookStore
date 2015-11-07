@@ -32,7 +32,7 @@ public class CartFragment extends Fragment {
 		listview = (ListView) view.findViewById(R.id.listBooks);
 		subTotal = (TextView) view.findViewById(R.id.subTotal);
 		payment = (Button) view.findViewById(R.id.payment);
-
+		
 		setData(arrList);
 		total = total_money();
 		subTotal.setText(total + "");
