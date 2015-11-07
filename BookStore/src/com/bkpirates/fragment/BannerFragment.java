@@ -26,7 +26,6 @@ public class BannerFragment extends Fragment {
 
 		ImageView image = (ImageView) view.findViewById(R.id.image);
 
-		// image.setImageResource(getResources().getd);
 		image.setImageResource(R.drawable.banner1);
 
 		return view;

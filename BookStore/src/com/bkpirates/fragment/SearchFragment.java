@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.bkpirates.bookstore.R;
 
-public class Search extends Fragment{
+public class SearchFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

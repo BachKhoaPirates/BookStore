@@ -1,5 +1,11 @@
 package com.bkpirates.bookstore;
 
+import com.bkpirates.fragment.AccountFragment;
+import com.bkpirates.fragment.CartFragment;
+import com.bkpirates.fragment.HomeFragment;
+import com.bkpirates.fragment.LoginFragment;
+import com.bkpirates.fragment.SearchFragment;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,12 +15,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bkpirates.fragment.*;
-
 public class MainActivity extends FragmentActivity {
 
-	private ImageView bt1;
-	private ImageView bt2, bt3, bt4;
+	private ImageView homeButton, searchButton, cartButton, userButton;
 	private TextView topBar;
 
 	@Override
@@ -23,39 +26,71 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 		setTopBar(topBar);
 
-		bt1 = (ImageView) findViewById(R.id.bt1);
-		bt2 = (ImageView) findViewById(R.id.bt2);
-		bt3 = (ImageView) findViewById(R.id.bt3);
-		bt4 = (ImageView) findViewById(R.id.bt4);
-		// FragmentManager fm = getSupportFragmentManager();
-		// FragmentTransaction ft = fm.beginTransaction();
-		final Home fg1 = new Home();
-		final Search fg2 = new Search();
-		getSupportFragmentManager().beginTransaction().add(R.id.container, fg1).commit();
+		homeButton = (ImageView) findViewById(R.id.home_button);
+		searchButton = (ImageView) findViewById(R.id.search_button);
+		cartButton = (ImageView) findViewById(R.id.cart_button);
+		userButton = (ImageView) findViewById(R.id.user_button);
 
-		bt1.setOnClickListener(new View.OnClickListener() {
+		setBottomBar();
+		homeButton.setImageResource(R.drawable.home_select);
+		getSupportFragmentManager().beginTransaction().add(R.id.container, new HomeFragment(), "Home").commit();
+
+		homeButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				// TODO Auto-generated method stub
-				getSupportFragmentManager().beginTransaction().replace(R.id.container, new Home()).commit();
+				setBottomBar();
+				homeButton.setImageResource(R.drawable.home_select);
+				
+				FragmentManager fm = getSupportFragmentManager();
+				fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				FragmentTransaction trans = fm.beginTransaction();
+				
+				HomeFragment home = (HomeFragment) getSupportFragmentManager().findFragmentByTag("Home");
+				if (home == null) {
+					home = new HomeFragment();
+					trans.replace(R.id.container, home, "Home");
+					trans.commit();
+				} else if (!home.isVisible()) {
+					trans.replace(R.id.container, home);
+					trans.commit();
+				}
 			}
 		});
 
-		bt2.setOnClickListener(new View.OnClickListener() {
+		searchButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				getSupportFragmentManager().beginTransaction().replace(R.id.container, new Search()).commit();
+
+				setBottomBar();
+				searchButton.setImageResource(R.drawable.search_select);
+				
+				FragmentManager fm = getSupportFragmentManager();
+				fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				FragmentTransaction trans = fm.beginTransaction();
+				
+				SearchFragment search = (SearchFragment) getSupportFragmentManager().findFragmentByTag("Search");
+				if (search == null) {
+					search = new SearchFragment();
+					trans.replace(R.id.container, search, "Search");
+					trans.commit();
+				} else if (!search.isVisible()) {
+					trans.replace(R.id.container, search);
+					trans.commit();
+				}
 			}
 
 		});
 
-		bt3.setOnClickListener(new View.OnClickListener() {
+		cartButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				
+				setBottomBar();
+				cartButton.setImageResource(R.drawable.cart_select);
+				
 				if (LoginFragment.accEntity.getPhone() == null) {
 					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
 							.commit();
@@ -67,10 +102,14 @@ public class MainActivity extends FragmentActivity {
 
 		});
 
-		bt4.setOnClickListener(new View.OnClickListener() {
+		userButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				
+				setBottomBar();
+				userButton.setImageResource(R.drawable.user_select);
+				
 				if (LoginFragment.accEntity.getPhone() == null) {
 					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
 							.commit();
@@ -87,5 +126,12 @@ public class MainActivity extends FragmentActivity {
 		topBar = (TextView) findViewById(R.id.top_bar);
 		Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Nabila.ttf");
 		topBar.setTypeface(face);
+	}
+	
+	private void setBottomBar(){
+		homeButton.setImageResource(R.drawable.home_unselect);
+		searchButton.setImageResource(R.drawable.search_unselect);
+		cartButton.setImageResource(R.drawable.cart_unselect);
+		userButton.setImageResource(R.drawable.user_unselect);
 	}
 }

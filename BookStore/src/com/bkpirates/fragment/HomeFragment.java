@@ -11,16 +11,19 @@ import com.bkpirates.entity.BookEntity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class Home extends Fragment {
+public class HomeFragment extends Fragment{
 
 	private HorizontalListView hotBookList, newBookList, favoriteBookList;
 	private ViewPager banner;
@@ -54,6 +57,21 @@ public class Home extends Fragment {
 		ViewPagerBannerAdapter bannerAdapter = new ViewPagerBannerAdapter(getFragmentManager(), bannerArray);
 		banner.setAdapter(bannerAdapter);
 		controlBanner(view, banner);
+		
+		hotBookList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Toast.makeText(getContext(), "click "+position, Toast.LENGTH_SHORT).show();
+				
+				FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+				trans.replace(((ViewGroup)getView().getParent()).getId(),
+						new BookFragment(getContext(), hotBookArray.get(position)));
+				trans.addToBackStack(null);
+				trans.commit();
+				
+			}
+		});
+	
 
 		return view;
 	}

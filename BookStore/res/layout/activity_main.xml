@@ -35,36 +35,36 @@
         android:weightSum="4" >
 
         <ImageView
-            android:id="@+id/bt1"
+            android:id="@+id/home_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:src="@drawable/home" />
+             />
 
         <ImageView
-            android:id="@+id/bt2"
+            android:id="@+id/search_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:src="@drawable/search" />
+             />
 
         <ImageView
-            android:id="@+id/bt3"
+            android:id="@+id/cart_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:src="@drawable/order" />
+            />
 
         <ImageView
-            android:id="@+id/bt4"
+            android:id="@+id/user_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:src="@drawable/user" />
+             />
     </LinearLayout>
 
 </LinearLayout>
