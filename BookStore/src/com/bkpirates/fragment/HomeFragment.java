@@ -8,12 +8,15 @@ import com.bkpirates.adapter.ViewPagerBannerAdapter;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BannerEntity;
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.network.BookLoader;
+import com.bkpirates.network.BookLoaderListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment implements BookLoaderListener{
 
 	private HorizontalListView hotBookList, newBookList, favoriteBookList;
 	private ViewPager banner;
@@ -35,17 +38,22 @@ public class HomeFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
+		BookLoader bld = new BookLoader();
+		bld.listener = this;
+		bld.execute("http://thachpn.name.vn/books/get_new_books.php");
+//		hotBookArray = bld.getResult();
+//		Log.d("sssssssssssssssss", ""+hotBookArray.size());
 
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
-		hotBookArray = new ArrayList<BookEntity>();
+//		hotBookArray = new ArrayList<BookEntity>();
 		newBookArray = new ArrayList<BookEntity>();
 		favoriteBookArray = new ArrayList<BookEntity>();
-		setData(hotBookArray);
+//		setData(hotBookArray);
 		setData(newBookArray);
 		setData(favoriteBookArray);
-		setAdapter(hotBookList, hotBookArray);
+//		setAdapter(hotBookList, hotBookArray);
 		setAdapter(newBookList, newBookArray);
 		setAdapter(favoriteBookList, favoriteBookArray);
 		
@@ -129,5 +137,13 @@ public class HomeFragment extends Fragment{
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
+	}
+	
+	@Override
+	public void getResult(ArrayList<?> array) {
+		// TODO Auto-generated method stub
+		hotBookArray =(ArrayList<BookEntity>) array;
+		setAdapter(hotBookList, hotBookArray);
+		Log.d("getResultttttttt", ""+array.size());
 	}
 }

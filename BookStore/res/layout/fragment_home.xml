@@ -79,7 +79,7 @@
         <com.bkpirates.HorizontalListView.HorizontalListView
             android:id="@+id/hotbooklist"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/hotbooktext"
             android:layout_marginBottom="30dp" />
 
@@ -103,7 +103,7 @@
         <com.bkpirates.HorizontalListView.HorizontalListView
             android:id="@+id/newbooklist"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/newbooktext"
             android:layout_marginBottom="30dp" />
 
@@ -127,7 +127,7 @@
         <com.bkpirates.HorizontalListView.HorizontalListView
             android:id="@+id/favoritebooklist"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/favoritebooktext"
             android:layout_marginBottom="30dp" />
 

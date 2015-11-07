@@ -1,6 +1,7 @@
 package com.bkpirates.entity;
 
 public class BookEntity {
+	private String bid;
 	private int price;
 	private String author;
 	private String name;
@@ -13,6 +14,14 @@ public class BookEntity {
 
 	public void setPulisher(String pulisher) {
 		this.pulisher = pulisher;
+	}
+
+	public String getBid() {
+		return bid;
+	}
+
+	public void setBid(String bid) {
+		this.bid = bid;
 	}
 
 	public int getQuantity() {
