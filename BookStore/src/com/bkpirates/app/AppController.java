@@ -50,6 +50,7 @@ public class AppController extends Application {
 		config.tasksProcessingOrder(QueueProcessingType.LIFO);
 		config.writeDebugLogs(); // Remove for release app
 		config.defaultDisplayImageOptions(defaultOptions);
+	
 
 		// Initialize ImageLoader with configuration.	
 		ImageLoader.getInstance().init(config.build());

@@ -16,11 +16,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -40,9 +38,12 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 		BookLoader bld = new BookLoader();
 		bld.listener = this;
-		bld.execute("http://thachpn.name.vn/books/get_new_books.php");
-//		hotBookArray = bld.getResult();
-//		Log.d("sssssssssssssssss", ""+hotBookArray.size());
+		try {
+			hotBookArray=newBookArray=favoriteBookArray =(ArrayList<BookEntity>) bld.execute("http://thachpn.name.vn/books/get_new_books.php").get();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
 
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
@@ -140,14 +141,10 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 	}
 	
 	@Override
-	public void getResult(ArrayList<?> array) {
+	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
-		hotBookArray =(ArrayList<BookEntity>) array;
-		newBookArray = (ArrayList<BookEntity>) array;
-		favoriteBookArray = (ArrayList<BookEntity>) array;
 		setAdapter(hotBookList, hotBookArray);
 		setAdapter(newBookList, newBookArray);
 		setAdapter(favoriteBookList, favoriteBookArray);
-		Log.d("getResultttttttt", ""+array.size());
 	}
 }

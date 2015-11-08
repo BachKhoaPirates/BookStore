@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,20 +48,12 @@ public class HorizontalListViewAdapter extends ArrayAdapter<BookEntity> {
             holder = (Holder) convertView.getTag();
         }
 
-//        if (position%3==0){
-//        	holder.image.setImageResource(R.drawable.book_image);        	
-//        } else if (position%3==1) {
-//        	holder.image.setImageResource(R.drawable.book_image2);
-//        } else {
-//        	holder.image.setImageResource(R.drawable.bookstore);
-//        }
+
         
+//        ImageSize targetImageSize = new ImageSize(BookEntity.IMAGE_SIZE, BookEntity.IMAGE_SIZE);
         String url = "http://thachpn.name.vn/books/image/11.jpg";
-        ImageSize targetImageSize = new ImageSize(BookEntity.IMAGE_SIZE, BookEntity.IMAGE_SIZE);
-        Bitmap bm = ImageLoader.getInstance().loadImageSync(url, targetImageSize);
-		holder.image.setImageBitmap(bm);
+        ImageLoader.getInstance().displayImage(url, holder.image);
         
-//		holder.image.setImageBitmap(bm);
         holder.text1.setText(array.get(position).getAuthor());
         holder.text2.setText(Integer.toString(array.get(position).getPrice()));
         
