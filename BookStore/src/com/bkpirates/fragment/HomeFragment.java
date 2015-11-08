@@ -2,7 +2,6 @@ package com.bkpirates.fragment;
 
 import java.util.ArrayList;
 
-import com.bkpirates.HorizontalListView.HorizontalListView;
 import com.bkpirates.adapter.HorizontalListViewAdapter;
 import com.bkpirates.adapter.ViewPagerBannerAdapter;
 import com.bkpirates.bookstore.R;
@@ -10,6 +9,7 @@ import com.bkpirates.entity.BannerEntity;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.network.BookLoader;
 import com.bkpirates.network.BookLoaderListener;
+import com.bkpirates.ui.HorizontalListView;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,14 +48,14 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
 //		hotBookArray = new ArrayList<BookEntity>();
-		newBookArray = new ArrayList<BookEntity>();
-		favoriteBookArray = new ArrayList<BookEntity>();
+//		newBookArray = new ArrayList<BookEntity>();
+//		favoriteBookArray = new ArrayList<BookEntity>();
 //		setData(hotBookArray);
-		setData(newBookArray);
-		setData(favoriteBookArray);
+//		setData(newBookArray);
+//		setData(favoriteBookArray);
 //		setAdapter(hotBookList, hotBookArray);
-		setAdapter(newBookList, newBookArray);
-		setAdapter(favoriteBookList, favoriteBookArray);
+//		setAdapter(newBookList, newBookArray);
+//		setAdapter(favoriteBookList, favoriteBookArray);
 		
 		banner = (ViewPager) view.findViewById(R.id.banner);
 		bannerArray = new ArrayList<BannerEntity>();
@@ -143,7 +143,11 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 	public void getResult(ArrayList<?> array) {
 		// TODO Auto-generated method stub
 		hotBookArray =(ArrayList<BookEntity>) array;
+		newBookArray = (ArrayList<BookEntity>) array;
+		favoriteBookArray = (ArrayList<BookEntity>) array;
 		setAdapter(hotBookList, hotBookArray);
+		setAdapter(newBookList, newBookArray);
+		setAdapter(favoriteBookList, favoriteBookArray);
 		Log.d("getResultttttttt", ""+array.size());
 	}
 }

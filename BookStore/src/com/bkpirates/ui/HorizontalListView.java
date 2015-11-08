@@ -24,7 +24,7 @@
  * It has been substantially rewritten and added to from the original version.
  */
 // @formatter:on
-package com.bkpirates.HorizontalListView;
+package com.bkpirates.ui;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

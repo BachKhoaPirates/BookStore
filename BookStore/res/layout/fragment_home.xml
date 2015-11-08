@@ -76,7 +76,7 @@
             android:text="Sách Mua Nhiều"
             android:textSize="20sp" />
 
-        <com.bkpirates.HorizontalListView.HorizontalListView
+        <com.bkpirates.ui.HorizontalListView
             android:id="@+id/hotbooklist"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -100,7 +100,7 @@
             android:text="Sách Mới"
             android:textSize="20sp" />
 
-        <com.bkpirates.HorizontalListView.HorizontalListView
+        <com.bkpirates.ui.HorizontalListView
             android:id="@+id/newbooklist"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -124,7 +124,7 @@
             android:text="Sách Được Yêu Thích"
             android:textSize="20sp" />
 
-        <com.bkpirates.HorizontalListView.HorizontalListView
+        <com.bkpirates.ui.HorizontalListView
             android:id="@+id/favoritebooklist"
             android:layout_width="match_parent"
             android:layout_height="200dp"

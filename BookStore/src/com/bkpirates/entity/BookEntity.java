@@ -7,6 +7,7 @@ public class BookEntity {
 	private String name;
 	private int quantity;
 	private String pulisher;
+	public static final int IMAGE_SIZE = 200;
 	
 	public String getPulisher() {
 		return pulisher;

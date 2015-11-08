@@ -1,5 +1,6 @@
 package com.bkpirates.bookstore;
 
+import com.bkpirates.app.AppController;
 import com.bkpirates.fragment.AccountFragment;
 import com.bkpirates.fragment.CartFragment;
 import com.bkpirates.fragment.HomeFragment;
@@ -25,7 +26,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTopBar(topBar);
-
+		
 		homeButton = (ImageView) findViewById(R.id.home_button);
 		searchButton = (ImageView) findViewById(R.id.search_button);
 		cartButton = (ImageView) findViewById(R.id.cart_button);
