@@ -1,4 +1,4 @@
-package com.bkpirates.network;
+package com.bkpirates.webservice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,18 +22,18 @@ public class JsonReader {
 	}
 
 	/**
-	 * Hàm trả về JSONObject
+	 * Hàm trả v�? JSONObject
 	 * 
 	 * @param url
-	 *            - Truyền link URL có định dạng JSON
-	 * @return - Trả về JSONOBject
+	 *            - Truy�?n link URL có định dạng JSON
+	 * @return - Trả v�? JSONOBject
 	 * @throws IOException
 	 * @throws JSONException
 	 */
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
 		try {
-			// đọc nội dung với Unicode:
+			// đ�?c nội dung với Unicode:
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 			String jsonText = readAll(rd);
 			JSONObject json = new JSONObject(jsonText);

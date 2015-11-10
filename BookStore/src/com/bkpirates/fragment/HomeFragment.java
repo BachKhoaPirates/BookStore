@@ -7,9 +7,9 @@ import com.bkpirates.adapter.ViewPagerBannerAdapter;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BannerEntity;
 import com.bkpirates.entity.BookEntity;
-import com.bkpirates.network.BookLoader;
-import com.bkpirates.network.BookLoaderListener;
-import com.bkpirates.ui.HorizontalListView;
+import com.bkpirates.webservice.BookLoader;
+import com.bkpirates.webservice.BookLoaderListener;
+import com.bkpirates.widget.HorizontalListView;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

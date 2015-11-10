@@ -1,4 +1,4 @@
-package com.bkpirates.network;
+package com.bkpirates.webservice;
 
 import java.util.ArrayList;
 
@@ -23,11 +23,11 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	@Override
 	protected ArrayList<?> doInBackground(String... params) {
-		// Lấy URL truyền vào
+		// Lấy URL truy�?n vào
 		String url = params[0];
 		JSONObject jsonObj;
 		try {
-			// đọc và chuyển về JSONObject
+			// đ�?c và chuyển v�? JSONObject
 			jsonObj = JsonReader.readJsonFromUrl(url);
 			Log.d("JSONNNNNNNNNN", ""+jsonObj);
 			// xu li Json
