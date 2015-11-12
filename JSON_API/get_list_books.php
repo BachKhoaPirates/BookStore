@@ -15,9 +15,10 @@
                 $book = array();
                 $book['bid'] = $row['BID'];
                 $book['name'] = $row['Name_Book'];
+                $book['publisher'] = $row['Publisher'];
+                $book['author'] = $row['Author'];
                 $book['price'] = $row['Price'];
                 $book['quantity'] = $row['Quantity'];
-
                 array_push($response['books'],$book);
             }
             echo json_encode($response);

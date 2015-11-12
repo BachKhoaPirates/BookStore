@@ -1,13 +1,12 @@
 <?php
     $response = array();
     require_once __DIR__.'/db_config.php';
-    if(isset($_REQUEST['uid']) && isset($_REQUEST['bid']) && isset($_REQUEST['quantity'])){
+    if(isset($_REQUEST['uid']) && isset($_REQUEST['bid'])){
         $user = $_REQUEST['uid'];
         $book = $_REQUEST['bid'];
-        $quantity = $_REQUEST['quantity'];
 
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-        $sql = "INSERT INTO Cart(UID, BID, Quantity) VALUES($user, $book, $quantity)";
+        $sql = "INSERT INTO Cart(UID, BID) VALUES('$user', '$book')";
         $result = mysqli_query($con, $sql);
         if($result){
             $response["success"] = 1;

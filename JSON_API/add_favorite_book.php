@@ -6,7 +6,7 @@
         $book = $_REQUEST['bid'];
 
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-        $sql = "INSERT INTO Favorite(UID, BID) VALUES($user, $book)";
+        $sql = "INSERT INTO Favorite(UID, BID) VALUES('$user', '$book')";
         $result = mysqli_query($con, $sql);
         if($result){
             $response["success"] = 1;

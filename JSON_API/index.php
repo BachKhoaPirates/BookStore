@@ -1,46 +1,46 @@
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>@@</title>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <title>@@</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+                <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
-        <style>
-            html, body {
+                <style>
+                html, body {
                 height: 100%;
-            }
+                }
 
-            body {
+                body {
                 margin: 0;
                 padding: 0;
                 width: 100%;
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
-            }
+                }
 
-            .container {
+                .container {
                 text-align: center;
                 display: table-cell;
                 vertical-align: middle;
-            }
+                }
 
-            .content {
+                .content {
                 text-align: center;
                 display: inline-block;
-            }
+                }
 
-            .title {
+                .title {
                 font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
+                }
+                </style>
+                </head>
+                <body>
+                <div class="container">
+                <div class="content">
                 <div class="title">BookStore</div>
-            </div>
-        </div>
-    </body>
-</html>
+                </div>
+                </div>
+                </body>
+                </html>
