@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity {
 				setBottomBar();
 				cartButton.setImageResource(R.drawable.cart_select);
 				
-				if (LoginFragment.accEntity.getPhone() == null) {
+				if (LoginFragment.accEntity.getPassword() == null) {
 					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
 							.commit();
 				} else {
@@ -111,7 +111,7 @@ public class MainActivity extends FragmentActivity {
 				setBottomBar();
 				userButton.setImageResource(R.drawable.user_select);
 				
-				if (LoginFragment.accEntity.getPhone() == null) {
+				if (LoginFragment.accEntity.getPassword() == null) {
 					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
 							.commit();
 				} else {

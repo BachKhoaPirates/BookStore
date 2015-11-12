@@ -1,13 +1,21 @@
 package com.bkpirates.fragment;
 
+import java.io.IOException;
+import java.text.ParseException;
+
+import org.apache.http.HttpResponse;
+
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
+import com.bkpirates.webservice.NetWork;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,16 +40,17 @@ public class LoginFragment extends Fragment {
 	private EditText passWord;
 	private String phone;
 	private String pass;
-	public static AccountEntity accEntity = new AccountEntity() ;
+	NetWork netWork = new NetWork();
+	private int check = 0;
+	public static AccountEntity accEntity = new AccountEntity();
 
-	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_login, null);
 		signIn = (Button) view.findViewById(R.id.btnSignIn);
 		crtAccount = (Button) view.findViewById(R.id.btnCreateAccount);
 		phoneNumber = (EditText) view.findViewById(R.id.phoneNumber);
 		passWord = (EditText) view.findViewById(R.id.passWord);
-		//phoneNumber.setHintTextColor(getResources().getColor(R.color.white));
+		// phoneNumber.setHintTextColor(getResources().getColor(R.color.white));
 		signIn.setEnabled(false);
 
 		phoneNumber.addTextChangedListener(new TextWatcher() {
@@ -97,22 +106,15 @@ public class LoginFragment extends Fragment {
 			public void onClick(View v) {
 				phone = phoneNumber.getText().toString();
 				pass = passWord.getText().toString();
-				if (phone.equals("123456789") == true && pass.equals("123456789") == true) {
-					InputMethodManager imm = (InputMethodManager) getActivity()
-							.getSystemService(Activity.INPUT_METHOD_SERVICE);
-					imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-					accEntity.setPhone("123456789");
-					accEntity.setPassword("123456789");
-					AccountFragment fa = new AccountFragment();
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
-					ft.replace(R.id.container, fa);
-					ft.addToBackStack(null);
-					ft.commit();
-
+				netWork.setPhone(phone);
+				netWork.setPass(pass);
+				if (netWork.checkInternetConnect(getActivity()))
+				{
+					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask().execute("http://thachpn.name.vn/books/check_account.php");
 				} else {
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-					dialog.setTitle("Are you wrong account ?").setCancelable(false)
-							.setMessage("Phonenumber of password are incorrect. Please try again.")
+					dialog.setTitle(" Error").setCancelable(false)
+							.setMessage("Not connected with Internet")
 							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 						@Override
@@ -141,21 +143,95 @@ public class LoginFragment extends Fragment {
 		return view;
 	}
 
-//	@Override
-//	public void onResume() {
-//		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-//		phoneNumber.setText(pre.getString("phone", ""));
-//		passWord.setText(pre.getString("pass", ""));
-//		super.onResume();
-//	}
-//
-//	@Override
-//	public void onPause() {
-//		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-//		SharedPreferences.Editor editor = pre.edit();
-//		editor.putString("phone", phoneNumber.getText().toString());
-//		editor.putString("pass", passWord.getText().toString());
-//		editor.commit();
-//		super.onPause();
-//	}
+	@Override
+	public void onResume() {
+		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+		phoneNumber.setText(pre.getString("phone", ""));
+		passWord.setText(pre.getString("pass", ""));
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = pre.edit();
+		editor.putString("phone", phoneNumber.getText().toString());
+		editor.putString("pass", passWord.getText().toString());
+		editor.commit();
+		super.onPause();
+	}
+
+	public class NetWorkAsyncTask extends AsyncTask<String, Void, String> {
+		ProgressDialog pb;
+
+		@Override
+		protected void onPreExecute() {
+			pb = new ProgressDialog(getActivity());
+			pb.setMessage("Login...");
+			pb.show();
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onPostExecute(String s) {
+			if (pb != null) {
+				pb.dismiss();
+			}
+			if (s != null) {
+				accEntity = netWork.checkAccountForLogin(s);
+				check = Integer.parseInt(accEntity.getPassword());
+				if (check == 1) {
+					accEntity.setPhone(phone);
+					accEntity.setPassword(pass);
+					FragmentManager fm = getActivity().getSupportFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					AccountFragment fragment = new AccountFragment();
+					ft.replace(R.id.container, fragment);
+					// ft.addToBackStack(null);
+					ft.commit();
+				} else {
+					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+					builder.setTitle("Fail");
+					builder.setMessage("Invalid login or password @@");
+					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							dialog.dismiss();
+						}
+					});
+					AlertDialog dialog = builder.create();
+					dialog.setCancelable(false);
+					dialog.show();
+				}
+			}
+			super.onPostExecute(s);
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			String url = params[0];
+			HttpResponse response = null;
+			try {
+				response = netWork.makeRquestLogin(url);
+			} catch (IOException e) {
+				return null;
+			}
+			if (response != null) {
+				String content = null;
+				try {
+					content = netWork.processHTTPResponce(response);
+					return content;
+				} catch (IOException e) {
+					return null;
+				} catch (ParseException e) {
+					return null;
+				}
+			}
+			return null;
+
+		}
+	}
+
 }

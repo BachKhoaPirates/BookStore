@@ -8,14 +8,18 @@ import com.bkpirates.entity.BookEntity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class CartFragment extends Fragment {
 
@@ -38,6 +42,21 @@ public class CartFragment extends Fragment {
 		subTotal.setText(total + "");
 		adapter = new ListCartAdapter(getContext(), arrList);
 		listview.setAdapter(adapter);
+		
+		
+		listview.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Toast.makeText(getContext(), "click "+position, Toast.LENGTH_SHORT).show();
+				
+				FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+				trans.replace(((ViewGroup)getView().getParent()).getId(),
+						new BookFragment(getContext(), arrList.get(position)));
+				trans.addToBackStack(null);
+				trans.commit();
+				
+			}
+		});
 		return view;
 
 	}
