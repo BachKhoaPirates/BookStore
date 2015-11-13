@@ -17,6 +17,9 @@
                 $book['price'] = $row['Price'];
                 $book['publisher'] = $row['Publisher'];
                 $book['author'] = $row['Author'];
+                $book['quantity'] = $row['Quantity'];
+                $book['content'] = $row['Content'];
+
                 array_push($response['books'],$book);
             }
 
