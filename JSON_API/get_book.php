@@ -10,15 +10,15 @@
 			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 			$response['success'] = 1;
-            $Product = array();
-			$Product['name'] = $result['Name_Book'];
-			$Product['publisher'] = $result['Publisher'];
-			$Product['author'] = $result['Author'];
-			$Product['price'] = $result['Price'];
-			$Product['quantity'] = $result['Quantity'];
+            $book = array();
+			$book['name'] = $result['Name_Book'];
+			$book['publisher'] = $result['Publisher'];
+			$book['author'] = $result['Author'];
+			$book['price'] = $result['Price'];
+			$book['quantity'] = $result['Quantity'];
+            $book['link'] = IMAGE_URL.$bid.'.jpg';
 
-			$response['Product'] = array();
-			array_push($response['product'], $Product);
+			array_push($response, $book);
 
 			echo json_encode($response);
 		}
