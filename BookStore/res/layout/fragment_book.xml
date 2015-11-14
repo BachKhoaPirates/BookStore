@@ -39,16 +39,37 @@
             android:singleLine="false"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/text_color"
              />
+        
+        <TextView 
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/name"
+            android:gravity="center"
+            android:textSize="15sp"
+            />
+        
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/csl"
+            android:background="@color/divider_color" />
         
         <TextView 
             android:id="@+id/csl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/author"
+            android:layout_marginTop="10dp"
             android:text="Chọn số lượng: "
             android:textSize="15sp"
             android:layout_alignParentLeft="true"
+            android:textColor="@color/text_color"
             />
         
         <LinearLayout 
@@ -75,6 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textColor="@color/text_color"
                 />
             
             <TextView 
@@ -89,11 +111,11 @@
         
         <LinearLayout 
             android:id="@+id/buy_button"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:background="@color/app_color"
             android:orientation="horizontal"
             >
@@ -110,8 +132,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/text_color"
                 />
         </LinearLayout>
         
@@ -121,13 +144,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/calculation"
             android:text="Conf hang"
+            android:textColor="@color/text_color"
             />
         
         <LinearLayout 
+            android:id="@+id/favorite_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/status"
             android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
             >
             
             <TextView 
@@ -135,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:text="Yêu thích: "
                 android:layout_gravity="center_vertical"
+                android:textColor="@color/text_color"
                 />
             
             <ImageView 
@@ -149,8 +176,68 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="(10)"
+                android:textColor="@color/text_color"
                 />
         </LinearLayout>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/content_title"
+            android:background="@color/divider_color" 
+            />
+        
+        <TextView 
+            android:id="@+id/content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/favorite_container"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="GIỚI THIỆU SÁCH"
+            android:textSize="20sp"
+           	android:gravity="center"
+           	android:textColor="@color/text_color"
+            />
+        
+        <TextView 
+            android:id="@+id/content"
+            android:layout_below="@+id/content_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            />
+        
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/more_info"
+            android:background="@color/divider_color" 
+            android:layout_marginTop="10dp"
+            />
+        
+        <TextView 
+            android:id="@+id/more_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="THÔNG TIN THÊM"
+            android:textSize="20sp"
+           	android:gravity="center"
+           	android:textColor="@color/text_color"
+            />
+        
+        <TextView 
+            android:id="@+id/pulisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/more_info"
+            android:layout_marginBottom="20dp"
+            />
+      
     </RelativeLayout>
 
 </ScrollView>
