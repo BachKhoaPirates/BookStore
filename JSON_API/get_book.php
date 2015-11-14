@@ -7,18 +7,20 @@
 		$sql = "SELECT * FROM Book WHERE BID = $bid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){
-			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 			$response['success'] = 1;
+            $response['books'] = array();
             $book = array();
-			$book['name'] = $result['Name_Book'];
-			$book['publisher'] = $result['Publisher'];
-			$book['author'] = $result['Author'];
-			$book['price'] = $result['Price'];
-			$book['quantity'] = $result['Quantity'];
+			$book['name'] = $row['Name_Book'];
+			$book['publisher'] = $row['Publisher'];
+			$book['author'] = $row['Author'];
+			$book['price'] = $row['Price'];
+			$book['quantity'] = $row['Quantity'];
+            $book['content'] = $row['Content'];
             $book['link'] = IMAGE_URL.$bid.'.jpg';
 
-			array_push($response, $book);
+			array_push($response['books'], $book);
 
 			echo json_encode($response);
 		}
