@@ -54,6 +54,18 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						if (js.has("quantity")) {
 							book.setQuantity(Integer.parseInt(js.getString("quantity")));
 						}
+						if (js.has("author")){
+							book.setAuthor(js.getString("author"));
+						}
+						if (js.has("pulisher")){
+							book.setPulisher(js.getString("pulisher"));
+						}
+						if (js.has("content")){
+							book.setContent(js.getString("content"));
+						}
+						if (js.has("link")){
+							book.setLinkImage(js.getString("link"));
+						}
 						array.add(book);
 					}
 

@@ -2,14 +2,17 @@ package com.bkpirates.fragment;
 
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class BookFragment extends Fragment {
@@ -50,10 +53,41 @@ public class BookFragment extends Fragment {
 			}
 		});
 
+		if (book == null){
+			Log.d("BOOKKKKKKK", "NULLLLLLLLLL");
+		} else {
+			Log.d("BOOKKKKKKKK",  "NOT NULLLLLLL");
+		}
+		
 		ImageView image = (ImageView) view.findViewById(R.id.image);
+		ImageLoader.getInstance().displayImage(book.getLinkImage(), image);
 
-		image.setImageResource(R.drawable.book_image);
-
+		
+		TextView name = (TextView) view.findViewById(R.id.name);
+		name.setText(book.getName());
+		
+		TextView price = (TextView) view.findViewById(R.id.price);
+		price.setText(Integer.toString(book.getPrice())+" Đ");
+		
+		TextView status = (TextView) view.findViewById(R.id.status);
+		if (book.getQuantity()>0){
+			status.setText("Tình trạng: Còn hàng.");
+		} else{
+			status.setText("Tình trạng: Hết hàng.");
+		}
+		
+//		TextView numberFavorite = (TextView) view.findViewById(R.id.number_favorite);
+//		numberFavorite.setText("("+book.get);
+		
 		return view;
+	}
+	
+	private static class Holder {
+		public ImageView image;
+		public TextView name;
+		public  LinearLayout buyButton;
+		public TextView price;
+		public TextView status;
+		public TextView numberFavorite;
 	}
 }

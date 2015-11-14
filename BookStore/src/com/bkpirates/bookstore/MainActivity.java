@@ -1,6 +1,5 @@
 package com.bkpirates.bookstore;
 
-import com.bkpirates.app.AppController;
 import com.bkpirates.fragment.AccountFragment;
 import com.bkpirates.fragment.CartFragment;
 import com.bkpirates.fragment.HomeFragment;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +20,8 @@ public class MainActivity extends FragmentActivity {
 
 	private ImageView homeButton, searchButton, cartButton, userButton;
 	private TextView topBar;
+//	private HomeFragment homeFrag;
+//	private SearchFragment searchFrag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,9 @@ public class MainActivity extends FragmentActivity {
 
 		setBottomBar();
 		homeButton.setImageResource(R.drawable.home_select);
-		getSupportFragmentManager().beginTransaction().add(R.id.container, new HomeFragment(), "Home").commit();
+		HomeFragment home = new HomeFragment();
+		getSupportFragmentManager().beginTransaction().add(R.id.container, home, "Home").commit();
+		getSupportFragmentManager().executePendingTransactions();
 
 		homeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -45,7 +49,9 @@ public class MainActivity extends FragmentActivity {
 				homeButton.setImageResource(R.drawable.home_select);
 				
 				FragmentManager fm = getSupportFragmentManager();
-				fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				if (fm.getBackStackEntryCount() > 0) {
+                    fm.popBackStackImmediate();
+                }
 				FragmentTransaction trans = fm.beginTransaction();
 				
 				HomeFragment home = (HomeFragment) getSupportFragmentManager().findFragmentByTag("Home");
@@ -53,10 +59,15 @@ public class MainActivity extends FragmentActivity {
 					home = new HomeFragment();
 					trans.replace(R.id.container, home, "Home");
 					trans.commit();
-				} else if (!home.isVisible()) {
+					fm.executePendingTransactions();
+					Log.d("Home NULLLLLL", "NULLL");
+				} else if (!home.isVisible()){
 					trans.replace(R.id.container, home);
 					trans.commit();
+					fm.executePendingTransactions();
 				}
+//				HomeFragment home = new HomeFragment();
+//				trans.replace(R.id.container, home).commit();
 			}
 		});
 
@@ -68,7 +79,9 @@ public class MainActivity extends FragmentActivity {
 				searchButton.setImageResource(R.drawable.search_select);
 				
 				FragmentManager fm = getSupportFragmentManager();
-				fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				if (fm.getBackStackEntryCount() > 0) {
+					fm.popBackStackImmediate();
+				}
 				FragmentTransaction trans = fm.beginTransaction();
 				
 				SearchFragment search = (SearchFragment) getSupportFragmentManager().findFragmentByTag("Search");
@@ -76,10 +89,15 @@ public class MainActivity extends FragmentActivity {
 					search = new SearchFragment();
 					trans.replace(R.id.container, search, "Search");
 					trans.commit();
+					fm.executePendingTransactions();
 				} else if (!search.isVisible()) {
 					trans.replace(R.id.container, search);
 					trans.commit();
+					fm.executePendingTransactions();
 				}
+				
+//				SearchFragment search = new SearchFragment();
+//				trans.replace(R.id.container, search).commit();
 			}
 
 		});
@@ -135,4 +153,5 @@ public class MainActivity extends FragmentActivity {
 		cartButton.setImageResource(R.drawable.cart_unselect);
 		userButton.setImageResource(R.drawable.user_unselect);
 	}
+	
 }

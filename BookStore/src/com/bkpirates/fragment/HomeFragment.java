@@ -11,53 +11,78 @@ import com.bkpirates.webservice.BookLoader;
 import com.bkpirates.webservice.BookLoaderListener;
 import com.bkpirates.widget.HorizontalListView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class HomeFragment extends Fragment implements BookLoaderListener{
 
 	private HorizontalListView hotBookList, newBookList, favoriteBookList;
+	private ArrayList<BookEntity> hotBookArray, newBookArray, favoriteBookArray;
+	
 	private ViewPager banner;
 
-	private ArrayList<BookEntity> hotBookArray, newBookArray, favoriteBookArray;
 	private ArrayList<BannerEntity> bannerArray;
-
+	private int downloadSuccess = 0;
+	private ProgressDialog loadDialog;
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
-		BookLoader bld = new BookLoader();
-		bld.listener = this;
-		try {
-			hotBookArray=newBookArray=favoriteBookArray =(ArrayList<BookEntity>) bld.execute("http://thachpn.name.vn/books/get_new_books.php").get();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-
-
+		
+		
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
-//		hotBookArray = new ArrayList<BookEntity>();
-//		newBookArray = new ArrayList<BookEntity>();
-//		favoriteBookArray = new ArrayList<BookEntity>();
-//		setData(hotBookArray);
-//		setData(newBookArray);
-//		setData(favoriteBookArray);
-//		setAdapter(hotBookList, hotBookArray);
-//		setAdapter(newBookList, newBookArray);
-//		setAdapter(favoriteBookList, favoriteBookArray);
 		
+		if (downloadSuccess == 0){
+			//on the first time open app
+			loadDialog = new ProgressDialog(getActivity());
+			loadDialog.setMessage("Loading... Please wait!");
+			loadDialog.setCancelable(false);
+			loadDialog.show();
+			
+			BookLoader bld1 = new BookLoader();
+			BookLoader bld2 = new BookLoader();
+			bld1.listener = this;
+			bld2.listener = this;
+			try {
+				if (newBookArray == null){
+					hotBookArray=
+							newBookArray =(ArrayList<BookEntity>) bld1
+							.execute("http://thachpn.name.vn/books/get_new_books.php")
+							.get();
+				}
+				if (favoriteBookArray == null){
+					favoriteBookArray = (ArrayList<BookEntity>) bld2
+							.execute("http://thachpn.name.vn/books/get_top_favorite_boooks.php")
+							.get();
+				}
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		} else {
+			//data haved been load before
+			setAdapter(hotBookList, hotBookArray);
+			setAdapter(newBookList, newBookArray);
+			setAdapter(favoriteBookList, favoriteBookArray);
+		}
+		
+
+		
+
 		banner = (ViewPager) view.findViewById(R.id.banner);
 		bannerArray = new ArrayList<BannerEntity>();
 		for (int i = 0; i < 5; i++) {
@@ -70,14 +95,21 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 		hotBookList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getContext(), "click "+position, Toast.LENGTH_SHORT).show();
-				
-				FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-				trans.replace(((ViewGroup)getView().getParent()).getId(),
-						new BookFragment(getContext(), hotBookArray.get(position)));
-				trans.addToBackStack(null);
-				trans.commit();
-				
+				startBookFragment(hotBookArray.get(position));
+			}
+		});
+		
+		newBookList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startBookFragment(newBookArray.get(position));
+			}
+		});
+		
+		favoriteBookList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startBookFragment(favoriteBookArray.get(position));
 			}
 		});
 	
@@ -90,22 +122,7 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 		listView.setAdapter(adapter);
 	}
 
-	private void setData(ArrayList<BookEntity> array) {
-		for (int i = 0; i < 20; i++) {
-			if (i % 2 == 0) {
-				BookEntity data = new BookEntity();
-				data.setAuthor("Ho Nam");
-				data.setPrice(15000);
-				array.add(data);
-			} else {
-				BookEntity data = new BookEntity();
-				data.setAuthor("Cuu Ba Dao");
-				data.setPrice(20000);
-				array.add(data);
-			}
-		}
-	}
-
+	
 	private void controlBanner(final View view, ViewPager banner) {
 		ImageView icon = (ImageView) view.findViewById(R.id.banner_icon0);
 		icon.setImageResource(R.drawable.selected_banner);
@@ -140,11 +157,26 @@ public class HomeFragment extends Fragment implements BookLoaderListener{
 		});
 	}
 	
+	
 	@Override
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
-		setAdapter(hotBookList, hotBookArray);
-		setAdapter(newBookList, newBookArray);
-		setAdapter(favoriteBookList, favoriteBookArray);
+		downloadSuccess++;
+		Log.d("Download Success: ", ""+downloadSuccess);
+		if (downloadSuccess == 2){
+			setAdapter(hotBookList, hotBookArray);
+			setAdapter(newBookList, newBookArray);
+			setAdapter(favoriteBookList, favoriteBookArray);
+			loadDialog.dismiss();
+		}
 	}
+	
+	private void startBookFragment(BookEntity book){
+		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+		trans.replace(((ViewGroup)getView().getParent()).getId(),
+				new BookFragment(getContext(), book));
+		trans.addToBackStack(null);
+		trans.commit();
+	}
+	
 }

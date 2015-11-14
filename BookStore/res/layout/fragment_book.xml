@@ -32,14 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_below="@+id/image"
             android:gravity="center"
             android:singleLine="false"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="NHAT KI GAI GOI" />
+             />
         
         <TextView 
             android:id="@+id/csl"
@@ -106,7 +106,6 @@
                 />
             
             <TextView 
-                android:text="350000 D"
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

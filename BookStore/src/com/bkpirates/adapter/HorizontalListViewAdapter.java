@@ -7,6 +7,7 @@ import com.bkpirates.entity.BookEntity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,12 @@ public class HorizontalListViewAdapter extends ArrayAdapter<BookEntity> {
 
         
 //        ImageSize targetImageSize = new ImageSize(BookEntity.IMAGE_SIZE, BookEntity.IMAGE_SIZE);
-        String url = "http://thachpn.name.vn/books/image/11.jpg";
-        ImageLoader.getInstance().displayImage(url, holder.image);
+        
+        ImageLoader.getInstance().displayImage(array.get(position).getLinkImage(), holder.image);
+        Log.d("LinkUrl", ""+array.get(position).getLinkImage());
         
         holder.text1.setText(array.get(position).getAuthor());
-        holder.text2.setText(Integer.toString(array.get(position).getPrice()));
+        holder.text2.setText(Integer.toString(array.get(position).getPrice())+" Đ");
         
         return convertView;
     }
