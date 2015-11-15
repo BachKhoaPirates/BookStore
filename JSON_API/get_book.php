@@ -1,9 +1,21 @@
 <?php
 	$response = array();
-	if(isset($_REQUEST['bid'])){
+	if(isset($_REQUEST['bid']) && isset($_REQUEST['uid'])){
 		$bid = $_REQUEST['bid'];
+        $uid = $_REQUEST['uid'];
 		require_once __DIR__.'/db_config.php';
 		$con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
+
+        $sql = "SELECT BID FROM Favorite WHERE UID = $uid";
+        $result = mysqli_query($con, $sql);
+        $like = 0;
+        while ($row = mysqli_fetch_array($result)) {
+            if($row['BID'] == $bid) {
+                $like = 1;
+                break;
+            }
+        }
+
 		$sql = "SELECT * FROM Book WHERE BID = $bid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){
@@ -19,7 +31,7 @@
 			$book['quantity'] = $row['Quantity'];
             $book['content'] = $row['Content'];
             $book['link'] = IMAGE_URL.$bid.'.jpg';
-
+            $book['like'] = $like;
 			array_push($response['books'], $book);
 
 			echo json_encode($response);

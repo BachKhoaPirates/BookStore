@@ -16,8 +16,8 @@
                 $book['name'] = $row['Name_Book'];
                 $book['price'] = $row['Price'];
                 //$book['publisher'] = $row['Publisher'];
-                //$book['author'] = $row['Author'];
-                $book['quantity'] = $row['Quantity'];
+                $book['author'] = $row['Author'];
+                //$book['quantity'] = $row['Quantity'];
                 //$book['content'] = $row['Content'];
                 $book['link'] = IMAGE_URL.$row['BID'].'.jpg';
 
