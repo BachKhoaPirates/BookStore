@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.json.JSONException;
@@ -22,16 +21,17 @@ public class JsonReader {
 	}
 
 	/**
-	 * Hàm trả v�? JSONObject
+	 * Ham tra ve JSONObject
 	 * 
 	 * @param url
-	 *            - Truy�?n link URL có định dạng JSON
-	 * @return - Trả v�? JSONOBject
+	 *            - Truyen link URL muon nhan ve JSON
+	 * @return - tra ve JSONOBject
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-		InputStream is = new URL(url).openStream();
+	public static JSONObject readJsonFromInputStream(InputStream is) throws IOException, JSONException {
+//		InputStream is = new URL(url).openStream();
+		
 		try {
 			// đ�?c nội dung với Unicode:
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));

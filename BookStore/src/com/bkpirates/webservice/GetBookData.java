@@ -5,26 +5,35 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.bkpirates.entity.BookEntity;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetBookData {
+public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 
 	private final String URL = "http://thachpn.name.vn/books/get_book.php?bid=";
 	public GetBookDataListener listener;
 
-	public interface GetBookDataListener{
+	public interface GetBookDataListener {
 		public void onDownloadSuccess();
 	}
-	
-	public GetBookData() {
-		
+
+	@Override
+	protected void onPreExecute() {
+		// TODO Auto-generated method stub
+		super.onPreExecute();
 	}
 
-	public void loadBook(BookEntity book){
+	@Override
+	protected Void doInBackground(BookEntity... params) {
+		// TODO Auto-generated method stub
+
+		BookEntity book = params[0];
+
 		try {
 			HttpClient client = new DefaultHttpClient();
 			String getURL = URL + book.getBid();
@@ -32,25 +41,36 @@ public class GetBookData {
 			HttpResponse responseGet = client.execute(get);
 			HttpEntity resEntityGet = responseGet.getEntity();
 			if (resEntityGet != null) {
-//				Log.d("resEntityGet", "NOT NULL");
-//				JSONObject js = new JSONObject(resEntityGet.toString());
-//				if (js.has("quantity")) {
-//					book.setQuantity(Integer.parseInt(js.getString("quantity")));
-//				}
-//				if (js.has("pulisher")){
-//					book.setPulisher(js.getString("pulisher"));
-//				}
-//				if (js.has("content")){
-//					book.setContent(js.getString("content"));
-//				}
-//				listener.onDownloadSuccess();
-			}else{
-				Log.d("NULLLLLLLLLL", "NULLLLLLLLL");
+				JSONObject jsResponse = JsonReader.readJsonFromInputStream(resEntityGet.getContent());
+				Log.d("JSONNNNNNNNNNN", ""+jsResponse);
+				if (jsResponse.has("success") && jsResponse.getString("success").equals("1")) {
+					JSONArray jsArray = new JSONArray(jsResponse.getString("books"));
+					JSONObject js = jsArray.getJSONObject(0);
+					if (js.has("quantity")) {
+						book.setQuantity(Integer.parseInt(js.getString("quantity")));
+					}
+					if (js.has("publisher")) {
+						book.setPulisher(js.getString("publisher"));
+					}
+					if (js.has("content")) {
+						book.setContent(js.getString("content"));
+					}
+				}
+				Log.d("GetBookData:", "Download success!");
+
+			} else {
+				Log.d("GetBookData:", "Download not success!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		// TODO Auto-generated method stub
 		listener.onDownloadSuccess();
 	}
 }

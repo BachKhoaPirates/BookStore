@@ -14,7 +14,6 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +74,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		price.setText(Integer.toString(book.getPrice())+" Đ");
 		
 		GetBookData getBook = new GetBookData();
-		getBook.listener = this;
-		getBook.loadBook(book);
+		getBook.listener=this;
+		getBook.execute(book);
 		
 		status = (TextView) view.findViewById(R.id.status);
 		status.setText("Tình trạng: ");
@@ -89,8 +88,15 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 //		numberFavorite.setText("("+book.get);
 		
 		
+		
+		return view;
+	}
+	
+	@Override
+	public void onDownloadSuccess() {
+		// TODO Auto-generated method stub
+
 		pulisher.setText(book.getPulisher());
-		Log.d("PPPPPPPPPPP", ""+book.getPulisher());
 		author.setText(book.getAuthor());
 		if (book.getQuantity()>0){
 			status.setText("Tình trạng: Còn hàng.");
@@ -100,21 +106,6 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		
 		content.setText(book.getContent());
 		makeTextViewResizable(content, 3, "Xem thêm", true);
-		return view;
-	}
-	
-	@Override
-	public void onDownloadSuccess() {
-		// TODO Auto-generated method stub
-//		if (book.getQuantity()>0){
-//			status.setText("Tình trạng: Còn hàng.");
-//		} else{
-//			status.setText("Tình trạng: Hết hàng.");
-//		}
-//		
-//		content.setText(book.getContent());
-//		makeTextViewResizable(content, 3, "Xem thêm", true);
-		
 	}
 	
 	

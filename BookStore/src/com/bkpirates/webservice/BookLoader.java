@@ -1,5 +1,6 @@
 package com.bkpirates.webservice;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -27,20 +28,18 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 		String url = params[0];
 		JSONObject jsonObj;
 		try {
-			// Ä‘á»?c vÃ  chuyá»ƒn vá»? JSONObject
-			jsonObj = JsonReader.readJsonFromUrl(url);
+			jsonObj = JsonReader.readJsonFromInputStream(new URL(url).openStream());
 			Log.d("JSONNNNNNNNNN", ""+jsonObj);
 			// xu li Json
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
 					array = new ArrayList<BookEntity>();
 
-					String str = jsonObj.getString("books");
-					JSONArray jsArr = new JSONArray(str);
+					JSONArray jsArr = new JSONArray(jsonObj.getString("books"));
 					JSONObject js;
 
 					for (int i = 0; i < jsArr.length(); i++) {
-						js = new JSONObject(jsArr.getString(i));
+						js = jsArr.getJSONObject(i);
 						BookEntity book = new BookEntity();
 						if (js.has("bid")) {
 							book.setBid(js.getString("bid"));
@@ -57,7 +56,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						if (js.has("author")){
 							book.setAuthor(js.getString("author"));
 						}
-						if (js.has("pulisher")){
+						if (js.has("publisher")){
 							book.setPulisher(js.getString("pulisher"));
 						}
 						if (js.has("content")){

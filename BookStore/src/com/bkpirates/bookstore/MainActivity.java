@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity {
                 }
 				FragmentTransaction trans = fm.beginTransaction();
 				
-				HomeFragment home = (HomeFragment) getSupportFragmentManager().findFragmentByTag("Home");
+				HomeFragment home = (HomeFragment) fm.findFragmentByTag("Home");
 				if (home == null) {
 					home = new HomeFragment();
 					trans.replace(R.id.container, home, "Home");
@@ -84,7 +84,7 @@ public class MainActivity extends FragmentActivity {
 				}
 				FragmentTransaction trans = fm.beginTransaction();
 				
-				SearchFragment search = (SearchFragment) getSupportFragmentManager().findFragmentByTag("Search");
+				SearchFragment search = (SearchFragment) fm.findFragmentByTag("Search");
 				if (search == null) {
 					search = new SearchFragment();
 					trans.replace(R.id.container, search, "Search");
