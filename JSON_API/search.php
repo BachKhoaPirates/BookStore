@@ -13,11 +13,11 @@
                 $book = array();
                 $book['bid'] = $row['BID'];
                 $book['name'] = $row['Name_Book'];
-                $book['publisher'] = $row['Publisher'];
-                $book['author'] = $row['Author'];
+                //$book['publisher'] = $row['Publisher'];
+                //$book['author'] = $row['Author'];
                 $book['price'] = $row['Price'];
                 $book['quantity'] = $row['Quantity'];
-                $book['content'] = $row['Content'];
+                //$book['content'] = $row['Content'];
                 $book['link'] = IMAGE_URL.$row['BID'].'.jpg';
 
                 array_push($response['books'],$book);

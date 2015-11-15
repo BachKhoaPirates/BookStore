@@ -5,7 +5,7 @@
         $user = $_REQUEST['uid'];
 
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-        $sql = "SELECT * FROM Cart NATURAL JOIN Book WHERE UID = $user AND Buy = 0";
+        $sql = "SELECT * FROM Cart NATURAL JOIN Book WHERE UID = $user AND Buy = 1";
         $result = mysqli_query($con, $sql);
         if(!empty($result)){
             $response["success"] = 1;

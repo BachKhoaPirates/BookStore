@@ -25,6 +25,8 @@
             $sql = "INSERT INTO Order_Book(OID, BID, Quantity) VALUES('$count', '$book', '$quantity')";
             $result = mysqli_query($con, $sql);
             if($result){
+                $sql = "UPDATE Cart SET Buy = 0 WHERE UID = $user AND BID = $book";
+                $result = mysqli_query($con, $sql);
                 $response["success"] = 1;
                 echo json_encode($response);
             }
