@@ -1,21 +1,21 @@
 <?php
 	$response = array();
-	if(isset($_REQUEST['bid']) && isset($_REQUEST['uid'])){
+	if(isset($_REQUEST['bid'])){
 		$bid = $_REQUEST['bid'];
-        $uid = $_REQUEST['uid'];
+        $like = 0;
 		require_once __DIR__.'/db_config.php';
 		$con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-
-        $sql = "SELECT BID FROM Favorite WHERE UID = $uid";
-        $result = mysqli_query($con, $sql);
-        $like = 0;
-        while ($row = mysqli_fetch_array($result)) {
-            if($row['BID'] == $bid) {
-                $like = 1;
-                break;
+        if(isset($_REQUEST['uid'])){
+            $uid = $_REQUEST['uid'];
+            $sql = "SELECT BID FROM Favorite WHERE UID = $uid";
+            $result = mysqli_query($con, $sql);
+            while ($row = mysqli_fetch_array($result)) {
+                if($row['BID'] == $bid) {
+                    $like = 1;
+                    break;
+                }
             }
         }
-
 		$sql = "SELECT * FROM Book WHERE BID = $bid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){

@@ -7,7 +7,7 @@
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
         $sql = "SELECT * FROM Cart NATURAL JOIN Book WHERE UID = $uid AND Buy = 0";
         $result = mysqli_query($con, $sql);
-        if(!empty($result)){
+        if(!empty($result) && (mysqli_num_rows($result) > 0) ){
             $response["success"] = 1;
             $response['books'] = array();
             while ($row = mysqli_fetch_array($result)) {
