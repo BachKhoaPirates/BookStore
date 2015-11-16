@@ -18,10 +18,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bkpirates.entity.AccountEntity;
+import com.bkpirates.entity.BookEntity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -33,6 +35,15 @@ public class NetWork {
 	String pass;
 	String name;
 	String address;
+	
+	BookEntity bookEntity = new BookEntity();
+	public BookEntity getBookEntity() {
+		return bookEntity;
+	}
+
+	public void setBookEntity(BookEntity bookEntity) {
+		this.bookEntity = bookEntity;
+	}
 
 	public String getPhone() {
 		return phone;
@@ -101,6 +112,26 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
+	public HttpResponse makeRquestGetUserFavoriteBooks(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
+	public HttpResponse makeRquestAddToCart(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
+
 
 	static InputStream is = null;
 
@@ -138,6 +169,19 @@ public class NetWork {
 		return success;
 	}
 
+	public int checkForAddToCart(String result) {
+		int success = 0;
+		try {
+			JSONObject json = new JSONObject(result);
+			if (json.has("success")) {
+				success = json.getInt("success");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
+
 	public AccountEntity checkAccountForLogin(String result) {
 		int success = 0;
 		AccountEntity accEntity = new AccountEntity();
@@ -160,6 +204,58 @@ public class NetWork {
 		}
 		accEntity.setPassword(success + ""); // cho success vao password
 		return accEntity;
+
+	}
+	public ArrayList<BookEntity> checkResultForGetUserBooks(String result) {
+		ArrayList<BookEntity> array = new ArrayList<BookEntity>();
+		Log.d("dmmm", "CHECKkkkkkkkkkkkkkkkkkkkk");
+		try {
+			Log.d("Dieu hieu sao luon lan 0", array.size() + "");	
+			JSONObject jsonObj = new JSONObject(result);
+			Log.d("Dieu hieu sao luon", array.size() + "");
+			Log.d("Minh Oc Cho", "" + jsonObj);
+			Log.d("Minh Oc Cho", "" + jsonObj);
+	
+			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
+				if (jsonObj.has("books")) {
+
+
+					String str = jsonObj.getString("books");
+					JSONArray jsArr = new JSONArray(str);
+					JSONObject js;
+
+					for (int i = 0; i < jsArr.length(); i++) {
+						js = new JSONObject(jsArr.getString(i));
+						BookEntity book = new BookEntity();
+						if (js.has("bid")) {
+							book.setBid(js.getString("bid"));
+						}
+						if (js.has("name")) {
+							book.setName(js.getString("name"));
+						}
+						if (js.has("author")) {
+							book.setAuthor(js.getString("author"));
+						}
+						if (js.has("price")) {
+							book.setPrice(Integer.parseInt(js.getString("price")));
+						}
+						if (js.has("link"))
+						{
+							book.setLinkImage(js.getString("link"));
+						}
+						if (js.has("quantity")) {
+							book.setQuantity(Integer.parseInt(js.getString("quantity")));
+						}
+						array.add(book);
+					}
+
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return array;
 
 	}
 

@@ -6,9 +6,11 @@ import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.fragment.CartFragment;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,14 +63,8 @@ public class ListBookAdapter extends ArrayAdapter<BookEntity> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		if (position % 3 == 0) {
-			holder.image.setImageResource(R.drawable.book_image);
-		} else if (position % 3 == 1) {
-			holder.image.setImageResource(R.drawable.book_image2);
-		} else {
-			holder.image.setImageResource(R.drawable.bookstore);
-		}
-
+		ImageLoader.getInstance().displayImage(listBook.get(position).getLinkImage(), holder.image);
+        Log.d("LinkUrl", ""+listBook.get(position).getLinkImage());
 		holder.author.setText(listBook.get(position).getAuthor());
 		holder.price.setText(Integer.toString(listBook.get(position).getPrice()));
 		holder.name.setText(listBook.get(position).getName());

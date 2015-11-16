@@ -9,17 +9,16 @@ import com.bkpirates.entity.BookEntity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class CartFragment extends Fragment {
 
@@ -54,6 +53,16 @@ public class CartFragment extends Fragment {
 						new BookFragment(getContext(), arrList.get(position)));
 				trans.addToBackStack(null);
 				trans.commit();
+				
+			}
+		});
+		
+		payment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
 				
 			}
 		});
