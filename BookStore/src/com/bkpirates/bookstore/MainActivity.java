@@ -20,15 +20,18 @@ public class MainActivity extends FragmentActivity {
 
 	private ImageView homeButton, searchButton, cartButton, userButton;
 	private TextView topBar;
-//	private HomeFragment homeFrag;
-//	private SearchFragment searchFrag;
+
+	private static final String HomeTag = "Home";
+	private static final String SearchTag = "Search";
+	private static final String CartTag = "Cart";
+	private static final String AccountTag = "Account";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTopBar(topBar);
-		
+
 		homeButton = (ImageView) findViewById(R.id.home_button);
 		searchButton = (ImageView) findViewById(R.id.search_button);
 		cartButton = (ImageView) findViewById(R.id.cart_button);
@@ -37,7 +40,7 @@ public class MainActivity extends FragmentActivity {
 		setBottomBar();
 		homeButton.setImageResource(R.drawable.home_select);
 		HomeFragment home = new HomeFragment();
-		getSupportFragmentManager().beginTransaction().add(R.id.container, home, "Home").commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.container, home, HomeTag).commit();
 		getSupportFragmentManager().executePendingTransactions();
 
 		homeButton.setOnClickListener(new View.OnClickListener() {
@@ -47,27 +50,15 @@ public class MainActivity extends FragmentActivity {
 
 				setBottomBar();
 				homeButton.setImageResource(R.drawable.home_select);
-				
+
 				FragmentManager fm = getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+
+				ft.remove(fm.findFragmentById(R.id.container)).commit();
 				if (fm.getBackStackEntryCount() > 0) {
-                    fm.popBackStackImmediate();
-                }
-				FragmentTransaction trans = fm.beginTransaction();
-				
-				HomeFragment home = (HomeFragment) fm.findFragmentByTag("Home");
-				if (home == null) {
-					home = new HomeFragment();
-					trans.replace(R.id.container, home, "Home");
-					trans.commit();
-					fm.executePendingTransactions();
-					Log.d("Home NULLLLLL", "NULLL");
-				} else if (!home.isVisible()){
-					trans.replace(R.id.container, home);
-					trans.commit();
-					fm.executePendingTransactions();
+					fm.popBackStackImmediate(HomeTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 				}
-//				HomeFragment home = new HomeFragment();
-//				trans.replace(R.id.container, home).commit();
+				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());
 			}
 		});
 
@@ -77,27 +68,24 @@ public class MainActivity extends FragmentActivity {
 
 				setBottomBar();
 				searchButton.setImageResource(R.drawable.search_select);
-				
+
 				FragmentManager fm = getSupportFragmentManager();
-				if (fm.getBackStackEntryCount() > 0) {
-					fm.popBackStackImmediate();
-				}
-				FragmentTransaction trans = fm.beginTransaction();
-				
-				SearchFragment search = (SearchFragment) fm.findFragmentByTag("Search");
-				if (search == null) {
+				FragmentTransaction ft = fm.beginTransaction();
+				SearchFragment search = (SearchFragment) fm.findFragmentByTag(SearchTag);
+
+				if (search == null || !search.isVisible()) {
+					while (fm.getBackStackEntryCount() > 1) {
+						fm.popBackStackImmediate();
+					}
 					search = new SearchFragment();
-					trans.replace(R.id.container, search, "Search");
-					trans.commit();
-					fm.executePendingTransactions();
-				} else if (!search.isVisible()) {
-					trans.replace(R.id.container, search);
-					trans.commit();
+					ft.replace(R.id.container, search, SearchTag);
+					if (fm.getBackStackEntryCount() == 0) {
+						ft.addToBackStack(HomeTag);
+					}
+					ft.commit();
 					fm.executePendingTransactions();
 				}
-				
-//				SearchFragment search = new SearchFragment();
-//				trans.replace(R.id.container, search).commit();
+				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());
 			}
 
 		});
@@ -106,17 +94,43 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				setBottomBar();
 				cartButton.setImageResource(R.drawable.cart_select);
-				
+
+				FragmentManager fm = getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+
 				if (LoginFragment.accEntity.getPassword() == null) {
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
-							.commit();
+					while (fm.getBackStackEntryCount() > 1) {
+						fm.popBackStackImmediate();
+					}
+					ft.replace(R.id.container, new LoginFragment());
+					if (fm.getBackStackEntryCount() == 0) {
+						ft.addToBackStack(HomeTag);
+					}
+					ft.commit();
+					fm.executePendingTransactions();
 				} else {
 
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new CartFragment()).commit();
+					CartFragment cart = (CartFragment) fm.findFragmentByTag(CartTag);
+
+					if (cart == null || !cart.isVisible()) {
+						while (fm.getBackStackEntryCount() > 1) {
+							fm.popBackStackImmediate();
+						}
+						cart = new CartFragment();
+						ft.replace(R.id.container, cart, CartTag);
+						if (fm.getBackStackEntryCount() == 0) {
+							ft.addToBackStack(HomeTag);
+						}
+						ft.commit();
+						fm.executePendingTransactions();
+					}
+
 				}
+
+				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());
 			}
 
 		});
@@ -125,18 +139,42 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				setBottomBar();
 				userButton.setImageResource(R.drawable.user_select);
-				
+
+				FragmentManager fm = getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+
 				if (LoginFragment.accEntity.getPassword() == null) {
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new LoginFragment())
-							.commit();
+					while (fm.getBackStackEntryCount() > 1) {
+						fm.popBackStackImmediate();
+					}
+					ft.replace(R.id.container, new LoginFragment());
+					if (fm.getBackStackEntryCount() == 0) {
+						ft.addToBackStack(HomeTag);
+					}
+					ft.commit();
+					fm.executePendingTransactions();
 				} else {
 
-					getSupportFragmentManager().beginTransaction().replace(R.id.container, new AccountFragment())
-							.commit();
+					AccountFragment acc = (AccountFragment) fm.findFragmentByTag(AccountTag);
+
+					if (acc == null || !acc.isVisible()) {
+						while (fm.getBackStackEntryCount() > 1) {
+							fm.popBackStackImmediate();
+						}
+						acc = new AccountFragment();
+						ft.replace(R.id.container, acc, AccountTag);
+						if (fm.getBackStackEntryCount() == 0) {
+							ft.addToBackStack(HomeTag);
+						}
+						ft.commit();
+						fm.executePendingTransactions();
+					}
 				}
+
+				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());
 			}
 		});
 	}
@@ -146,12 +184,27 @@ public class MainActivity extends FragmentActivity {
 		Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Nabila.ttf");
 		topBar.setTypeface(face);
 	}
-	
-	private void setBottomBar(){
+
+	private void setBottomBar() {
 		homeButton.setImageResource(R.drawable.home_unselect);
 		searchButton.setImageResource(R.drawable.search_unselect);
 		cartButton.setImageResource(R.drawable.cart_unselect);
 		userButton.setImageResource(R.drawable.user_unselect);
 	}
-	
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		FragmentManager fm = getSupportFragmentManager();
+		if (fm.getBackStackEntryCount() == 0) {
+			finish();
+		}
+		if (fm.getBackStackEntryCount() == 1) {
+			setBottomBar();
+			homeButton.setImageResource(R.drawable.home_select);
+		}
+		fm.beginTransaction().remove(fm.findFragmentById(R.id.container)).commit();
+		fm.popBackStackImmediate();
+	}
+
 }

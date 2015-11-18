@@ -16,7 +16,6 @@ import android.util.DisplayMetrics;
 public class AppController extends Application {
 
 	private static AppController instance;
-//	private ProgressDialog progressDialog;
 
 	@Override
 	public void onCreate() {
@@ -48,7 +47,7 @@ public class AppController extends Application {
 		config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
 		config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
 		config.tasksProcessingOrder(QueueProcessingType.LIFO);
-		config.writeDebugLogs(); // Remove for release app
+//		config.writeDebugLogs(); // Remove for release app
 		config.defaultDisplayImageOptions(defaultOptions);
 	
 
