@@ -43,7 +43,7 @@ public class AccountFragment extends Fragment {
 
 	private NetWork netWork = new NetWork();
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
-	private ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
+	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
 	private AccountEntity accEntity = new AccountEntity();
 
 	public AccountEntity getAccEntity() {

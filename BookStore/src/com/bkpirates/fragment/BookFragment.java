@@ -11,7 +11,7 @@ import com.bkpirates.webservice.GetBookData;
 import com.bkpirates.webservice.GetBookData.GetBookDataListener;
 import com.bkpirates.webservice.NetWork;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
+import android.accounts.OnAccountsUpdateListener;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,6 +47,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	private BookEntity book;
 	private int numberBookToBuy = 1;
 	private LinearLayout btnBuy;
+	private ImageView btnLike;
 	TextView number;
 	TextView content, status, author, pulisher;
 	NetWork netWork = new NetWork();
@@ -64,6 +65,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		number = (TextView) view.findViewById(R.id.number);
 		TextView decrease_button = (TextView) view.findViewById(R.id.decrease_button);
 		btnBuy = (LinearLayout) view.findViewById(R.id.buy_button);
+		btnLike = (ImageView) view.findViewById(R.id.like_button);
+
 		number.setText(Integer.toString(numberBookToBuy));
 		increase_button.setOnClickListener(new View.OnClickListener() {
 
@@ -112,11 +115,24 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
 				Toast.makeText(getActivity(), book.getBid() + book.getQuantity() + "", Toast.LENGTH_LONG).show();
 				Log.d(book.getBid() + "", book.getQuantity() + "");
-				AddToCartAsyncTask addCart = (AddToCartAsyncTask) new AddToCartAsyncTask().execute("http://thachpn.name.vn/books/add_cart.php");
+				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+						.execute("ttph://thachpn.name.vn/books/add_cart.php");
 
 			}
 		});
+		btnLike.setOnClickListener(new OnClickListener() {
+				
+			@Override
+			public void onClick(View v) {
+				btnLike.setImageResource(R.drawable.like);
+				netWork.setBookEntity(book);
+				netWork.setPhone(LoginFragment.accEntity.getPhone());
+				Toast.makeText(getActivity(), book.getBid() + "", Toast.LENGTH_LONG).show();
+				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+						.execute("http://thachpn.name.vn/books/add_favorite_book.php");
 
+			}
+		});
 		return view;
 	}
 
@@ -210,7 +226,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		return ssb;
 	}
 
-	public class AddToCartAsyncTask extends AsyncTask<String, Void, String> {
+	public class AddToCartAndFavoriteListAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
 		@Override
@@ -221,9 +237,11 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		@Override
 		protected void onPostExecute(String s) {
 			if (s != null) {
-				check = netWork.checkForAddToCart(s);
-				if(check == 1) Toast.makeText(getActivity(), "Add to Cart", Toast.LENGTH_LONG).show();
-				else Toast.makeText(getActivity(), "Cannot Add to Cart" + check	, Toast.LENGTH_LONG).show();
+				check = netWork.checkForAddCartAndFavoriteList(s);
+				if (check == 1)
+					Toast.makeText(getActivity(), "Add Success", Toast.LENGTH_LONG).show();
+				else
+					Toast.makeText(getActivity(), "Add unsuccess" + check, Toast.LENGTH_LONG).show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Fail");
@@ -248,25 +266,45 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		protected String doInBackground(String... params) {
 			String url = params[0];
 			HttpResponse response = null;
-			try {
-				response = netWork.makeRquestAddToCart(url);
-			} catch (IOException e) {
-				return null;
-			}
-			if (response != null) {
-				String content = null;
+			if (url.equals("http://thachpn.name.vn/books/add_cart.php")) {
 				try {
-					content = netWork.processHTTPResponce(response);
-					return content;
+					response = netWork.makeRquestAddToCart(url);
 				} catch (IOException e) {
 					return null;
-				} catch (ParseException e) {
-					return null;
+				}
+				if (response != null) {
+					String content = null;
+					try {
+						content = netWork.processHTTPResponce(response);
+						return content;
+					} catch (IOException e) {
+						return null;
+					} catch (ParseException e) {
+						return null;
+					}
 				}
 			}
-			return null;
+			else if (url.equals("http://thachpn.name.vn/books/add_favorite_book.php")){
+				try {
+					response = netWork.makeRquestAddFavoriteList(url);
+				} catch (IOException e) {
+					return null;
+				}
+				if (response != null) {
+					String content = null;
+					try {
+						content = netWork.processHTTPResponce(response);
+						return content;
+					} catch (IOException e) {
+						return null;
+					} catch (ParseException e) {
+						return null;
+					}
+				}
+				
+			}
 
+			return null;
 		}
 	}
-
 }
