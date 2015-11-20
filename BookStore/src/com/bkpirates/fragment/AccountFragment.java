@@ -71,7 +71,7 @@ public class AccountFragment extends Fragment {
 				// if(netWork.checkInternetConnect(getActivity())){
 				Log.d("Favorite", "Favorite");
 				netWork.setPhone(accEntity.getPhone());
-				GetUserFavoriteBooksAsyncTask nw = (GetUserFavoriteBooksAsyncTask) new GetUserFavoriteBooksAsyncTask()
+				GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
 						.execute("http://thachpn.name.vn/books/get_user_favorite_books.php");
 				// }
 			}
@@ -83,7 +83,7 @@ public class AccountFragment extends Fragment {
 			public void onClick(View v) {
 				Log.d("listOrder", "listOrder");
 				netWork.setPhone(accEntity.getPhone());
-				GetUserFavoriteBooksAsyncTask nw = (GetUserFavoriteBooksAsyncTask) new GetUserFavoriteBooksAsyncTask()
+				GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
 						.execute("http://thachpn.name.vn/books/get_bought_books.php");
 			}
 
@@ -114,7 +114,7 @@ public class AccountFragment extends Fragment {
 		return view;
 	}
 
-	private class GetUserFavoriteBooksAsyncTask extends AsyncTask<String, Void, String> {
+	private class GetUserBooksAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
 		@Override
@@ -163,7 +163,7 @@ public class AccountFragment extends Fragment {
 				Log.d("respone", url);
 				Log.d("respone", url);
 
-				response = netWork.makeRquestGetUserFavoriteBooks(url);
+				response = netWork.makeRquestGetUserBooks(url);
 			} catch (IOException e) {
 				return null;
 			}

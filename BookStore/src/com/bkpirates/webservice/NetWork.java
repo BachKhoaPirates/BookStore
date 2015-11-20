@@ -112,7 +112,7 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
-	public HttpResponse makeRquestGetUserFavoriteBooks(String url) throws ClientProtocolException, IOException {
+	public HttpResponse makeRquestGetUserBooks(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
@@ -127,6 +127,7 @@ public class NetWork {
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
 		nameValuePairList.add(new BasicNameValuePair("uid", phone));
 		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));
+		nameValuePairList.add(new BasicNameValuePair("quantity", bookEntity.getQuantity()+""));		
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
