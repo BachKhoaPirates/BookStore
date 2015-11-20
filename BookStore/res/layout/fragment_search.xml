@@ -1,26 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:orientation="vertical" >
 
- <!--     <EditText
-        android:id="@+id/searchText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:singleLine="true"
+            android:hint="Search" />
+
+        <ImageView
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/search_select" />
+    </RelativeLayout>
 
     <ListView
-        android:id="@+id/listviewCategory"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-    </ListView>
-    -->
-    
-     <TextView 
+        android:id="@+id/category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment search"
-        />
+        android:scrollbars="none" >
+    </ListView>
 
 </LinearLayout>

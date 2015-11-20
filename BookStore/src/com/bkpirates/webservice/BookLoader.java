@@ -2,19 +2,28 @@ package com.bkpirates.webservice;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.entity.DistributeBookEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
-	ArrayList<BookEntity> array;
+	ArrayList<BookEntity> bookArray;
+	ArrayList<DistributeBookEntity> distributeArray;
 	public BookLoaderListener listener;
+	
+	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
+	public static final String TOP_FAVORITE_BOOK_LINK = "http://thachpn.name.vn/books/get_top_favorite_boooks.php";
+	public static final String HOT_BOOK_LINK = "http://thachpn.name.vn/books/get_hot_books.php";
+	
+	public static final String DISTRIBUTE_LINK = "http://thachpn.name.vn/books/get_distribute.php";
 
 	@Override
 	protected void onPreExecute() {
@@ -24,7 +33,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	@Override
 	protected ArrayList<?> doInBackground(String... params) {
-		// Lấy URL truy�?n vào
+		// Lấy URL truy�?n vào
 		String url = params[0];
 		JSONObject jsonObj;
 		try {
@@ -33,7 +42,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			// xu li Json
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
-					array = new ArrayList<BookEntity>();
+					bookArray = new ArrayList<BookEntity>();
 
 					JSONArray jsArr = new JSONArray(jsonObj.getString("books"));
 					JSONObject js;
@@ -65,20 +74,41 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						if (js.has("link")){
 							book.setLinkImage(js.getString("link"));
 						}
-						array.add(book);
+						bookArray.add(book);
 					}
 
 				} else {
-					array = null;
+					if (jsonObj.has("distributes")){
+						distributeArray = new ArrayList<DistributeBookEntity>();
+
+						JSONArray jsArr = new JSONArray(jsonObj.getString("distributes"));
+						JSONObject js;
+						
+						for (int i = 0; i < jsArr.length(); i++) {
+							js = jsArr.getJSONObject(i);
+							DistributeBookEntity distributeBook = new DistributeBookEntity();
+							if (js.has("pid")) {
+								distributeBook.setPid(js.getString("pid"));
+							}
+							if (js.has("distribute")) {
+								distributeBook.setName(js.getString("distribute"));
+							}
+							distributeArray.add(distributeBook);
+						}
+					}
 				}
-			} else {
-				array = null;
-			}
+			} 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return array;
+		if (bookArray != null){
+			return bookArray;
+		} else if (distributeArray != null){
+			return distributeArray;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
