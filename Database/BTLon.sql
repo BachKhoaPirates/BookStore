@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2015 at 10:42 AM
+-- Generation Time: Nov 21, 2015 at 09:41 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -85,7 +85,7 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`
 CREATE TABLE IF NOT EXISTS `Cart` (
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `Buy` int(11) DEFAULT '0',
+  `Total` int(11) NOT NULL,
   PRIMARY KEY (`UID`,`BID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -94,11 +94,11 @@ CREATE TABLE IF NOT EXISTS `Cart` (
 -- Dumping data for table `Cart`
 --
 
-INSERT INTO `Cart` (`UID`, `BID`, `Buy`) VALUES
-(195842465, 1, 1),
+INSERT INTO `Cart` (`UID`, `BID`, `Total`) VALUES
+(195842465, 1, 0),
 (195842465, 2, 0),
-(195842465, 3, 1),
-(195875456, 5, 1);
+(195842465, 3, 0),
+(195875456, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -218,19 +218,9 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
   `OID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
   `Quantity` int(11) DEFAULT '0',
-  PRIMARY KEY (`OID`,`BID`),
+  PRIMARY KEY (`OID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `Order_Book`
---
-
-INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity`) VALUES
-(2, 2, 3),
-(3, 3, 6),
-(4, 3, 17),
-(11, 2, 12);
 
 -- --------------------------------------------------------
 
@@ -348,14 +338,14 @@ ALTER TABLE `Genre_Book`
 -- Constraints for table `Order_Book`
 --
 ALTER TABLE `Order_Book`
-  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
+  ADD CONSTRAINT `Order_Book_ibfk_1` FOREIGN KEY (`OID`) REFERENCES `Order_User` (`OID`),
+  ADD CONSTRAINT `Order_Book_ibfk_2` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 --
 -- Constraints for table `Order_User`
 --
 ALTER TABLE `Order_User`
-  ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`),
-  ADD CONSTRAINT `Order_User_ibfk_2` FOREIGN KEY (`OID`) REFERENCES `Order_Book` (`OID`);
+  ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`);
 
 --
 -- Constraints for table `Publisher`
