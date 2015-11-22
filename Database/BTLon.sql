@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2015 at 09:41 PM
+-- Generation Time: Nov 22, 2015 at 08:06 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
   `OID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
   `Quantity` int(11) DEFAULT '0',
-  PRIMARY KEY (`OID`),
+  PRIMARY KEY (`OID`,`BID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
