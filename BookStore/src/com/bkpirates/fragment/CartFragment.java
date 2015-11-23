@@ -73,7 +73,10 @@ public class CartFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				for (int i = 0;i < arrList.size(); i ++){
+					AccountFragment.orderArrayBooks.add(arrList.get(i));
+					arrList.remove(i);
+				}
 
 			}
 		});

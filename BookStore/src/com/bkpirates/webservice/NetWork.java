@@ -132,6 +132,16 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
+	public HttpResponse makeRquestAddFavoriteList(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));	
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
 
 
 	static InputStream is = null;
@@ -170,7 +180,7 @@ public class NetWork {
 		return success;
 	}
 
-	public int checkForAddToCart(String result) {
+	public int checkForAddCartAndFavoriteList(String result) {
 		int success = 0;
 		try {
 			JSONObject json = new JSONObject(result);
