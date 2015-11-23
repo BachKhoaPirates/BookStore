@@ -3,6 +3,7 @@ package com.bkpirates.fragment;
 import java.util.ArrayList;
 
 import com.bkpirates.adapter.ListDistributeAdapter;
+import com.bkpirates.app.AppController;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.DistributeBookEntity;
 import com.bkpirates.webservice.BookLoader;
@@ -10,7 +11,6 @@ import com.bkpirates.webservice.BookLoaderListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +21,30 @@ import android.widget.Toast;
 
 public class SearchFragment extends Fragment implements BookLoaderListener{
 	
-	ArrayList<DistributeBookEntity> array;
+	ArrayList<DistributeBookEntity> array = null;
 	ListView lView;
 	EditText edText;
 	ImageView searchButton;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+		BookLoader bld = new BookLoader();
+		bld.listener=this;
+		
+		if (AppController.getInstance().getDistributeArray() == null) {
+			try {
+				array = (ArrayList<DistributeBookEntity>) bld.execute(BookLoader.DISTRIBUTE_LINK).get();
+				AppController.getInstance().setDistributeArray(array);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		} else {
+			array = AppController.getInstance().getDistributeArray();
+		}
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,19 +56,20 @@ public class SearchFragment extends Fragment implements BookLoaderListener{
 		edText = (EditText) view.findViewById(R.id.searchText);
 		searchButton = (ImageView) view.findViewById(R.id.searchButton);
 		
-		BookLoader bld = new BookLoader();
-		bld.listener=this;
+//		BookLoader bld = new BookLoader();
+//		bld.listener=this;
+//		
+//		if (array == null) {
+//			try {
+//				array = (ArrayList<DistributeBookEntity>) bld.execute(BookLoader.DISTRIBUTE_LINK).get();
+//			} catch (Exception e){
+//				e.printStackTrace();
+//			}
+//		} else {
+//			setAdapter(lView, array);
+//		}
 		
-		if (array == null) {
-			try {
-				array = (ArrayList<DistributeBookEntity>) bld.execute(BookLoader.DISTRIBUTE_LINK).get();
-			} catch (Exception e){
-				e.printStackTrace();
-			}
-		} else {
-			setAdapter(lView, array);
-		}
-		
+		setAdapter(lView, array);
 		searchButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -64,8 +85,6 @@ public class SearchFragment extends Fragment implements BookLoaderListener{
 	@Override
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
-		setAdapter(lView, array);
-		Log.d("siseeeeeeeeeeee", array.size()+"");
 	}
 	
 	private void setAdapter(ListView lView, ArrayList<DistributeBookEntity> array){

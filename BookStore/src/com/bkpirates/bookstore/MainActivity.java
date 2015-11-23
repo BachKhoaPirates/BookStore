@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity {
 		HomeFragment home = new HomeFragment();
 		getSupportFragmentManager().beginTransaction().add(R.id.container, home, HomeTag).commit();
 		getSupportFragmentManager().executePendingTransactions();
+		Log.d("BACKSTACK:", ""+getSupportFragmentManager().getBackStackEntryCount());
 
 		homeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -54,8 +55,8 @@ public class MainActivity extends FragmentActivity {
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 
-				ft.remove(fm.findFragmentById(R.id.container)).commit();
 				if (fm.getBackStackEntryCount() > 0) {
+					ft.remove(fm.findFragmentById(R.id.container)).commit();
 					fm.popBackStackImmediate(HomeTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 				}
 				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());

@@ -19,7 +19,7 @@ public class ViewPagerBannerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		return new BannerFragment(arr.get(position).getUrl(), position);
+		return new BannerFragment(arr.get(position).getUrl());
 	}
 
 	@Override

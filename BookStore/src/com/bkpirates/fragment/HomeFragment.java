@@ -11,13 +11,12 @@ import com.bkpirates.webservice.BookLoader;
 import com.bkpirates.webservice.BookLoaderListener;
 import com.bkpirates.widget.HorizontalListView;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +32,44 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 	private ViewPager banner;
 
 	private ArrayList<BannerEntity> bannerArray;
-	private int downloadSuccess = 0;
-	private ProgressDialog loadDialog;
+
+	private int positionBanner;
+	private Handler handler;
+	private Runnable runnable;
+	private final int TIMER = 5000;
+
+	// private int downloadSuccess = 0;
+	// private ProgressDialog loadDialog;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+
+		BookLoader bld1 = new BookLoader();
+		BookLoader bld2 = new BookLoader();
+		BookLoader bld3 = new BookLoader();
+		bld1.listener = bld2.listener = bld3.listener = this;
+		try {
+			if (hotBookArray == null) {
+				hotBookArray = (ArrayList<BookEntity>) bld1.execute(BookLoader.HOT_BOOK_LINK).get();
+			}
+			if (newBookArray == null) {
+				newBookArray = (ArrayList<BookEntity>) bld2.execute(BookLoader.NEW_BOOK_LINK).get();
+			}
+			if (favoriteBookArray == null) {
+				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(BookLoader.TOP_FAVORITE_BOOK_LINK).get();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		bannerArray = new ArrayList<BannerEntity>();
+		for (int i = 1; i <= 5; i++) {
+			bannerArray.add(new BannerEntity(
+					getResources().getIdentifier("banner" + i, "drawable", getActivity().getPackageName())));
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,46 +79,35 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
-
-		if (downloadSuccess == 0) {
-			// on the first time open app
-			loadDialog = new ProgressDialog(getActivity());
-			loadDialog.setMessage("Loading... Please wait!");
-			loadDialog.setCancelable(false);
-			loadDialog.show();
-
-			BookLoader bld1 = new BookLoader();
-			BookLoader bld2 = new BookLoader();
-			BookLoader bld3 = new BookLoader();
-			bld1.listener = bld2.listener = bld3.listener = this;
-			try {
-				// if (hotBookArray == null){
-				hotBookArray = (ArrayList<BookEntity>) bld1.execute(BookLoader.HOT_BOOK_LINK).get();
-				// }
-				// if (newBookArray == null){
-				newBookArray = (ArrayList<BookEntity>) bld2.execute(BookLoader.NEW_BOOK_LINK).get();
-				// }
-				// if (favoriteBookArray == null){
-				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(BookLoader.TOP_FAVORITE_BOOK_LINK).get();
-				// }
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			// data haved been load before
-			setAdapter(hotBookList, hotBookArray);
-			setAdapter(newBookList, newBookArray);
-			setAdapter(favoriteBookList, favoriteBookArray);
-		}
-
 		banner = (ViewPager) view.findViewById(R.id.banner);
-		bannerArray = new ArrayList<BannerEntity>();
-		for (int i = 0; i < 5; i++) {
-			bannerArray.add(new BannerEntity(R.drawable.banner1));
-		}
+
+		setAdapter(hotBookList, hotBookArray);
+		setAdapter(newBookList, newBookArray);
+		setAdapter(favoriteBookList, favoriteBookArray);
+
+
 		ViewPagerBannerAdapter bannerAdapter = new ViewPagerBannerAdapter(getFragmentManager(), bannerArray);
 		banner.setAdapter(bannerAdapter);
 		controlBanner(view, banner);
+		//auto slide viewpager
+		handler = new Handler();
+		runnable = new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				positionBanner = banner.getCurrentItem();
+				if (positionBanner >= 4) {
+					positionBanner = 0;
+				} else {
+					positionBanner = positionBanner + 1;
+				}
+				banner.setCurrentItem(positionBanner, true);
+
+				handler.postDelayed(runnable, TIMER);
+			}
+		};
+		
 
 		hotBookList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -106,6 +130,8 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 			}
 		});
 
+		
+		
 		return view;
 	}
 
@@ -126,6 +152,10 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 				ImageView icon = (ImageView) view.findViewById(
 						getResources().getIdentifier("banner_icon" + position, "id", getContext().getPackageName()));
 				icon.setImageResource(R.drawable.selected_banner);
+				if (position == 0){
+					icon = (ImageView) view.findViewById(R.id.banner_icon4);
+					icon.setImageResource(R.drawable.unselected_banner);
+				}
 				if (position > 0) {
 					icon = (ImageView) view.findViewById(getResources().getIdentifier("banner_icon" + (position - 1),
 							"id", getContext().getPackageName()));
@@ -149,15 +179,22 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 	}
 
 	@Override
+	public void onPause() {
+	    super.onPause();
+	    if (handler!= null) {
+	        handler.removeCallbacks(runnable);
+	    }
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();  // Always call the superclass method first
+	    handler.postDelayed(runnable, TIMER);
+	}
+	
+	@Override
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
-		downloadSuccess++;
-		if (downloadSuccess == 3) {
-			setAdapter(hotBookList, hotBookArray);
-			setAdapter(newBookList, newBookArray);
-			setAdapter(favoriteBookList, favoriteBookArray);
-			loadDialog.dismiss();
-		}
 	}
 
 	private void startBookFragment(BookEntity book) {

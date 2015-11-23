@@ -12,11 +12,10 @@ import android.widget.ImageView;
 public class BannerFragment extends Fragment {
 
 	private int url;
-	private int position;
+//	private int position;
 
-	public BannerFragment(int url, int position) {
+	public BannerFragment(int url) {
 		this.url = url;
-		this.position = position;
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class BannerFragment extends Fragment {
 
 		ImageView image = (ImageView) view.findViewById(R.id.image);
 
-		image.setImageResource(R.drawable.banner1);
+		image.setImageResource(url);
 
 		return view;
 	}
