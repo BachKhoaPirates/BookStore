@@ -54,17 +54,13 @@ public class CartFragment extends Fragment {
 			
 		}
 		
+		
 
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getContext(), "click " + position, Toast.LENGTH_SHORT).show();
-
-				FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-				trans.replace(((ViewGroup) getView().getParent()).getId(),
-						new BookFragment(getContext(), arrList.get(position)));
-				trans.addToBackStack(null);
-				trans.commit();
+				Toast.makeText(getActivity(), position + "", Toast.LENGTH_LONG).show();
+				startBookFragment(arrList.get(position));
 
 			}
 		});
@@ -162,5 +158,12 @@ public class CartFragment extends Fragment {
 
 		}
 	}
+	private void startBookFragment(BookEntity book) {
+		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		trans.addToBackStack(null);
+		trans.commit();
+	}
+
 
 }

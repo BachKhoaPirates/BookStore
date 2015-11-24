@@ -20,9 +20,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class LoginFragment extends Fragment {
@@ -108,13 +110,12 @@ public class LoginFragment extends Fragment {
 				pass = passWord.getText().toString();
 				netWork.setPhone(phone);
 				netWork.setPass(pass);
-				if (netWork.checkInternetConnect(getActivity()))
-				{
-					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask().execute("http://thachpn.name.vn/books/check_account.php");
+				if (netWork.checkInternetConnect(getActivity())) {
+					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
+							.execute("http://thachpn.name.vn/books/check_account.php");
 				} else {
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-					dialog.setTitle(" Error").setCancelable(false)
-							.setMessage("Not connected with Internet")
+					dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
 							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 						@Override
@@ -179,7 +180,9 @@ public class LoginFragment extends Fragment {
 			}
 			if (s != null) {
 				accEntity = netWork.checkAccountForLogin(s);
+				Log.d("ABCCCCCCCCCCCCCCC", accEntity.getPassword() + "");
 				check = Integer.parseInt(accEntity.getPassword());
+				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
@@ -190,20 +193,22 @@ public class LoginFragment extends Fragment {
 					// ft.addToBackStack(null);
 					ft.commit();
 				} else {
-					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setTitle("Fail");
-					builder.setMessage("Invalid login or password @@");
-					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 
+					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+					dialog.setTitle("");
+					dialog.setMessage("Wrong Account!! Please try again");
+					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// TODO Auto-generated method stub
 							dialog.dismiss();
+
 						}
 					});
-					AlertDialog dialog = builder.create();
+
 					dialog.setCancelable(false);
+					dialog.create();
 					dialog.show();
+					Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				}
 			}
 			super.onPostExecute(s);

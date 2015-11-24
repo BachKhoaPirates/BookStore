@@ -213,6 +213,7 @@ public class NetWork {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 		accEntity.setPassword(success + ""); // cho success vao password
 		return accEntity;
 
