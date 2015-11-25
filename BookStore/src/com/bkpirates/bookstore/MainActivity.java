@@ -39,6 +39,7 @@ public class MainActivity extends FragmentActivity {
 
 		setBottomBar();
 		homeButton.setImageResource(R.drawable.home_select);
+		
 		HomeFragment home = new HomeFragment();
 		getSupportFragmentManager().beginTransaction().add(R.id.container, home, HomeTag).commit();
 		getSupportFragmentManager().executePendingTransactions();
@@ -51,7 +52,7 @@ public class MainActivity extends FragmentActivity {
 
 				setBottomBar();
 				homeButton.setImageResource(R.drawable.home_select);
-
+				
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 
@@ -66,10 +67,10 @@ public class MainActivity extends FragmentActivity {
 		searchButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				
 				setBottomBar();
 				searchButton.setImageResource(R.drawable.search_select);
-
+				
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 				SearchFragment search = (SearchFragment) fm.findFragmentByTag(SearchTag);
