@@ -11,34 +11,30 @@ import com.bkpirates.webservice.GetBookData;
 import com.bkpirates.webservice.GetBookData.GetBookDataListener;
 import com.bkpirates.webservice.NetWork;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import android.accounts.OnAccountsUpdateListener;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.BufferType;
+import android.widget.Toast;
 
 public class BookFragment extends Fragment implements GetBookDataListener {
 
@@ -51,6 +47,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	TextView number;
 	TextView content, status, author, pulisher;
 	NetWork netWork = new NetWork();
+	
 
 	public BookFragment(Context context, BookEntity book) {
 		this.content = content;
@@ -72,7 +69,27 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 			@Override
 			public void onClick(View v) {
-				number.setText(Integer.toString(++numberBookToBuy));
+				if(book.getQuantity() <= numberBookToBuy) {
+
+					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+					dialog.setTitle("");
+					dialog.setMessage("Cannot increase quantity");
+					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+
+						}
+					});
+
+					dialog.setCancelable(false);
+					dialog.create();
+					dialog.show();
+
+				}
+				else{
+					number.setText(Integer.toString(++numberBookToBuy));					
+				}
 			}
 		});
 		decrease_button.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +115,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		getBook.execute(book);
 
 		status = (TextView) view.findViewById(R.id.status);
-		status.setText("Tình trạng: ");
+		status.setText("Status: ");
 
 		content = (TextView) view.findViewById(R.id.content);
 		author = (TextView) view.findViewById(R.id.author);
@@ -113,10 +130,31 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 				// TODO Auto-generated method stub
 				netWork.setBookEntity(book);
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
-				Toast.makeText(getActivity(), book.getBid() + book.getQuantity() + "", Toast.LENGTH_LONG).show();
-				Log.d(book.getBid() + "", book.getQuantity() + "");
-				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
-						.execute("ttph://thachpn.name.vn/books/add_cart.php");
+				netWork.setNumberBookToBuy(numberBookToBuy);
+				if(book.getQuantity() > 0){
+					Toast.makeText(getActivity(),numberBookToBuy + "", Toast.LENGTH_LONG).show();
+					
+					AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+							.execute("http://thachpn.name.vn/books/add_cart.php");
+				}else {
+				
+					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+					dialog.setTitle("");
+					dialog.setMessage("Sorry because not enough quantity");
+					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+
+						}
+					});
+
+					dialog.setCancelable(false);
+					dialog.create();
+					dialog.show();
+
+				}
+				
 
 			}
 		});
@@ -143,9 +181,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		pulisher.setText(book.getPulisher());
 		author.setText(book.getAuthor());
 		if (book.getQuantity() > 0) {
-			status.setText("Tình trạng: Còn hàng.");
+			status.setText("Status: Còn hàng.");
 		} else {
-			status.setText("Tình trạng: Hết hàng.");
+			status.setText("Status: Hết hàng.");
 		}
 
 		content.setText(book.getContent());
