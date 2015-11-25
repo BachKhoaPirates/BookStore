@@ -10,10 +10,15 @@ import com.bkpirates.webservice.BookLoaderListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class BookOfDistribute extends Fragment implements BookLoaderListener {
 	
@@ -50,6 +55,20 @@ public class BookOfDistribute extends Fragment implements BookLoaderListener {
 		View view = inflater.inflate(R.layout.fragment_book_of_distribute, container, false);
 		gView = (GridView) view.findViewById(R.id.gView);
 		gView.setAdapter(new BookGridViewAdapter(getContext(), arr));
+		
+		gView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+//				trans.replace(((ViewGroup) getView().getParent()).getId(), new BookOfDistribute(array.get(position).getPid()));
+				ft.replace(R.id.container, new BookFragment(getContext(), arr.get(position)));
+				ft.addToBackStack(null);
+				ft.commit();
+				fm.executePendingTransactions();
+			}
+		});
 		return view;
 	}
 	

@@ -43,7 +43,7 @@ public class BookGridViewAdapter extends BaseAdapter {
         if (convertView == null) {
         	LayoutInflater inflater = (LayoutInflater) 
         			context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.horizontal_list_view_data, parent, false);
+            convertView = inflater.inflate(R.layout.grid_view_book_item, parent, false);
             
             holder = new Holder();
         	holder.image = (ImageView) convertView.findViewById(R.id.image);
