@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2015 at 09:54 PM
+-- Generation Time: Nov 26, 2015 at 12:34 AM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -298,6 +298,16 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Triggers `Order_Book`
+--
+DROP TRIGGER IF EXISTS `trig_Order_Book_check`;
+DELIMITER //
+CREATE TRIGGER `trig_Order_Book_check` BEFORE INSERT ON `Order_Book`
+ FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+//
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -312,6 +322,13 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
   PRIMARY KEY (`OID`),
   KEY `UID` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Order_User`
+--
+
+INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`) VALUES
+(1, 195842465, 111111, 1);
 
 -- --------------------------------------------------------
 
