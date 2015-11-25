@@ -5,46 +5,61 @@
     android:weightSum="2" >
 
     <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:src="@drawable/books3"
          />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:weightSum="4" >
+         >
 
         <Button
             android:id="@+id/favoriteBook"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/buttonshape"
             android:text="Favorite Books" />
 
         <Button
             android:id="@+id/listOrder"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_below="@id/favoriteBook"
+            android:background="@drawable/buttonshape"
             android:text="List Orders" />
 
         <Button
+            
             android:id="@+id/infoAccount"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_below="@id/listOrder"
+            android:background="@drawable/buttonshape"
             android:text="Information User" />
 
         <Button
             android:id="@+id/logOut"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_below="@id/infoAccount"
+            android:background="@drawable/buttonshape"
             android:text="Log out" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

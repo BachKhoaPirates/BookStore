@@ -60,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/addressCrt"
+        android:background="@drawable/buttonshape1"
         android:layout_centerInParent="true"
         android:text="REGISTER" />
 

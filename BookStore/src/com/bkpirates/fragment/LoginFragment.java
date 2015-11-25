@@ -44,6 +44,8 @@ public class LoginFragment extends Fragment {
 	private String pass;
 	NetWork netWork = new NetWork();
 	private int check = 0;
+	public static int checkLogin = 0;
+
 	public static AccountEntity accEntity = new AccountEntity();
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class LoginFragment extends Fragment {
 				if (phoneNumber.getText().toString().equals("") == false
 						&& passWord.getText().toString().equals("") == false) {
 					signIn.setEnabled(true);
+					signIn.setBackgroundResource(R.drawable.buttonshape1);
+					//signIn.setTextColor(R.string.CodeColor);
 				}
 
 			}
@@ -87,6 +91,7 @@ public class LoginFragment extends Fragment {
 				if (phoneNumber.getText().toString().equals("") == false
 						&& passWord.getText().toString().equals("") == false) {
 					signIn.setEnabled(true);
+					signIn.setBackgroundResource(R.drawable.buttonshape1);
 				}
 			}
 
@@ -106,26 +111,7 @@ public class LoginFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				phone = phoneNumber.getText().toString();
-				pass = passWord.getText().toString();
-				netWork.setPhone(phone);
-				netWork.setPass(pass);
-				if (netWork.checkInternetConnect(getActivity())) {
-					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
-							.execute("http://thachpn.name.vn/books/check_account.php");
-				} else {
-					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-					dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
-							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-					dialog.create().show();
-
-				}
+				doLogin();
 			}
 		});
 		crtAccount.setOnClickListener(new OnClickListener() {
@@ -149,6 +135,10 @@ public class LoginFragment extends Fragment {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		phoneNumber.setText(pre.getString("phone", ""));
 		passWord.setText(pre.getString("pass", ""));
+		if( checkLogin == 0){
+			doLogin();
+			
+		}
 		super.onResume();
 	}
 
@@ -156,10 +146,16 @@ public class LoginFragment extends Fragment {
 	public void onPause() {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pre.edit();
+		editor.putString("check", checkLogin + "");
 		editor.putString("phone", phoneNumber.getText().toString());
 		editor.putString("pass", passWord.getText().toString());
 		editor.commit();
 		super.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 	}
 
 	public class NetWorkAsyncTask extends AsyncTask<String, Void, String> {
@@ -180,12 +176,12 @@ public class LoginFragment extends Fragment {
 			}
 			if (s != null) {
 				accEntity = netWork.checkAccountForLogin(s);
-				Log.d("ABCCCCCCCCCCCCCCC", accEntity.getPassword() + "");
 				check = Integer.parseInt(accEntity.getPassword());
 				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
+					checkLogin = 1;
 					FragmentManager fm = getActivity().getSupportFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
 					AccountFragment fragment = new AccountFragment();
@@ -237,6 +233,35 @@ public class LoginFragment extends Fragment {
 			return null;
 
 		}
+	}
+
+	private void doLogin() {
+		phone = phoneNumber.getText().toString();
+		pass = passWord.getText().toString();
+		Log.d(phone.length() + "", pass.length() + "");
+		if (phone.length() == 0 || pass.length() == 0)
+			return;
+		else {
+			netWork.setPhone(phone);
+			netWork.setPass(pass);
+			if (netWork.checkInternetConnect(getActivity())) {
+				NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
+						.execute("http://thachpn.name.vn/books/check_account.php");
+			} else {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+				dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+				dialog.create().show();
+
+			}
+		}
+
 	}
 
 }

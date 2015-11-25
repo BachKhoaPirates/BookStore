@@ -35,7 +35,17 @@ public class NetWork {
 	String pass;
 	String name;
 	String address;
+	int numberBookToBuy;
 	
+	public int getNumberBookToBuy() {
+		return numberBookToBuy;
+	}
+
+	public void setNumberBookToBuy(int numberBookToBuy) {
+		this.numberBookToBuy = numberBookToBuy;
+	}
+
+
 	BookEntity bookEntity = new BookEntity();
 	public BookEntity getBookEntity() {
 		return bookEntity;
@@ -127,11 +137,12 @@ public class NetWork {
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
 		nameValuePairList.add(new BasicNameValuePair("uid", phone));
 		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));
-		nameValuePairList.add(new BasicNameValuePair("quantity", bookEntity.getQuantity()+""));		
+		nameValuePairList.add(new BasicNameValuePair("total", numberBookToBuy + ""));		
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
+	// AddFavoriteList and Delete Book in Cart are same request so you can use this function for both
 	public HttpResponse makeRquestAddFavoriteList(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);

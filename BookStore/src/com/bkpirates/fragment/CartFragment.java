@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ import android.widget.Toast;
 public class CartFragment extends Fragment {
 
 	public static TextView subTotal;
-	private Button payment;
+	private ImageView payment;
 	private ListView listview;
 	int total = 0;
 	private NetWork netWork = new NetWork();
@@ -45,7 +46,7 @@ public class CartFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_cart, container, false);
 		listview = (ListView) view.findViewById(R.id.listBooks);
 		subTotal = (TextView) view.findViewById(R.id.subTotal);
-		payment = (Button) view.findViewById(R.id.payment);
+		payment = (ImageView) view.findViewById(R.id.payment);
 
 		if(netWork.checkInternetConnect(getActivity())){
 			netWork.setPhone(LoginFragment.accEntity.getPhone());
@@ -59,11 +60,10 @@ public class CartFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getActivity(), position + "", Toast.LENGTH_LONG).show();
 				startBookFragment(arrList.get(position));
-
 			}
 		});
+		
 
 		payment.setOnClickListener(new OnClickListener() {
 
@@ -72,6 +72,7 @@ public class CartFragment extends Fragment {
 				for (int i = 0;i < arrList.size(); i ++){
 					AccountFragment.orderArrayBooks.add(arrList.get(i));
 					arrList.remove(i);
+					adapter.notifyDataSetChanged();
 				}
 
 			}
@@ -158,9 +159,11 @@ public class CartFragment extends Fragment {
 
 		}
 	}
-	private void startBookFragment(BookEntity book) {
+	
+	private void startBookFragment(BookEntity book){
 		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		trans.replace(((ViewGroup)getView().getParent()).getId(),
+				new BookFragment(getContext(), book));
 		trans.addToBackStack(null);
 		trans.commit();
 	}
