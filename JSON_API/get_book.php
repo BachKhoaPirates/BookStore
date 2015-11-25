@@ -16,7 +16,7 @@
                 }
             }
         }
-		$sql = "SELECT * FROM Book WHERE BID = $bid";
+		$sql = "SELECT * FROM Book NATURAL JOIN Genre_Publisher NATURAL JOIN Publisher WHERE BID = $bid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){
 			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -25,7 +25,7 @@
             $response['books'] = array();
             $book = array();
 			$book['name'] = $row['Name_Book'];
-			$book['publisher'] = $row['Publisher'];
+			$book['publisher'] = $row['Name'];
 			$book['author'] = $row['Author'];
 			$book['price'] = $row['Price'];
 			$book['quantity'] = $row['Quantity'];

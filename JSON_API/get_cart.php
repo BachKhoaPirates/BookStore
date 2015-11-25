@@ -5,7 +5,7 @@
         $uid = $_REQUEST['uid'];
 
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-        $sql = "SELECT * FROM Cart NATURAL JOIN Book WHERE UID = $uid AND Buy = 0";
+        $sql = "SELECT * FROM Cart NATURAL JOIN Book WHERE UID = $uid";
         $result = mysqli_query($con, $sql);
         if(!empty($result) && (mysqli_num_rows($result) > 0) ){
             $response["success"] = 1;
@@ -17,6 +17,7 @@
                 $book['price'] = $row['Price'];
                 //$book['publisher'] = $row['Publisher'];
                 $book['author'] = $row['Author'];
+                $book['total'] = $row['Total'];
                 //$book['quantity'] = $row['Quantity'];
                 //$book['content'] = $row['Content'];
                 $book['link'] = IMAGE_URL.$row['BID'].'.jpg';
