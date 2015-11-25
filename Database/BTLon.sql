@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 22, 2015 at 08:06 PM
+-- Generation Time: Nov 25, 2015 at 09:54 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -36,7 +36,10 @@ CREATE TABLE IF NOT EXISTS `Book` (
   PRIMARY KEY (`BID`),
   UNIQUE KEY `BID_2` (`BID`),
   KEY `BID` (`BID`),
-  KEY `BID_3` (`BID`)
+  KEY `BID_3` (`BID`),
+  KEY `Name_Book` (`Name_Book`),
+  KEY `Name_Book_2` (`Name_Book`),
+  KEY `Name_Book_3` (`Name_Book`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -74,7 +77,24 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`
 (28, 'Khi Yêu Cần Nhiều Dũng Cảm', 'Chetah Bhagat', 89000, 17, 'Trên thế giới này, những cuộc hôn nhân dựa trên tình yêu luôn theo một qui trình tuần tự: chàng trai yêu cô gái, cô gái yêu chàng trai, họ kết hôn.\r\n\r\nTuy nhiên, ở Ấn Độ, có thêm vài bước nữa: chàng trai yêu cô gái, gia đình cô gái thích chàng trai, gia đình chàng trai thích cô gái, họ hàng cô gái thích họ hàng chàng trai, họ hàng chàng trai thích họ hàng cô gái, chàng trai và cô gái vẫn yêu nhau, họ kết hôn.Đó chính là câu chuyện của Krish và Ananya. Trai tài, gái sắc. Là đôi bạn đồng chí hướng trong những tháng năm học MBA tại ngôi trường danh giá hàng đầu Ấn Độ, họ thậm chí còn chờ một lễ cưới rực rỡ. Nhưng trăm núi nghìn sông còn dễ vượt qua hơn so với sự phản đối của hai bên gia đình. Hai người phải làm thế nào đây, khi nổi loạn thì dễ, thuyết phục người khác mới là điều khó.\r\n\r\nThành danh với tiểu thuyết Ba chàng ngốc, lần này Chetan Bhagat mang đến một tác phẩm gần như tự truyện của mình. Khi Yêu Cần Nhiều Dũng Cảm, cuốn tiểu thuyết dí dỏm về cuộc hôn nhân liên cộng đồng tại Ấn Độ hiện đại, đã được chuyển thể thành phim điện ảnh, với những ca ngợi của giới phê bình và công phá mãnh liệt doanh số phòng vé.'),
 (29, 'Những Điều Trường Harvard Không Dạy Bạn', 'Mark H. Mccormack', 132000, 11, 'Với lối viết thẳng thắn và mạnh mẽ, Những Điều Trường Harvard Không Dạy Bạn cung cấp nhiều kinh nghiệm thực tế về:\r\n\r\nCách thức thấu hiểu một con người\r\n\r\nNhững bí ẩn của một cuộc đàm phán\r\n\r\nCách điều hành và tham dự một cuộc họp\r\n\r\nBiến sự giận dữ của đối tác thành cơ hội\r\n\r\nĐón nhận những thách thức\r\n\r\nNhạy bén để biết vận may\r\n\r\nĐây thật sự là cuốn sách dành cho tất cả những ai thực sự muốn  thành công trong giới kinh doanh đầy thách thức.');
 INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`) VALUES
-(30, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu - Think And Grow Rich', 'Napoleon Hill', 120000, 17, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu là cuốn sách “chỉ dẫn” duy nhất chỉ ra những nguồn lực bạn phải có để thành công. Cuốn sách sẽ giúp bạn trở nên giàu có, làm giàu thêm cho cuộc sống của bạn trên tất cả các phương diện của cuộc sống chứ không chỉ về tài chính và vật chất. Những ý tưởng trong cuốn sách Think and Grow rich - 13 nguyên tắc nghĩ giàu, làm giàu bắt nguồn từ những động lực tốt đẹp: “Thành công cá nhân” và “Quan điểm suy nghĩ tích cực”.\r\n\r\nCuốn sách chứa đựng nhiều hơn những gì mà cuốn sách giải thích về sức mạnh của những nguyên tắc. Phần hấp dẫn nhất của cuốn sách chính là những điều phi thường, những thông điệp trong cuốn sách được viết ra từ rất lâu nhưng vẫn mang tính “thời đại”. Ông đã bàn về những quan niệm như quản lý nhóm, dịch vụ chăm sóc khách hàng hoàn hảo, những công cụ hữu hình, trí tuệ tập thể và mục tiêu cần được viết ra trước khi hành động.\r\n\r\nNhững lời khen tặng\r\n\r\n“Think and grow rich – 13 nguyên tắc nghĩ giàu, làm giàu sẽ luôn là cuốn sách giá trị và nó sẽ còn tiếp tục làm thay đổi cuộc sống của nhiều người. Đó thực sự là sức mạnh giúp chúng ta biến đổi những giấc mơ và hoài bão thành hiện thực. Cuốn sách đã ảnh hưởng đến tôi như vậy và sẽ mãi là cuốn sách gối đầu giường số một của tôi.”\r\n\r\n(Don L.Price, diễn giả chuyên nghiệp, tác giả, chuyên viên marketing và bán hàng đồng thời là người cung cấp các giải pháp thay đổi tích cực)\r\n\r\n“Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là cuốn sách có ảnh hưởng rất lớn đến cuộc sống của tôi. Công ty Contours Express của tôi sẽ không thể tồn tại nếu không có cuốn sách này. Và bây giờ, sau 7 năm và 15 lần đọc đi đọc lại cuốn sách, chúng tôi đã có hơn 350 trung tâm chuyển phát nhanh. Mỗi lần đọc nó, tôi vẫn luôn tìm ra được những điều hữu ích cho bản thân và công việc của mình. Không còn nghi ngờ gì nữa, đây quả thực là một cuốn sách viết về kinh doanh tuyệt vời nhất mà tôi từng biết.”\r\n\r\n(Daren Carter, người sáng lập Công ty chuyển phát nhanh đa quốc gia Contours Express hoạt động tại sáu quốc gia trên thế giới)\r\n\r\n“Ấn bản gốc của Tiến sĩ Hill đã làm thay đổi cả thế kỷ XX của chúng ta. Ấn bản mới sau khi chỉnh sửa này cũng sẽ thay đổi cả thế kỷ XXI này. Không có tác giả nào có thể có lối suy nghĩ như một người lãnh đạo, một nhà cố vấn trong việc phát triển và thúc đẩy khả năng của mỗi cá nhân như Napoleon Hill. Công trình này đã nâng ông lên một tầm cao mới, có lẽ còn hơn cả sự vĩ đại.”\r\n\r\n(Bill Brooks, tác giả cuốn sách The New Science of Selling and Persuasion)\r\n\r\n“Tôi từng nghĩ rằng Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là một cuốn sách kinh điển và không cần phải cải thiện gì thêm nữa. Tôi đã nhầm, tôi chắc rằng Tiến sĩ Hill sẽ rất vui mừng khi thấy tác phẩm của ông được tôn vinh hơn với ấn bản vô cùng nổi bật này.”\r\n\r\n(Wally Amos, người sáng lập ra hãng Famous Amos Chocolate Chip Cookies, tác giả cuốn sách The Cookies Never Crumbles, Inspirational Recipes for Everyday Living)\r\n\r\n"Tôi đã đọc Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu cách đây nhiều năm và cuốn sách đã giúp tôi trở thành nhà kinh doanh bán lẻ lớn nhất thế giới. Bạn cần đọc nó nếu bạn muốn có một “chỗ đứng” trong cuộc đời này. Tôi biết bạn sẽ yêu nó, vì tôi cũng vậy. Cảm ơn ngài, Napoleon Hill!”\r\n\r\n(Joe Girard, nhà kinh doanh bán lẻ số một thế giới, được ghi danh vào cuốn The Guiness Book of World Records)');
+(30, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu - Think And Grow Rich', 'Napoleon Hill', 120000, 17, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu là cuốn sách “chỉ dẫn” duy nhất chỉ ra những nguồn lực bạn phải có để thành công. Cuốn sách sẽ giúp bạn trở nên giàu có, làm giàu thêm cho cuộc sống của bạn trên tất cả các phương diện của cuộc sống chứ không chỉ về tài chính và vật chất. Những ý tưởng trong cuốn sách Think and Grow rich - 13 nguyên tắc nghĩ giàu, làm giàu bắt nguồn từ những động lực tốt đẹp: “Thành công cá nhân” và “Quan điểm suy nghĩ tích cực”.\r\n\r\nCuốn sách chứa đựng nhiều hơn những gì mà cuốn sách giải thích về sức mạnh của những nguyên tắc. Phần hấp dẫn nhất của cuốn sách chính là những điều phi thường, những thông điệp trong cuốn sách được viết ra từ rất lâu nhưng vẫn mang tính “thời đại”. Ông đã bàn về những quan niệm như quản lý nhóm, dịch vụ chăm sóc khách hàng hoàn hảo, những công cụ hữu hình, trí tuệ tập thể và mục tiêu cần được viết ra trước khi hành động.\r\n\r\nNhững lời khen tặng\r\n\r\n“Think and grow rich – 13 nguyên tắc nghĩ giàu, làm giàu sẽ luôn là cuốn sách giá trị và nó sẽ còn tiếp tục làm thay đổi cuộc sống của nhiều người. Đó thực sự là sức mạnh giúp chúng ta biến đổi những giấc mơ và hoài bão thành hiện thực. Cuốn sách đã ảnh hưởng đến tôi như vậy và sẽ mãi là cuốn sách gối đầu giường số một của tôi.”\r\n\r\n(Don L.Price, diễn giả chuyên nghiệp, tác giả, chuyên viên marketing và bán hàng đồng thời là người cung cấp các giải pháp thay đổi tích cực)\r\n\r\n“Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là cuốn sách có ảnh hưởng rất lớn đến cuộc sống của tôi. Công ty Contours Express của tôi sẽ không thể tồn tại nếu không có cuốn sách này. Và bây giờ, sau 7 năm và 15 lần đọc đi đọc lại cuốn sách, chúng tôi đã có hơn 350 trung tâm chuyển phát nhanh. Mỗi lần đọc nó, tôi vẫn luôn tìm ra được những điều hữu ích cho bản thân và công việc của mình. Không còn nghi ngờ gì nữa, đây quả thực là một cuốn sách viết về kinh doanh tuyệt vời nhất mà tôi từng biết.”\r\n\r\n(Daren Carter, người sáng lập Công ty chuyển phát nhanh đa quốc gia Contours Express hoạt động tại sáu quốc gia trên thế giới)\r\n\r\n“Ấn bản gốc của Tiến sĩ Hill đã làm thay đổi cả thế kỷ XX của chúng ta. Ấn bản mới sau khi chỉnh sửa này cũng sẽ thay đổi cả thế kỷ XXI này. Không có tác giả nào có thể có lối suy nghĩ như một người lãnh đạo, một nhà cố vấn trong việc phát triển và thúc đẩy khả năng của mỗi cá nhân như Napoleon Hill. Công trình này đã nâng ông lên một tầm cao mới, có lẽ còn hơn cả sự vĩ đại.”\r\n\r\n(Bill Brooks, tác giả cuốn sách The New Science of Selling and Persuasion)\r\n\r\n“Tôi từng nghĩ rằng Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là một cuốn sách kinh điển và không cần phải cải thiện gì thêm nữa. Tôi đã nhầm, tôi chắc rằng Tiến sĩ Hill sẽ rất vui mừng khi thấy tác phẩm của ông được tôn vinh hơn với ấn bản vô cùng nổi bật này.”\r\n\r\n(Wally Amos, người sáng lập ra hãng Famous Amos Chocolate Chip Cookies, tác giả cuốn sách The Cookies Never Crumbles, Inspirational Recipes for Everyday Living)\r\n\r\n"Tôi đã đọc Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu cách đây nhiều năm và cuốn sách đã giúp tôi trở thành nhà kinh doanh bán lẻ lớn nhất thế giới. Bạn cần đọc nó nếu bạn muốn có một “chỗ đứng” trong cuộc đời này. Tôi biết bạn sẽ yêu nó, vì tôi cũng vậy. Cảm ơn ngài, Napoleon Hill!”\r\n\r\n(Joe Girard, nhà kinh doanh bán lẻ số một thế giới, được ghi danh vào cuốn The Guiness Book of World Records)'),
+(31, 'Thành Danh Sau Một Đêm', 'Hồng Táo', 57000, 5, 'Thẩm Miên và Tống Minh Thành là hai anh em sinh đôi. Lúc nhỏ, Thẩm Miên rất yếu, gia đình sợ cô yểu mệnh nên nhờ thầy cúng đổi tên khác và đưa cô sang bên Anh sống để chữa trị lâu dài.\r\n\r\nTống Gia và Hàn Gia là hai gia đình rất giàu có và nổi tiếng. Hai gia đình họ đã giao hẹn khi nào sinh con thì sẽ kết thông gia. Thẩm Miên không đồng ý cưới một người đàn ông mà mình không quen biết, nhưng đáng tiếc là cả bố và mẹ cô đều nói với cô rằng Hàn Tiềm là một người đàn ông tốt, hơn nữa vì gia thế của họ cũng rất tốt nên việc kết duyên với Hàn Gia là rất môn đăng hộ đối. Hàn Gia cũng không có ý kiến phản đối gì đối với việc này nên Thẩm Miên cũng chẳng tìm được lí do gì để từ chối mối nhân duyên này cả.\r\n\r\nHàn Tiềm đầu tư kinh doanh trong lĩnh vực điện ảnh truyền hình. Thẩm Miên nghĩ rằng một người đàn ông làm trong lĩnh vực này sẽ có cuộc sống đời tư mập mờ, phức tạp. Vì vậy sau khi trở về nước cô quyết định trở thành một paparazzi (phóng viên chuyên săn ảnh). Cô theo dõi Hàn Tiềm trong hai năm liền với ý định sẽ tìm được những chứng cứ về các mối quan hệ không lành mạnh của anh để bôi nhọ danh tiếng của anh, và như thế Tống Gia sẽ chủ động từ bỏ hôn ước.\r\n\r\nNhưng ngờ đâu trong quá trình theo dõi thì cô bị Hàn Tiềm tóm được và bị anh cho một bài học nhớ đời. Vì vậy mà Thẩm Miên lại càng căm ghét anh hơn. Trong mắt cô, Hàn Tiềm là con người lạnh lùng, thủ đoạn độc ác khiến cô càng ngày càng không muốn bị gả cho anh. Còn Hàn Tiềm cũng không ngờ rằng với những biện pháp mạnh tay như vậy mà cô gái Thẩm Miên rắc rối kia “ám” anh không rời. Trong một lần tình cờ, cả hai người họ đều bị rơi vào một tình thế ngoài ý muốn, và sau lần đó,…'),
+(32, 'Đối,Hòa,Hỗn,Tận (Quyển I)', 'Jelu. C', 67000, 18, 'Đối,Hòa,Hỗn,Tận - Quyển I là tác phẩm thứ hai được xuất bản của tác giả Jelu. C (tác giả của "Thời đại Sodom") và là cuốn sách đầu tiên trong bộ ba cùng tên. Cùng với hai phần dẫn nhập đầu sách, cuốn sách được chia làm 9 chương; trong đó mỗi chương được trình bày theo những văn phong khác biệt nhau gồm văn xuôi, thơ, luận, đối thoại, kịch …\r\n\r\nNội dung cuốn sách kể về những cuộc giao tranh giữa các dân tộc sử thi hư cấu: vương quốc hiếu chiến, vương quốc hề, vương quốc hải tặc, vương quốc nhung lụa, vương quốc vàng, vương quốc nhũ hương, vương quốc mộc dược … nhằm chiếm đoạt một chiếc vương miện đại diện cho quyền lực cai quản dân chúng. Qua nhiều giai đoạn, chiếc vương miện lần lượt trở thành vật sở hữu của những vị Vua, lái buôn, thợ rèn, hải tặc… gây nên nhiều cuộc chiến phi nghĩa lớn nhỏ.\r\n\r\nTrích đoạn\r\n\r\n"Thuở trước, đứa con trai được các thầy thuốc chẩn đoán sẽ qua đời không lâu sau khi lọt lòng, Vua hiếu chiến thôn tính ba dân tộc, đàn áp họ cho đến khi những quốc vương tạo nên vị thuốc chữa lành. Tam Hoàng Đế kiệt sức lâm bạo bệnh băng hà. Những vị tướng đặc cách quản cai.  Sắc lệnh sáng tạo trường sinh dược được ban bố. Các vương quốc về nguyên tắc trở nên một. Sự phân hóa xuất hiện. Ông chủ và người làm thuê. Những kẻ vô dụng bị nhốt xuống trại riêng, khóc lóc nghiến răng. Theo thời gian, đám làm chủ những lều lán bào chế hiềm khích, mâu thuẫn nhau tạo nên kỳ lũng đoạn. Tồn tại vì men dược, các Nhà Vua mất dần quyền cai trị đám làm chủ. Người dân từ ấy mang ách chuyên chế đôi."\r\n'),
+(33, 'Pegasus Lửa Thần Xứ Olympus (Tập 1)', 'Kate O''Hearn', 240000, 13, 'Cuốn sách đầu tiên trong bộ series 5 cuốn hấp dẫn về Pegasus .\r\n\r\nMột cô gái trẻ và một chú ngựa mang đôi cánh, và một cuộc chiến của người Olympia tạo ra một khởi đầu đầy tính mạo hiểm trong một câu chuyện phiêu lưu thú vị.\r\n\r\nEmily và Joel phải đối mặt trong trận chiến sử thi với những con quái vật khủng khiếp, những cuộc rượt đuổi nguy hiểm từ một cơ quan chính phủ. Họ và chú ngựa thiên thần cùng sát cánh bên nhau để hoàn thành nhiệm vụ anh hùng cứu Olympus trước khi "ngọn lửa thần" được dập tắt mãi mãi...'),
+(34, 'Cái Kết Đắng', 'Ruth Rendell', 83000, 3, 'Cơn ác mộng kinh hoàng nhất của một người cha. Đó là khi bình minh dần hé rạng và cô con gái của George Marshalson vẫn chưa trở về nhà. Nhưng ông không biết được rằng cô gái sẽ chẳng bao giờ có thể trở về nữa - rằng thi thể của cô đang nằm sóng soài phía bên ngoài ngôi nhà cách chưa đầy một mét. Hay biết rằng ông sẽ là người đầu tiên khám phá ra sự thật khủng khiếp đó.\r\n\r\nChánh thanh tra Wexford chưa từng điều tra một vụ án nào mà người cha lại chính là người phát hiện ra thi thể con gái mình. Anh cũng có con gái nhưng anh không thể tưởng tượng được bản thân sẽ thế nào nếu lâm vào hoàn cảnh của George Marshalson.\r\n\r\nNhặt nhạnh tìm tòi trong số những mảnh ghép của gia đình vốn đã rạn nứt đó, Wexford đã khám phá ra những bí mật đáng kinh ngạc về lối sống của cô gái xấu số - nạn nhân chắc chắn có liên quan tới một vụ án trước đó - Wexford phải tạm gác những vấn đề cá nhân trong gia đình mình sang một bên để giải quyết vụ án đầy cảm động đồng thời nhức nhối nhất trong sự nghiệp của anh…\r\n'),
+(35, 'Người Ngựa Ngựa Người', 'Nguyễn Công Hoan', 53000, 5, 'Nguyễn Công Hoan (1903 - 1977) là nhà văn nổi tiếng của Việt Nam. Thế giới truyện ngắn Nguyễn Công Hoan đa dạng, phong phú như một "Bách khoa thư", một "tấn trò đời" mà đặc trưng là xã hội phong kiến của thực dân ở Việt Nam nửa đầu thế kỳ 20. Truyện ngắn Nguyễn Công Hoan có nhiều nét gần với truyện cười dân gian, tiếp thu truyền thống lạc quan của nhân dân muốn dùng tiếng cười như một " vũ khí của người mạnh" để tống tiễn cái lạc hậu, cái xẫu xa vào dĩ vãng...\r\n\r\nNgười ngựa ngựa người là tập truyện ngắn chọn lọc của nhà văn Nguyễn Công Hoan. Từ những truyện đầu tiên, ông đã tìm đề tài trong những người nghèo khổ, cùng khốn của xã hội. Đa số nhân vật phản diện của ông đều thuộc tầng lớp thượng lưu, giàu có và quan lại, cường hào. Toàn những cảnh xấu xa, bỉ ổi, những chuyện bất công, ngang ngược, những con người ghê tởm, đáng khinh bỉ. Nguyễn Công Hoan tạo ra những tình huống bất ngờ, rồi phá lên cười và làm cho người khác cười theo, nhưng ngẫm lại thật thương tâm đau xót!'),
+(36, 'Bản Đồ Kho Báu Hạnh Phúc', 'Gia Chương', 34000, 15, 'Nếu trên đời này tồn tại một "công cụ ma thuật giúp biến ước mơ thành hiện thực", hơn nữa chỉ cần 1 tiếng tạo lập, một phút xem lại mỗi ngày, liệu bạn có muốn sở hữu nó hay không? \r\n\r\n[Thật hoang đường!] [Trên đời này làm gì có thứ như vậy!]\r\n\r\nTôi thực ra cũng từng là người có suy nghĩ như vậy. Cho đến tận 20 năm trước, khi tôi biết đến “bản đồ kho báu”…\r\n\r\nCông cụ "biến giấc mơ thành hiện thực" ấy không phải là phép thuật hay chuyện hoang tưởng, đó là một kỹ năng có thật.  Bạn chỉ cần dành 1 tiếng đọc sách, tiếp đó để ra 1-2 tiếng tạo công cụ sách hướng dẫn, mỗi ngày nhìn lại nó khoảng một phút, bạn sẽ không thấy thời gian và tiền bạc bỏ ra cho cuốn sách này bị lãng phí.\r\n\r\nNếu được biết đây là một phương pháp vừa có cơ sở khoa học vừa có rất nhiều ứng dụng thành công, hẳn bạn cũng sẽ tò mò "muốn nghe thử xem thế nào" đúng không? Cuốn sách này sẽ giới thiệu cho các bạn về những vấp ngã có thể có của con người và phương hướng giải quyết chúng. \r\n\r\nCuốn sách gồm những nội dung chính như sau:\r\n\r\nLời nói đầu\r\n\r\nChương 1: Bản đồ kho báu là gì vậy?\r\n\r\nMột tấm bản đồ phép thuật dẫn tới "giấc mơ hiện thực" của bạn\r\n\r\nChương 2: Tại sao lại vẽ giấc mơ thành hiện thực trên tấm bản đồ kho báu?\r\n\r\nTiềm thức của bạn sẽ không bao giờ quên những thông tin thú vị\r\n\r\nChương 3: Những kỹ thuật nhằm tận dụng tối đa hiệu quả của bản đồ kho báu giúp biến ước mơ thành hiện thực\r\n\r\nÝ tưởng giúp tăng tốc độ vươn tới mục tiêu của bạn\r\n\r\nLời bạt.'),
+(37, 'Liên Hoa Lâu - Chu Tước Quyển', ' Đằng Bình', 67000, 15, '“Liên hoa lâu vân cát tường” là một y quán. Chủ nhân của nó họ Lý tên Liên hoa, được xưng tụng là thần y. Nhưng sự thật hắn chẳng biết tí y thuật nào, ngược lại, lại vô cùng thích xía vào các vụ án kỳ lại khắp giang hồ. Chùa Phổ Độ trên núi Thanh Nguyên ở Phật Châu có một mật đạo nối liền với Bách Xuyên Viện, trong mật đạo bỗng xuất hiện một xác chết cháy bị lột da; những cái chết ly kỳ của người trong Mã gia bảo, sát nhân lại là một cánh tay cụt; ông chủ Kim Mãn Đường trong giang hồ bị kinh sợ mà chết; bảo vật hiếm có "Bạc Lam nhân thủ" được cất giấu trong sơn trang không cánh mà bay…\r\n\r\nRốt cuộc là ma quỷ làm loạn hay là lòng người khó lường?\r\n\r\nNgười nào có thể tháo gỡ biết bao nhiêu bí mật đen tối cất giấu trong giang hồ đây?\r\n\r\n"Thần y" không biết y thuật Lý Liên Hoa sẽ làm sáng tỏ chuyện này thế nào?');
+
+--
+-- Triggers `Book`
+--
+DROP TRIGGER IF EXISTS `trig_sd_check`;
+DELIMITER //
+CREATE TRIGGER `trig_sd_check` BEFORE INSERT ON `Book`
+ FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -211,6 +231,62 @@ INSERT INTO `Genre_Book` (`PID`, `BID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Genre_Publisher`
+--
+
+CREATE TABLE IF NOT EXISTS `Genre_Publisher` (
+  `NID` int(11) NOT NULL,
+  `BID` int(11) NOT NULL,
+  PRIMARY KEY (`NID`,`BID`),
+  KEY `BID` (`BID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Genre_Publisher`
+--
+
+INSERT INTO `Genre_Publisher` (`NID`, `BID`) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(4, 6),
+(5, 7),
+(1, 8),
+(6, 9),
+(2, 10),
+(7, 11),
+(7, 12),
+(8, 13),
+(9, 14),
+(10, 15),
+(10, 16),
+(1, 17),
+(6, 18),
+(11, 19),
+(9, 20),
+(12, 21),
+(1, 22),
+(1, 23),
+(3, 24),
+(10, 25),
+(4, 26),
+(5, 27),
+(5, 28),
+(8, 29),
+(11, 30),
+(1, 31),
+(9, 32),
+(1, 33),
+(2, 34),
+(1, 35),
+(2, 36),
+(1, 37);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Order_Book`
 --
 
@@ -232,6 +308,7 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
   `OID` int(11) NOT NULL,
   `UID` int(11) NOT NULL,
   `Payment` int(11) DEFAULT '0',
+  `Confirm` int(11) DEFAULT '0',
   PRIMARY KEY (`OID`),
   KEY `UID` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -243,46 +320,28 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
 --
 
 CREATE TABLE IF NOT EXISTS `Publisher` (
-  `BID` int(11) NOT NULL,
+  `NID` int(11) NOT NULL,
   `Name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`BID`)
+  PRIMARY KEY (`NID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Publisher`
 --
 
-INSERT INTO `Publisher` (`BID`, `Name`) VALUES
+INSERT INTO `Publisher` (`NID`, `Name`) VALUES
 (1, 'NXB Văn Học'),
-(2, 'NXB Văn Học'),
-(3, 'NXB Lao Động'),
-(4, 'NXB Lao Động'),
-(5, 'NXB Trẻ'),
-(6, 'NXB Mỹ Thuật'),
-(7, 'NXB Văn Hóa - Văn Nghệ'),
-(8, 'NXB Văn Học'),
-(9, 'NXB Lao Động Xã Hội'),
-(10, 'NXB Lao Động'),
-(11, 'NXB Hồng Đức'),
-(12, 'NXB Hồng Đức'),
-(13, 'NXB Tổng hợp TP.HCM'),
-(14, 'NXB Hội Nhà Văn'),
-(15, 'NXB Dân Trí'),
-(16, 'NXB Dân Trí'),
-(17, 'NXB Văn Học'),
-(18, 'NXB Lao Động Xã Hội'),
-(19, 'NXB Thế Giới'),
-(20, 'NXB Hội Nhà Văn'),
-(21, 'NXB Tri thức\r\n'),
-(22, 'NXB Văn Học\r\n'),
-(23, 'NXB Văn Học\r\n'),
-(24, 'NXB Trẻ'),
-(25, 'NXB Dân Trí'),
-(26, 'NXB Mỹ Thuật'),
-(27, 'NXB Văn Hóa - Văn Nghệ'),
-(28, 'NXB Văn Hóa - Văn Nghệ'),
-(29, 'NXB Tổng hợp TP.HCM'),
-(30, 'NXB Thế Giới');
+(2, 'NXB Lao Động'),
+(3, 'NXB Trẻ'),
+(4, 'NXB Mỹ Thuật'),
+(5, 'NXB Văn Hóa - Văn Nghệ'),
+(6, 'NXB Lao Động Xã Hội'),
+(7, 'NXB Hồng Đức'),
+(8, 'NXB Tổng hợp TP.HCM'),
+(9, 'NXB Hội Nhà Văn'),
+(10, 'NXB Dân Trí'),
+(11, 'NXB Thế Giới'),
+(12, 'NXB Tri thức');
 
 -- --------------------------------------------------------
 
@@ -295,7 +354,9 @@ CREATE TABLE IF NOT EXISTS `User` (
   `Password` varchar(40) NOT NULL,
   `Name` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Address` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`UID`)
+  PRIMARY KEY (`UID`),
+  KEY `UID` (`UID`),
+  KEY `UID_2` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -335,6 +396,13 @@ ALTER TABLE `Genre_Book`
   ADD CONSTRAINT `Genre_Book_ibfk_2` FOREIGN KEY (`PID`) REFERENCES `Distribute` (`PID`);
 
 --
+-- Constraints for table `Genre_Publisher`
+--
+ALTER TABLE `Genre_Publisher`
+  ADD CONSTRAINT `Genre_Publisher_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`),
+  ADD CONSTRAINT `Genre_Publisher_ibfk_2` FOREIGN KEY (`NID`) REFERENCES `Publisher` (`NID`);
+
+--
 -- Constraints for table `Order_Book`
 --
 ALTER TABLE `Order_Book`
@@ -346,12 +414,6 @@ ALTER TABLE `Order_Book`
 --
 ALTER TABLE `Order_User`
   ADD CONSTRAINT `Order_User_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `User` (`UID`);
-
---
--- Constraints for table `Publisher`
---
-ALTER TABLE `Publisher`
-  ADD CONSTRAINT `Publisher_ibfk_1` FOREIGN KEY (`BID`) REFERENCES `Book` (`BID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
