@@ -38,7 +38,7 @@
                         $tmp = mysqli_query($con, $sql);
                         if(!$tmp){
                             $response["success"] = 0;
-                            echo json_encode($response);
+                            //echo json_encode($response);
                             break;
                         }
                         $sql = "INSERT INTO Order_Book(OID, BID, Quantity) VALUES($count, $bid, $total)";
