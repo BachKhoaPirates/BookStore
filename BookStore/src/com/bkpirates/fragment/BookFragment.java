@@ -1,4 +1,4 @@
-package com.bkpirates.fragment;
+	package com.bkpirates.fragment;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -24,6 +24,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,10 +43,12 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	private Context context;
 	private BookEntity book;
 	private int numberBookToBuy = 1;
+	private int numberFavo = 0;
 	private LinearLayout btnBuy;
 	private ImageView btnLike;
 	TextView number;
 	TextView content, status, author, pulisher;
+	TextView numberFavorite;
 	NetWork netWork = new NetWork();
 	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
 	private final String ADD_FAVORITE = "http://thachpn.name.vn/books/add_favorite_book.php";
@@ -64,7 +67,10 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		TextView decrease_button = (TextView) view.findViewById(R.id.decrease_button);
 		btnBuy = (LinearLayout) view.findViewById(R.id.buy_button);
 		btnLike = (ImageView) view.findViewById(R.id.like_button);
-
+		numberFavorite = (TextView) view.findViewById(R.id.number_favorite);
+		numberFavorite.setText(Integer.toString(numberFavo));
+		
+		
 		number.setText(Integer.toString(numberBookToBuy));
 		// Toast.makeText(getActivity(), book.getQuantity(),
 		// Toast.LENGTH_LONG).show();
@@ -129,38 +135,45 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 			@Override
 			public void onClick(View v) {
+				
 				// TODO Auto-generated method stub
-				netWork.setBookEntity(book);
-				netWork.setPhone(LoginFragment.accEntity.getPhone());
-				netWork.setNumberBookToBuy(numberBookToBuy);
-				if (book.getQuantity() > 0) {
-					Toast.makeText(getActivity(), netWork.getNumberBookToBuy() + "", Toast.LENGTH_SHORT).show();
-
-					AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
-							.execute(ADD_CART);
-				} else {
-
-					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-					dialog.setTitle("");
-					dialog.setMessage("Sorry because not enough quantity");
-					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-
-						}
-					});
-
-					dialog.setCancelable(false);
-					dialog.create();
-					dialog.show();
-
+				if(LoginFragment.checkLogin == 1){
+					
+					netWork.setBookEntity(book);
+					netWork.setPhone(LoginFragment.accEntity.getPhone());
+					netWork.setNumberBookToBuy(numberBookToBuy);
+					if (book.getQuantity() > 0) {
+						Toast.makeText(getActivity(), netWork.getNumberBookToBuy() + "", Toast.LENGTH_SHORT).show();
+						
+						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+								.execute(ADD_CART);
+					} else {
+						
+						AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+						dialog.setTitle("");
+						dialog.setMessage("Sorry because not enough quantity");
+						dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+								
+							}
+						});
+						
+						dialog.setCancelable(false);
+						dialog.create();
+						dialog.show();
+						
+					}
+				}else{
+					Toast.makeText(getActivity(), "You must login to add this book in your cart", Toast.LENGTH_SHORT).show();
 				}
 
 			}
 		});
 		if (book.getLike() == 1)
 			btnLike.setImageResource(R.drawable.like);
+		Log.d(book.getLike() + "", book.getLike() + "");
 		btnLike.setOnClickListener(new OnClickListener() {
 
 			@Override

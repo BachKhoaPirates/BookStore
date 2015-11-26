@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 
+import com.bkpirates.adapter.AccountAdapter;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
@@ -28,23 +29,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("InflateParams")
 public class AccountFragment extends Fragment {
 
-	private Button favoriteBook;
-	private Button listOrder;
-	private Button infoAccount;
-	private Button logOut;
-
+	private String[] str = {"Favorite Books","Ordered Books", "List Order","Information","Logout"};
+	private ListView listview;
 	private NetWork netWork = new NetWork();
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
 	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
 	private AccountEntity accEntity = new AccountEntity();
+	private ArrayAdapter<String> adapter = null;
 
 	public AccountEntity getAccEntity() {
 		return accEntity;
@@ -56,66 +57,52 @@ public class AccountFragment extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_account, null);
-
-		favoriteBook = (Button) view.findViewById(R.id.favoriteBook);
-		listOrder = (Button) view.findViewById(R.id.listOrder);
-		infoAccount = (Button) view.findViewById(R.id.infoAccount);
-		logOut = (Button) view.findViewById(R.id.logOut);
-
+		
 		setAccEntity(LoginFragment.accEntity);
 
-		favoriteBook.setOnClickListener(new OnClickListener() {
-
+		listview = (ListView) view.findViewById(R.id.listview);
+		adapter = new AccountAdapter(getActivity(), R.layout.item_distribute_book, str);
+		listview.setAdapter(adapter);
+		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onClick(View v) {
-				// if(netWork.checkInternetConnect(getActivity())){
+			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+				// TODO Auto-generated method stub
+				if(position == 0){ // sach thich
+
+					netWork.setPhone(accEntity.getPhone());
+					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
+							.execute("http://thachpn.name.vn/books/get_user_favorite_books.php");		
+				}else if(position == 1) // sach da mua
+				{
+					netWork.setPhone(accEntity.getPhone());
+					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
+							.execute("http://thachpn.name.vn/books/get_bought_books.php");	
+				}else if(position == 2){
+					
+				}else if(position == 3){ // thong tin ng dung
+					initiatePopupWindow();
+					
+				}else if(position == 4){ //logout
+					accEntity.setPhone(null);
+					accEntity.setPassword(null);
+					LoginFragment.checkLogin = 0;
+					// clear phone and password
+					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = pre.edit();
+					editor.clear();
+					editor.putString("checkLogin", 0 + "");
+					editor.commit();
+					FragmentManager fm = getFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					LoginFragment lg = new LoginFragment();
+					ft.replace(R.id.container, lg);
+					ft.commit();
+					fm.executePendingTransactions();
+				}
+			}
 			
-				netWork.setPhone(accEntity.getPhone());
-				GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
-						.execute("http://thachpn.name.vn/books/get_user_favorite_books.php");
-				// }
-			}
-
 		});
-		listOrder.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				netWork.setPhone(accEntity.getPhone());
-				GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
-						.execute("http://thachpn.name.vn/books/get_bought_books.php");
-			}
-
-		});
-		infoAccount.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				initiatePopupWindow();
-
-			}
-		});
-		logOut.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				accEntity.setPhone(null);
-				accEntity.setPassword(null);
-				LoginFragment.checkLogin = 0;
-				// clear phone and password
-				SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = pre.edit();
-				editor.clear();
-				editor.putString("checkLogin", 0 + "");
-				editor.commit();
-				FragmentManager fm = getFragmentManager();
-				FragmentTransaction ft = fm.beginTransaction();
-				LoginFragment lg = new LoginFragment();
-				ft.replace(R.id.container, lg);
-				ft.commit();
-
-			}
-		});
 
 		return view;
 	}
@@ -148,10 +135,12 @@ public class AccountFragment extends Fragment {
 					listBookFragment.setArrBooks(favoriteArrayBooks);
 					LayoutInflater mInflater = LayoutInflater.from(getActivity());
 					View mView = mInflater.inflate(R.layout.fragment_listbooks, null);
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentManager fm = getFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
 					ft.replace(R.id.container, listBookFragment);
 					ft.addToBackStack(null);
 					ft.commit();
+					fm.executePendingTransactions();
 				}
 			}
 
@@ -200,8 +189,8 @@ public class AccountFragment extends Fragment {
 		TextView addressText;
 		TextView nameText;
 
-		width = (int) convertDpToPixel(340, getActivity());
-		height = (int) convertDpToPixel(180, getActivity());
+		width = (int) convertDpToPixel(320, getActivity());
+		height = (int) convertDpToPixel(150, getActivity());
 
 		try {
 

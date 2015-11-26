@@ -269,6 +269,9 @@ public class NetWork {
 						if (js.has("quantity")) {
 							book.setQuantity(Integer.parseInt(js.getString("quantity")));
 						}
+						if (js.has("total")){ // thang thach luc tra ve total luc tra ve quantity
+							book.setQuantity(Integer.parseInt(js.getString("total")));
+						}
 						array.add(book);
 					}
 

@@ -72,8 +72,8 @@ public class CartFragment extends Fragment {
 				for (int i = 0;i < arrList.size(); i ++){
 					AccountFragment.orderArrayBooks.add(arrList.get(i));
 					arrList.remove(i);
-					adapter.notifyDataSetChanged();
 				}
+				adapter.notifyDataSetChanged();
 
 			}
 		});
