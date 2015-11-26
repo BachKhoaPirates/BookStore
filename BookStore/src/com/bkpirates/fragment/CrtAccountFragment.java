@@ -17,7 +17,7 @@ import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +103,7 @@ public class CrtAccountFragment extends Fragment {
 				if (check == 1) {
 					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = pre.edit();
+					editor.putString("checkLogin", 1 + "");
 					editor.putString("phone", phone);
 					editor.putString("pass", pass);
 					editor.commit();

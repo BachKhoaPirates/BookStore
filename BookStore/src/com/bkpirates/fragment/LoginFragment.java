@@ -25,8 +25,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -66,7 +68,7 @@ public class LoginFragment extends Fragment {
 						&& passWord.getText().toString().equals("") == false) {
 					signIn.setEnabled(true);
 					signIn.setBackgroundResource(R.drawable.buttonshape1);
-					//signIn.setTextColor(R.string.CodeColor);
+					// signIn.setTextColor(R.string.CodeColor);
 				}
 
 			}
@@ -107,6 +109,15 @@ public class LoginFragment extends Fragment {
 
 			}
 		});
+		passWord.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				passWord.setText("");
+				return false;
+			}
+		});
 		signIn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -135,10 +146,8 @@ public class LoginFragment extends Fragment {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		phoneNumber.setText(pre.getString("phone", ""));
 		passWord.setText(pre.getString("pass", ""));
-		if( checkLogin == 0){
-			doLogin();
-			
-		}
+		Log.d(pre.getString("checkLogin", ""),pre.getString("checkLogin", ""));
+		doLogin();
 		super.onResume();
 	}
 
@@ -146,16 +155,11 @@ public class LoginFragment extends Fragment {
 	public void onPause() {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pre.edit();
-		editor.putString("check", checkLogin + "");
 		editor.putString("phone", phoneNumber.getText().toString());
 		editor.putString("pass", passWord.getText().toString());
+		editor.putString("checkLogin", checkLogin + "");
 		editor.commit();
 		super.onPause();
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
 	}
 
 	public class NetWorkAsyncTask extends AsyncTask<String, Void, String> {
@@ -179,6 +183,7 @@ public class LoginFragment extends Fragment {
 				check = Integer.parseInt(accEntity.getPassword());
 				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
+					// Login success
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
 					checkLogin = 1;
@@ -204,7 +209,10 @@ public class LoginFragment extends Fragment {
 					dialog.setCancelable(false);
 					dialog.create();
 					dialog.show();
-					Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
+					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = pre.edit();
+					editor.clear();
+					editor.commit();
 				}
 			}
 			super.onPostExecute(s);
@@ -258,7 +266,6 @@ public class LoginFragment extends Fragment {
 							}
 						});
 				dialog.create().show();
-
 			}
 		}
 

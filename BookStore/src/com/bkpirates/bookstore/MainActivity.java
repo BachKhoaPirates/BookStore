@@ -102,7 +102,7 @@ public class MainActivity extends FragmentActivity {
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 
-				if (LoginFragment.accEntity.getPassword() == null) {
+				if (LoginFragment.checkLogin == 0) {
 					while (fm.getBackStackEntryCount() > 1) {
 						fm.popBackStackImmediate();
 					}
@@ -147,7 +147,7 @@ public class MainActivity extends FragmentActivity {
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 
-				if (LoginFragment.accEntity.getPassword() == null) {
+				if (LoginFragment.checkLogin == 0) {
 					while (fm.getBackStackEntryCount() > 1) {
 						fm.popBackStackImmediate();
 					}

@@ -106,6 +106,7 @@ public class AccountFragment extends Fragment {
 				SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pre.edit();
 				editor.clear();
+				editor.putString("checkLogin", 0 + "");
 				editor.commit();
 				FragmentManager fm = getFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
