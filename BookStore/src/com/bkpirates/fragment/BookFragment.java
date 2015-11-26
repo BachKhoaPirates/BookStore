@@ -66,12 +66,13 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		btnLike = (ImageView) view.findViewById(R.id.like_button);
 
 		number.setText(Integer.toString(numberBookToBuy));
-		Toast.makeText(getActivity(), book.getQuantity(), Toast.LENGTH_LONG).show();
+		// Toast.makeText(getActivity(), book.getQuantity(),
+		// Toast.LENGTH_LONG).show();
 		increase_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(book.getQuantity() <= numberBookToBuy) {
+				if (book.getQuantity() <= numberBookToBuy) {
 
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 					dialog.setTitle("");
@@ -88,9 +89,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					dialog.create();
 					dialog.show();
 
-				}
-				else{
-					number.setText(Integer.toString(++numberBookToBuy));					
+				} else {
+					number.setText(Integer.toString(++numberBookToBuy));
 				}
 			}
 		});
@@ -133,13 +133,13 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 				netWork.setBookEntity(book);
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
 				netWork.setNumberBookToBuy(numberBookToBuy);
-				if(book.getQuantity() > 0){
-					Toast.makeText(getActivity(),netWork.getNumberBookToBuy() + "", Toast.LENGTH_LONG).show();
-					
+				if (book.getQuantity() > 0) {
+					Toast.makeText(getActivity(), netWork.getNumberBookToBuy() + "", Toast.LENGTH_SHORT).show();
+
 					AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
 							.execute(ADD_CART);
-				}else {
-				
+				} else {
+
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 					dialog.setTitle("");
 					dialog.setMessage("Sorry because not enough quantity");
@@ -156,25 +156,32 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					dialog.show();
 
 				}
-				
 
 			}
 		});
+		if (book.getLike() == 1)
+			btnLike.setImageResource(R.drawable.like);
 		btnLike.setOnClickListener(new OnClickListener() {
-				
+
 			@Override
 			public void onClick(View v) {
-				if(LoginFragment.checkLogin == 1){
-					btnLike.setImageResource(R.drawable.like);
-					netWork.setBookEntity(book);
-					netWork.setPhone(LoginFragment.accEntity.getPhone());
-					Toast.makeText(getActivity(), book.getBid() + "", Toast.LENGTH_LONG).show();
-					AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
-							.execute(ADD_FAVORITE);
-					
-				}
-				else {
-					Toast.makeText(getActivity(), "You must login to like this book", Toast.LENGTH_LONG).show();
+				if (LoginFragment.checkLogin == 1) {
+					if (book.getLike() == 0) {
+
+						btnLike.setImageResource(R.drawable.like);
+						netWork.setBookEntity(book);
+						netWork.setPhone(LoginFragment.accEntity.getPhone());
+						Toast.makeText(getActivity(), book.getBid() + "", Toast.LENGTH_LONG).show();
+						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+								.execute(ADD_FAVORITE);
+					}
+					else {
+						btnLike.setImageResource(R.drawable.unlike);
+						
+					}
+
+				} else {
+					Toast.makeText(getActivity(), "You must login to like this book", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -328,8 +335,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						return null;
 					}
 				}
-			}
-			else if (url.equals(ADD_FAVORITE)){
+			} else if (url.equals(ADD_FAVORITE)) {
 				try {
 					response = netWork.makeRquestAddFavoriteList(url);
 				} catch (IOException e) {
@@ -346,7 +352,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						return null;
 					}
 				}
-				
+
 			}
 
 			return null;

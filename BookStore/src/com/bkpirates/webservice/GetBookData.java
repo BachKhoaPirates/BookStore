@@ -55,6 +55,9 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 					if (js.has("content")) {
 						book.setContent(js.getString("content"));
 					}
+					if (js.has("like")){
+						book.setLike(Integer.parseInt(js.getString("like")));
+					}
 				}
 				Log.d("GetBookData:", "Download success!");
 
