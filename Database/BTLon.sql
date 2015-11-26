@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 26, 2015 at 12:34 AM
+-- Generation Time: Nov 26, 2015 at 07:50 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `Book` (
   `Name_Book` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `Author` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `Price` int(11) NOT NULL,
-  `Quantity` int(11) NOT NULL,
+  `Quantity_Book` int(11) NOT NULL,
   `Content` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`BID`),
   UNIQUE KEY `BID_2` (`BID`),
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `Book` (
 -- Dumping data for table `Book`
 --
 
-INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`) VALUES
+INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity_Book`, `Content`) VALUES
 (1, 'Có những bàn tay', 'September Rain', 59000, 10, 'Đã quá trễ,chuyến tàu em rời bến\r\n\r\nanh lên không? còn chỗ trống cuối cùng\r\n\r\nnhanh lên nhé,sợ không còn kịp nữa\r\n\r\nchuyến tàu em sắp sửa chuyển sang đông!\r\n\r\nĐã quá trễ,anh có muốn lên không\r\n\r\ncánh cửa ấy sắp đóng sầm\r\n\r\nthinh lặng\r\n\r\nlối rẽ vào đêm là con đường xa vắng\r\n\r\nlối rẽ lòng em là một nỗi xa xăm”\r\n\r\n\r\nTa có quyền yêu bằng cả con tim nồng nhiệt căng tràn, không ngại ngần, không sợ đón nhận tổn thương. Là bởi thanh xuân, là bởi vẻ đẹp chỉ một lần tỏa sáng trong đời.\r\n\r\n"Có những bàn tay không chạm được, dẫu gần\r\n\r\nMùa thu cũ dẫu gần mùa đông mới\r\n\r\nEm đã nhoài tìm bàn tay anh với\r\n\r\nChỉ để buồn thôi,\r\n\r\nChỉ biết đã xa xôi!"\r\n'),
 (2, 'Mật Mã Thanh Minh Thượng Hà ', 'Dã Văn Bưu', 135000, 15, 'Bộ tiểu thuyết Mật mã Thanh minh thượng hà được hư cấu từ bức tranh cổ “Thanh minh thượng hà đồ”, bản gốc thời Tống của Trương Trạch Đoan. Các câu chuyện trong đó được dựng lên từ chính các nhân vật được vẽ trong bức tranh cổ. Bức tranh có 824 nhân vật vô danh, giờ đây mỗi nhân vật đều có tên có họ. Họ cải trang, mai phục trong ghe thuyền xe kiệu cho tới quán rượu quán trà. Quang cảnh tưởng chừng như thái bình thịnh trị, kì thực nguy hiểm đang rình rập bốn bề. Trong tiếng rao của người bán hàng rong, những tên gián điệp, thích khách của các nước Kim, Liêu, Tây Hạ, Cao Ly đã dần dần nhập cuộc, 824 nhân vật sống dậy từng người từng người một, chỉ còn đợi chiếc thuyền chở khách trôi qua gầm cầu cong cong kia, thước phim về sự sụp đổ của vương triều Bắc Tống sẽ được mở màn. Đây chính là mỹ cảnh tuyệt đẹp nhất về sự thịnh trị của nhà Bắc Tống, hơi thở của sự diệt vong đang ẩn khuất trong khói sóng trên dòng Biện Hà: “Chính giữa bức tranh, giữa đám tàu thuyền tấp nập trên Biện Hà, một con thuyền trông bình thường như bao con thuyền khác đang từ từ trôi qua gầm cầu, thế nhưng vì không kịp hạ cọc buồm xuống, chiếc thuyền như sắp đâm vào cầu tới nơi. Trên thuyền mọi người tay chân cuống loại, bên bờ kêu hô ầm ĩ, trong cơn hỗn loạn, một bóng lạ lướt qua, một trận khói sương mù mịt ập tới, đến khi khói tan sương nhạt, trên thuyền chỉ còn lại 24 thi thể, tất cả mọi người đều chỉ biết há hốc miệng không tin vào mắt mình...”'),
 (3, 'Steve Jobs', 'Brent Schlender, Rick Tetzeli', 155000, 13, 'Vào một buổi chiều tháng mười hai lạnh lẽo năm 1979, Steve Jobs dừng xe tại bãi đậu xe trong Khu vườn của Thánh A-La (Garden of Allah), một trung tâm phục vụ hội nghị và tĩnh dưỡng trên sườn ngọn núi Mount Tamalpais của hạt Marin, phía Bắc San Francisco. Trông anh mệt mỏi, thất vọng, tức giận và đến muộn. Giao thông trên đường 280 và 101 bị tắc nghẽn nhiều nơi trên đường lên từ Cupertino, và đường xuống phía nam thung lũng Sillicon, nơi đặt trụ sở chính của công ty anh sáng lập, Apple Computer, và cũng là nơi anh vừa phải trải qua một cuộc họp hội đồng quản trị Apple dưới sự chủ trì của Arthur Rock đáng kính. Anh và Rock có rất nhiều bất đồng ý kiến. Rock đối xử với anh như một đứa con nít. Rock ưa cấp bậc còn anh chuộng các quá trình, anh tin rằng các công ty công nghệ phát triển theo những cách và nguyên tắc nhất định. Anh có niềm tin này do đã quan sát thấy nó phát huy tác dụng, đáng chú ý nhất là tại Intel, hãng sản xuất chip vĩ đại có trụ sở tại Santa Clara mà anh ủng hộ ngay từ những ngày đầu. Rock có lẽ là nhà đầu tư công nghệ đáng chú ý nhất trong thời đại của mình, nhưng thực tế thì ban đầu ông đã trợ giúp Apple một cách miễn cưỡng, phần nhiều bởi vì ông không vừa mắt với Steve và đồng sự Steve Wozniak. Ông không nhìn Apple theo cách mà Jobs vẫn nhìn – Steve xem Apple là một công ty khác thường đang thực hiện công việc nhân tính hóa điện toán với một cơ cấu tổ chức không có tôn ti trật tự. Rock thì đơn giản coi Apple như một vụ đầu tư không hơn không kém. Steve cảm thấy các cuộc họp ban điều hành với Rock không tạo ra động lực và chỉ khiến anh thêm nhụt chí; anh đã trông đợi chuyến đi dài trên chiếc xe mui trần phóng tới Marin sẽ giúp anh thoát khỏi mùi hôi thối cũ rích của cuộc tranh luận kéo dài dường như tới vô tận.'),
@@ -76,7 +76,7 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`
 (27, 'Trọn Đời Bên Nhau', 'Mặc Bảo Phi Bảo', 60000, 27, '"Em vẫn muốn được tiếp tục yêu anh."\r\n\r\nCố Bình Sinh đặt một tay lên trên mặt kính, đầu khẽ dựa vào tường kính, nhìn thẳng vào mắt cô và trả lời: “I never left.”\r\n\r\n"I never left - Anh chưa bao giờ rời đi..."\r\n\r\nTrong thế giới đã mất đi âm thanh của mình, anh cũng dần lãng quên giọng nói của từng người thân thuộc, nhưng duy chỉ có giọng nói của cô năm đó là anh vẫn nhớ mãi. Đó dường như là âm thanh duy nhất vang lên trong anh mỗi khi nhìn thấy cô, nói chuyện với cô.\r\n\r\nCô là một cô gái giấu trong trong lòng mình nhiều bí mật. Cô không nói với ai về gia cảnh của bản thân mình. Bố mẹ ly hôn, một người bố mê mẩm với cổ phiếu luôn ngập trong nợ nần và một người bà đã già yếu luôn cần cô chăm sóc. Cô đã cố gắng kiên cường, tự gánh vác tất cả qua bốn năm đại học cho đến khi anh xuất hiện. Anh cứ thản nhiên mà xâm nhập vào cuộc sống của cô và đỡ lấy trách nhiệm đè nặng trên vai cô bao lâu nay. Để rồi, không biết từ thưở nào, cô đã yêu người đàn ông dịu dàng có đôi mắt sâu hun hút ấy.\r\n\r\nhttp://tikicdn.com/media/catalog/product/t/r/tron-doi-ben-nhau-mac-bao-phi-bao.jpg\r\n\r\nHọ đến với nhau như một điều tất nhiên.\r\n\r\nHọ thuộc về nhau như khi hai mảnh ghép vừa khít và duy nhất trên thế giới này.\r\n\r\nThế nhưng, khi trái tim người này chỉ tồn tại duy nhất người kia, điều người này lo lắng nhất chỉ là hạnh phúc của người kia, thì vì người này, người kia cũng có thể hy sinh mọi thứ, cho dù là tình yêu của chính mình…'),
 (28, 'Khi Yêu Cần Nhiều Dũng Cảm', 'Chetah Bhagat', 89000, 17, 'Trên thế giới này, những cuộc hôn nhân dựa trên tình yêu luôn theo một qui trình tuần tự: chàng trai yêu cô gái, cô gái yêu chàng trai, họ kết hôn.\r\n\r\nTuy nhiên, ở Ấn Độ, có thêm vài bước nữa: chàng trai yêu cô gái, gia đình cô gái thích chàng trai, gia đình chàng trai thích cô gái, họ hàng cô gái thích họ hàng chàng trai, họ hàng chàng trai thích họ hàng cô gái, chàng trai và cô gái vẫn yêu nhau, họ kết hôn.Đó chính là câu chuyện của Krish và Ananya. Trai tài, gái sắc. Là đôi bạn đồng chí hướng trong những tháng năm học MBA tại ngôi trường danh giá hàng đầu Ấn Độ, họ thậm chí còn chờ một lễ cưới rực rỡ. Nhưng trăm núi nghìn sông còn dễ vượt qua hơn so với sự phản đối của hai bên gia đình. Hai người phải làm thế nào đây, khi nổi loạn thì dễ, thuyết phục người khác mới là điều khó.\r\n\r\nThành danh với tiểu thuyết Ba chàng ngốc, lần này Chetan Bhagat mang đến một tác phẩm gần như tự truyện của mình. Khi Yêu Cần Nhiều Dũng Cảm, cuốn tiểu thuyết dí dỏm về cuộc hôn nhân liên cộng đồng tại Ấn Độ hiện đại, đã được chuyển thể thành phim điện ảnh, với những ca ngợi của giới phê bình và công phá mãnh liệt doanh số phòng vé.'),
 (29, 'Những Điều Trường Harvard Không Dạy Bạn', 'Mark H. Mccormack', 132000, 11, 'Với lối viết thẳng thắn và mạnh mẽ, Những Điều Trường Harvard Không Dạy Bạn cung cấp nhiều kinh nghiệm thực tế về:\r\n\r\nCách thức thấu hiểu một con người\r\n\r\nNhững bí ẩn của một cuộc đàm phán\r\n\r\nCách điều hành và tham dự một cuộc họp\r\n\r\nBiến sự giận dữ của đối tác thành cơ hội\r\n\r\nĐón nhận những thách thức\r\n\r\nNhạy bén để biết vận may\r\n\r\nĐây thật sự là cuốn sách dành cho tất cả những ai thực sự muốn  thành công trong giới kinh doanh đầy thách thức.');
-INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`) VALUES
+INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity_Book`, `Content`) VALUES
 (30, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu - Think And Grow Rich', 'Napoleon Hill', 120000, 17, '13 Nguyên Tắc Nghĩ Giàu Làm Giàu là cuốn sách “chỉ dẫn” duy nhất chỉ ra những nguồn lực bạn phải có để thành công. Cuốn sách sẽ giúp bạn trở nên giàu có, làm giàu thêm cho cuộc sống của bạn trên tất cả các phương diện của cuộc sống chứ không chỉ về tài chính và vật chất. Những ý tưởng trong cuốn sách Think and Grow rich - 13 nguyên tắc nghĩ giàu, làm giàu bắt nguồn từ những động lực tốt đẹp: “Thành công cá nhân” và “Quan điểm suy nghĩ tích cực”.\r\n\r\nCuốn sách chứa đựng nhiều hơn những gì mà cuốn sách giải thích về sức mạnh của những nguyên tắc. Phần hấp dẫn nhất của cuốn sách chính là những điều phi thường, những thông điệp trong cuốn sách được viết ra từ rất lâu nhưng vẫn mang tính “thời đại”. Ông đã bàn về những quan niệm như quản lý nhóm, dịch vụ chăm sóc khách hàng hoàn hảo, những công cụ hữu hình, trí tuệ tập thể và mục tiêu cần được viết ra trước khi hành động.\r\n\r\nNhững lời khen tặng\r\n\r\n“Think and grow rich – 13 nguyên tắc nghĩ giàu, làm giàu sẽ luôn là cuốn sách giá trị và nó sẽ còn tiếp tục làm thay đổi cuộc sống của nhiều người. Đó thực sự là sức mạnh giúp chúng ta biến đổi những giấc mơ và hoài bão thành hiện thực. Cuốn sách đã ảnh hưởng đến tôi như vậy và sẽ mãi là cuốn sách gối đầu giường số một của tôi.”\r\n\r\n(Don L.Price, diễn giả chuyên nghiệp, tác giả, chuyên viên marketing và bán hàng đồng thời là người cung cấp các giải pháp thay đổi tích cực)\r\n\r\n“Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là cuốn sách có ảnh hưởng rất lớn đến cuộc sống của tôi. Công ty Contours Express của tôi sẽ không thể tồn tại nếu không có cuốn sách này. Và bây giờ, sau 7 năm và 15 lần đọc đi đọc lại cuốn sách, chúng tôi đã có hơn 350 trung tâm chuyển phát nhanh. Mỗi lần đọc nó, tôi vẫn luôn tìm ra được những điều hữu ích cho bản thân và công việc của mình. Không còn nghi ngờ gì nữa, đây quả thực là một cuốn sách viết về kinh doanh tuyệt vời nhất mà tôi từng biết.”\r\n\r\n(Daren Carter, người sáng lập Công ty chuyển phát nhanh đa quốc gia Contours Express hoạt động tại sáu quốc gia trên thế giới)\r\n\r\n“Ấn bản gốc của Tiến sĩ Hill đã làm thay đổi cả thế kỷ XX của chúng ta. Ấn bản mới sau khi chỉnh sửa này cũng sẽ thay đổi cả thế kỷ XXI này. Không có tác giả nào có thể có lối suy nghĩ như một người lãnh đạo, một nhà cố vấn trong việc phát triển và thúc đẩy khả năng của mỗi cá nhân như Napoleon Hill. Công trình này đã nâng ông lên một tầm cao mới, có lẽ còn hơn cả sự vĩ đại.”\r\n\r\n(Bill Brooks, tác giả cuốn sách The New Science of Selling and Persuasion)\r\n\r\n“Tôi từng nghĩ rằng Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu là một cuốn sách kinh điển và không cần phải cải thiện gì thêm nữa. Tôi đã nhầm, tôi chắc rằng Tiến sĩ Hill sẽ rất vui mừng khi thấy tác phẩm của ông được tôn vinh hơn với ấn bản vô cùng nổi bật này.”\r\n\r\n(Wally Amos, người sáng lập ra hãng Famous Amos Chocolate Chip Cookies, tác giả cuốn sách The Cookies Never Crumbles, Inspirational Recipes for Everyday Living)\r\n\r\n"Tôi đã đọc Think and Grow Rich - 13 nguyên tắc nghĩ giàu, làm giàu cách đây nhiều năm và cuốn sách đã giúp tôi trở thành nhà kinh doanh bán lẻ lớn nhất thế giới. Bạn cần đọc nó nếu bạn muốn có một “chỗ đứng” trong cuộc đời này. Tôi biết bạn sẽ yêu nó, vì tôi cũng vậy. Cảm ơn ngài, Napoleon Hill!”\r\n\r\n(Joe Girard, nhà kinh doanh bán lẻ số một thế giới, được ghi danh vào cuốn The Guiness Book of World Records)'),
 (31, 'Thành Danh Sau Một Đêm', 'Hồng Táo', 57000, 5, 'Thẩm Miên và Tống Minh Thành là hai anh em sinh đôi. Lúc nhỏ, Thẩm Miên rất yếu, gia đình sợ cô yểu mệnh nên nhờ thầy cúng đổi tên khác và đưa cô sang bên Anh sống để chữa trị lâu dài.\r\n\r\nTống Gia và Hàn Gia là hai gia đình rất giàu có và nổi tiếng. Hai gia đình họ đã giao hẹn khi nào sinh con thì sẽ kết thông gia. Thẩm Miên không đồng ý cưới một người đàn ông mà mình không quen biết, nhưng đáng tiếc là cả bố và mẹ cô đều nói với cô rằng Hàn Tiềm là một người đàn ông tốt, hơn nữa vì gia thế của họ cũng rất tốt nên việc kết duyên với Hàn Gia là rất môn đăng hộ đối. Hàn Gia cũng không có ý kiến phản đối gì đối với việc này nên Thẩm Miên cũng chẳng tìm được lí do gì để từ chối mối nhân duyên này cả.\r\n\r\nHàn Tiềm đầu tư kinh doanh trong lĩnh vực điện ảnh truyền hình. Thẩm Miên nghĩ rằng một người đàn ông làm trong lĩnh vực này sẽ có cuộc sống đời tư mập mờ, phức tạp. Vì vậy sau khi trở về nước cô quyết định trở thành một paparazzi (phóng viên chuyên săn ảnh). Cô theo dõi Hàn Tiềm trong hai năm liền với ý định sẽ tìm được những chứng cứ về các mối quan hệ không lành mạnh của anh để bôi nhọ danh tiếng của anh, và như thế Tống Gia sẽ chủ động từ bỏ hôn ước.\r\n\r\nNhưng ngờ đâu trong quá trình theo dõi thì cô bị Hàn Tiềm tóm được và bị anh cho một bài học nhớ đời. Vì vậy mà Thẩm Miên lại càng căm ghét anh hơn. Trong mắt cô, Hàn Tiềm là con người lạnh lùng, thủ đoạn độc ác khiến cô càng ngày càng không muốn bị gả cho anh. Còn Hàn Tiềm cũng không ngờ rằng với những biện pháp mạnh tay như vậy mà cô gái Thẩm Miên rắc rối kia “ám” anh không rời. Trong một lần tình cờ, cả hai người họ đều bị rơi vào một tình thế ngoài ý muốn, và sau lần đó,…'),
 (32, 'Đối,Hòa,Hỗn,Tận (Quyển I)', 'Jelu. C', 67000, 18, 'Đối,Hòa,Hỗn,Tận - Quyển I là tác phẩm thứ hai được xuất bản của tác giả Jelu. C (tác giả của "Thời đại Sodom") và là cuốn sách đầu tiên trong bộ ba cùng tên. Cùng với hai phần dẫn nhập đầu sách, cuốn sách được chia làm 9 chương; trong đó mỗi chương được trình bày theo những văn phong khác biệt nhau gồm văn xuôi, thơ, luận, đối thoại, kịch …\r\n\r\nNội dung cuốn sách kể về những cuộc giao tranh giữa các dân tộc sử thi hư cấu: vương quốc hiếu chiến, vương quốc hề, vương quốc hải tặc, vương quốc nhung lụa, vương quốc vàng, vương quốc nhũ hương, vương quốc mộc dược … nhằm chiếm đoạt một chiếc vương miện đại diện cho quyền lực cai quản dân chúng. Qua nhiều giai đoạn, chiếc vương miện lần lượt trở thành vật sở hữu của những vị Vua, lái buôn, thợ rèn, hải tặc… gây nên nhiều cuộc chiến phi nghĩa lớn nhỏ.\r\n\r\nTrích đoạn\r\n\r\n"Thuở trước, đứa con trai được các thầy thuốc chẩn đoán sẽ qua đời không lâu sau khi lọt lòng, Vua hiếu chiến thôn tính ba dân tộc, đàn áp họ cho đến khi những quốc vương tạo nên vị thuốc chữa lành. Tam Hoàng Đế kiệt sức lâm bạo bệnh băng hà. Những vị tướng đặc cách quản cai.  Sắc lệnh sáng tạo trường sinh dược được ban bố. Các vương quốc về nguyên tắc trở nên một. Sự phân hóa xuất hiện. Ông chủ và người làm thuê. Những kẻ vô dụng bị nhốt xuống trại riêng, khóc lóc nghiến răng. Theo thời gian, đám làm chủ những lều lán bào chế hiềm khích, mâu thuẫn nhau tạo nên kỳ lũng đoạn. Tồn tại vì men dược, các Nhà Vua mất dần quyền cai trị đám làm chủ. Người dân từ ấy mang ách chuyên chế đôi."\r\n'),
@@ -89,6 +89,12 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity`, `Content`
 --
 -- Triggers `Book`
 --
+DROP TRIGGER IF EXISTS `trig_Book_update`;
+DELIMITER //
+CREATE TRIGGER `trig_Book_update` BEFORE UPDATE ON `Book`
+ FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+//
+DELIMITER ;
 DROP TRIGGER IF EXISTS `trig_sd_check`;
 DELIMITER //
 CREATE TRIGGER `trig_sd_check` BEFORE INSERT ON `Book`
@@ -293,10 +299,21 @@ INSERT INTO `Genre_Publisher` (`NID`, `BID`) VALUES
 CREATE TABLE IF NOT EXISTS `Order_Book` (
   `OID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `Quantity` int(11) DEFAULT '0',
+  `Quantity_Order` int(11) DEFAULT '0',
   PRIMARY KEY (`OID`,`BID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Order_Book`
+--
+
+INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity_Order`) VALUES
+(1, 2, 3),
+(2, 2, 3),
+(2, 11, 1),
+(3, 1, 20),
+(3, 5, 1);
 
 --
 -- Triggers `Order_Book`
@@ -304,6 +321,12 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
 DROP TRIGGER IF EXISTS `trig_Order_Book_check`;
 DELIMITER //
 CREATE TRIGGER `trig_Order_Book_check` BEFORE INSERT ON `Order_Book`
+ FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trig_Order_Book_update`;
+DELIMITER //
+CREATE TRIGGER `trig_Order_Book_update` BEFORE UPDATE ON `Order_Book`
  FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
 //
 DELIMITER ;
@@ -328,7 +351,9 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
 --
 
 INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`) VALUES
-(1, 195842465, 111111, 1);
+(1, 195842465, 111111, 1),
+(2, 195875456, 1212, 1),
+(3, 195875465, 3333, 0);
 
 -- --------------------------------------------------------
 
