@@ -1,0 +1,8 @@
+//M Làm 1 cái transaction như này nhé:
+//ban đầu
+start transaction; //bắt đầu 1 transaction
+các câu lệnh select ,update khi có order 
+if((UPDATE  `BTLon`.`Order_User` SET  `Confirm` =  '1' WHERE  `Order_User`.`OID` =1;) true) commit;
+else rollback;
+// thế thôi
+

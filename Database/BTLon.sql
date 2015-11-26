@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 26, 2015 at 07:50 PM
+-- Generation Time: Nov 26, 2015 at 10:26 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -89,16 +89,16 @@ INSERT INTO `Book` (`BID`, `Name_Book`, `Author`, `Price`, `Quantity_Book`, `Con
 --
 -- Triggers `Book`
 --
+DROP TRIGGER IF EXISTS `trig_Book_check`;
+DELIMITER //
+CREATE TRIGGER `trig_Book_check` BEFORE INSERT ON `Book`
+ FOR EACH ROW BEGIN  IF NEW.Quantity_Book <0 THEN SET NEW.Quantity_Book = 0; END IF;  END
+//
+DELIMITER ;
 DROP TRIGGER IF EXISTS `trig_Book_update`;
 DELIMITER //
 CREATE TRIGGER `trig_Book_update` BEFORE UPDATE ON `Book`
- FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
-//
-DELIMITER ;
-DROP TRIGGER IF EXISTS `trig_sd_check`;
-DELIMITER //
-CREATE TRIGGER `trig_sd_check` BEFORE INSERT ON `Book`
- FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+ FOR EACH ROW BEGIN  IF NEW.Quantity_Book <0 THEN SET NEW.Quantity_Book = 0; END IF;  END
 //
 DELIMITER ;
 
@@ -111,7 +111,7 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `Cart` (
   `UID` int(11) NOT NULL,
   `BID` int(11) NOT NULL,
-  `Total` int(11) NOT NULL,
+  `Total` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`UID`,`BID`),
   KEY `BID` (`BID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -311,6 +311,7 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
 INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity_Order`) VALUES
 (1, 2, 3),
 (2, 2, 3),
+(2, 4, 0),
 (2, 11, 1),
 (3, 1, 20),
 (3, 5, 1);
@@ -321,13 +322,13 @@ INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity_Order`) VALUES
 DROP TRIGGER IF EXISTS `trig_Order_Book_check`;
 DELIMITER //
 CREATE TRIGGER `trig_Order_Book_check` BEFORE INSERT ON `Order_Book`
- FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+ FOR EACH ROW BEGIN  IF NEW.Quantity_Order <0 THEN SET NEW.Quantity_Order = 0; END IF;  END
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trig_Order_Book_update`;
 DELIMITER //
 CREATE TRIGGER `trig_Order_Book_update` BEFORE UPDATE ON `Order_Book`
- FOR EACH ROW BEGIN  IF NEW.Quantity <0 THEN SET NEW.Quantity=0; END IF;  END
+ FOR EACH ROW BEGIN  IF NEW.Quantity_Order <0 THEN SET NEW.Quantity_Order = 0; END IF;  END
 //
 DELIMITER ;
 
@@ -353,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
 INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`) VALUES
 (1, 195842465, 111111, 1),
 (2, 195875456, 1212, 1),
-(3, 195875465, 3333, 0);
+(3, 195875465, 3333, 1);
 
 -- --------------------------------------------------------
 
