@@ -22,7 +22,7 @@ public class HorizontalListViewAdapter extends ArrayAdapter<BookEntity> {
     private Context context;
 
     public HorizontalListViewAdapter(Context context, ArrayList<BookEntity> array) {
-        super(context, R.layout.horizontal_list_view_data, array);
+        super(context, R.layout.horizontal_list_view_item, array);
         this.context = context;
         this.array = array;
     }
@@ -35,7 +35,7 @@ public class HorizontalListViewAdapter extends ArrayAdapter<BookEntity> {
             // Inflate the view since it does not exist
         	LayoutInflater inflater = (LayoutInflater) 
         			context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.horizontal_list_view_data, parent, false);
+            convertView = inflater.inflate(R.layout.horizontal_list_view_item, parent, false);
 
             // Create and save off the holder in the tag so we get quick access to inner fields
             // This must be done for performance reasons

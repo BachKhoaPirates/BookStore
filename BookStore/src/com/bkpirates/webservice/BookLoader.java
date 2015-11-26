@@ -2,7 +2,6 @@ package com.bkpirates.webservice;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +23,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	public static final String HOT_BOOK_LINK = "http://thachpn.name.vn/books/get_hot_books.php";
 	
 	public static final String DISTRIBUTE_LINK = "http://thachpn.name.vn/books/get_distribute.php";
-
+	
 	@Override
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
@@ -119,12 +118,12 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	@Override
 	protected void onPostExecute(ArrayList<?> result) {
 		// TODO Auto-generated method stub
-		// super.onPostExecute(result);
 		if (result == null) {
 			Log.d("BookLoader:", "Download not success!");
 		} else
 			Log.d("BookLoader:", "Download success!");
 		listener.onDownloadSuccess();
+//		super.onPostExecute(result);
 	}
 
 }

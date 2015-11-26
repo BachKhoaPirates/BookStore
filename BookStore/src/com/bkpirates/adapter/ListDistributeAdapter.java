@@ -65,5 +65,4 @@ public class ListDistributeAdapter extends ArrayAdapter<DistributeBookEntity> {
 	static class ViewHolder {
 		TextView name;
 	}
-
 }

@@ -11,6 +11,7 @@ import com.bkpirates.webservice.BookLoader;
 import com.bkpirates.webservice.BookLoaderListener;
 import com.bkpirates.widget.HorizontalListView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -36,28 +37,31 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 	private int positionBanner;
 	private Handler handler;
 	private Runnable runnable;
-	private final int TIMER = 5000;
+	private final int TIMER = 3000;
 
 	// private int downloadSuccess = 0;
-	// private ProgressDialog loadDialog;
+//	 private ProgressDialog loadDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		BookLoader bld1 = new BookLoader();
-		BookLoader bld2 = new BookLoader();
-		BookLoader bld3 = new BookLoader();
-		bld1.listener = bld2.listener = bld3.listener = this;
+
 		try {
 			if (hotBookArray == null) {
+				BookLoader bld1 = new BookLoader();
+				bld1.listener = this;
 				hotBookArray = (ArrayList<BookEntity>) bld1.execute(BookLoader.HOT_BOOK_LINK).get();
 			}
 			if (newBookArray == null) {
+				BookLoader bld2 = new BookLoader();
+				bld2.listener = this;
 				newBookArray = (ArrayList<BookEntity>) bld2.execute(BookLoader.NEW_BOOK_LINK).get();
 			}
 			if (favoriteBookArray == null) {
+				BookLoader bld3 = new BookLoader();
+				bld3.listener = this;
 				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(BookLoader.TOP_FAVORITE_BOOK_LINK).get();
 			}
 		} catch (Exception e) {
@@ -75,7 +79,7 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+		
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
@@ -199,7 +203,8 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 
 	private void startBookFragment(BookEntity book) {
 		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+//		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		trans.replace(R.id.container, new BookFragment(getContext(), book));
 		trans.addToBackStack(null);
 		trans.commit();
 	}
