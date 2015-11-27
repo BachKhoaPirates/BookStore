@@ -41,7 +41,7 @@
                             //echo json_encode($response);
                             break;
                         }
-                        $sql = "INSERT INTO Order_Book(OID, BID, Quantity) VALUES($count, $bid, $total)";
+                        $sql = "INSERT INTO Order_Book(OID, BID, Quantity_Order) VALUES($count, $bid, $total)";
                         mysqli_query($con, $sql);
 
                     }

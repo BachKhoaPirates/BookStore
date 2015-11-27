@@ -2,7 +2,7 @@
     $response = array();
     require_once __DIR__.'/db_config.php';
     $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-    $sql = "select * from Book WHERE Book.BID = (select BID from Order_Book group by(BID) order by(sum(Quantity)) desc limit 10);";
+    $sql = "SELECT * FROM Book JOIN (SELECT BID FROM Order_Book GROUP BY(BID) ORDER BY(sum(Quantity_ORDER)) desc limit 10) ip ON Book.BID = ip.BID;";
     $result = mysqli_query($con , $sql);
     if(!empty($result)){
         $response['success'] = 1;
