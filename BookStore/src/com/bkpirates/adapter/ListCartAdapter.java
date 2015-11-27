@@ -90,16 +90,14 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		holder.deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				CartFragment.arrList.remove(position);
-
 				HttpResponse response = null;
 				String content = null;
 				netWork.setBookEntity(listBook.get(position));
 				Log.d(netWork.getBookEntity().getBid() + "", netWork.getBookEntity().getBid() + "");
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
-				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()						
 						.execute(DELETE_BOOK);
-
+				CartFragment.arrList.remove(position);
 				CartFragment.adapter.notifyDataSetChanged();
 				CartFragment.subTotal.setText(CartFragment.total_money() + "");
 			}

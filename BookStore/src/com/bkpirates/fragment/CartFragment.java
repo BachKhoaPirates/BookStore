@@ -11,7 +11,6 @@ import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.webservice.NetWork;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +34,10 @@ public class CartFragment extends Fragment {
 	public static TextView subTotal;
 	private ImageView payment;
 	private ListView listview;
+	private final String PAYMENT = "http://thachpn.name.vn/books/add_order_book.php";
+	private final String GET_CART = "http://thachpn.name.vn/books/get_cart.php";
 	int total = 0;
+	int checkPayment = 0;
 	private NetWork netWork = new NetWork();
 	public static ArrayList<BookEntity> arrList = new ArrayList<BookEntity>();
 	public static ListCartAdapter adapter = null;
@@ -50,7 +51,7 @@ public class CartFragment extends Fragment {
 
 		if(netWork.checkInternetConnect(getActivity())){
 			netWork.setPhone(LoginFragment.accEntity.getPhone());
-			GetFromCartAsyncTask addCart = (GetFromCartAsyncTask) new GetFromCartAsyncTask().execute("http://thachpn.name.vn/books/get_cart.php");
+			GetFromCartAsyncTask addCart = (GetFromCartAsyncTask) new GetFromCartAsyncTask().execute(GET_CART);
 			
 			
 		}
@@ -69,10 +70,17 @@ public class CartFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				for (int i = 0;i < arrList.size(); i ++){
-					AccountFragment.orderArrayBooks.add(arrList.get(i));
+				Log.d(arrList.size() + "s",arrList.size() + "s");
+				netWork.setPayment(total);
+				PaymentAsyncTask pat = (PaymentAsyncTask) new PaymentAsyncTask().execute(PAYMENT);
+				Log.d(arrList.size() + "",arrList.size() + "");
+				int n = arrList.size();
+				for (int i = n-1;i >= 0 ;i --){
+					//result :success
+					//request : uid, payment;
 					arrList.remove(i);
 				}
+				subTotal.setText("");
 				adapter.notifyDataSetChanged();
 
 			}
@@ -88,8 +96,7 @@ public class CartFragment extends Fragment {
 		return total;
 	}
 
-	public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
-		ProgressDialog pb;
+	public class PaymentAsyncTask extends AsyncTask<String, Void, String> {
 
 		@Override
 		protected void onPreExecute() {
@@ -101,20 +108,13 @@ public class CartFragment extends Fragment {
 			if (s != null) {
 					// Log.d(s, s);
 					//Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-					arrList = netWork.checkResultForGetUserBooks(s);
-					if (arrList.size() == 0) {
-						 Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_LONG ).show();
-
-					} else {
-						for (int i = 0; i < arrList.size(); i++)
-						{
-							Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getQuantity() + "");
-						}
-						total = total_money();
-						subTotal.setText(total + "");
-						adapter = new ListCartAdapter(getContext(), arrList);
-						listview.setAdapter(adapter);
-					}
+				checkPayment = netWork.checkForAddCartAndFavoriteList(s);
+				if(checkPayment == 1){
+					Toast.makeText(getActivity(), "Payment success", Toast.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(getActivity(), "Payment unsuccess", Toast.LENGTH_SHORT).show();
+				}
+										
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Fail");
@@ -135,38 +135,107 @@ public class CartFragment extends Fragment {
 			super.onPostExecute(s);
 		}
 
-		@Override
-		protected String doInBackground(String... params) {
-			String url = params[0];
-			HttpResponse response = null;
+	@Override
+	protected String doInBackground(String... params) {
+		String url = params[0];
+		HttpResponse response = null;
+		try {
+			response = netWork.makeRquestPayment(url);
+		} catch (IOException e) {
+			return null;
+		}
+		if (response != null) {
+			String content = null;
 			try {
-				response = netWork.makeRquestGetUserBooks(url);
+				content = netWork.processHTTPResponce(response);
+				return content;
 			} catch (IOException e) {
 				return null;
+			} catch (ParseException e) {
+				return null;
 			}
-			if (response != null) {
-				String content = null;
-				try {
-					content = netWork.processHTTPResponce(response);
-					return content;
-				} catch (IOException e) {
-					return null;
-				} catch (ParseException e) {
-					return null;
-				}
-			}
-			return null;
-
 		}
+		return null;
+
 	}
-	
-	private void startBookFragment(BookEntity book){
+}
+
+public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
+
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+	}
+
+	@Override
+	protected void onPostExecute(String s) {
+		if (s != null) {
+			// Log.d(s, s);
+			// Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+			arrList = netWork.checkResultForGetUserBooks(s);
+			if (arrList.size() == 0) {
+				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_LONG).show();
+
+			} else {
+				for (int i = 0; i < arrList.size(); i++) {
+					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getQuantity() + "--" + arrList.get(i).getName());
+				}
+				total = total_money();
+				subTotal.setText(total + "");
+				adapter = new ListCartAdapter(getContext(), arrList);
+				listview.setAdapter(adapter);
+			}
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Fail");
+			builder.setMessage("Check for Connect Server");
+			builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.dismiss();
+				}
+			});
+			AlertDialog dialog = builder.create();
+			dialog.setCancelable(false);
+			dialog.show();
+		}
+
+		super.onPostExecute(s);
+	}
+
+	@Override
+	protected String doInBackground(String... params) {
+		String url = params[0];
+		HttpResponse response = null;
+		try {
+			response = netWork.makeRquestGetUserBooks(url);
+		} catch (IOException e) {
+			return null;
+		}
+		if (response != null) {
+			String content = null;
+			try {
+				content = netWork.processHTTPResponce(response);
+				return content;
+			} catch (IOException e) {
+				return null;
+			} catch (ParseException e) {
+				return null;
+			}
+		}
+		return null;
+
+	}
+
+	}
+
+	private void startBookFragment(BookEntity book) {
 		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-		trans.replace(((ViewGroup)getView().getParent()).getId(),
-				new BookFragment(getContext(), book));
+		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
 		trans.addToBackStack(null);
 		trans.commit();
 	}
-
 
 }

@@ -36,7 +36,15 @@ public class NetWork {
 	String name;
 	String address;
 	int numberBookToBuy;
-	
+	int payment;
+	public int getPayment() {
+		return payment;
+	}
+
+	public void setPayment(int payment) {
+		this.payment = payment;
+	}
+
 	public int getNumberBookToBuy() {
 		return numberBookToBuy;
 	}
@@ -149,6 +157,16 @@ public class NetWork {
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
 		nameValuePairList.add(new BasicNameValuePair("uid", phone));
 		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));	
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
+	public HttpResponse makeRquestPayment(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		nameValuePairList.add(new BasicNameValuePair("payment", payment + ""));	
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
