@@ -249,13 +249,8 @@ public class NetWork {
 	}
 	public ArrayList<BookEntity> checkResultForGetUserBooks(String result) {
 		ArrayList<BookEntity> array = new ArrayList<BookEntity>();
-		Log.d("dmmm", "CHECKkkkkkkkkkkkkkkkkkkkk");
 		try {
-			Log.d("Dieu hieu sao luon lan 0", array.size() + "");	
 			JSONObject jsonObj = new JSONObject(result);
-			Log.d("Dieu hieu sao luon", array.size() + "");
-			Log.d("Minh Oc Cho", "" + jsonObj);
-			Log.d("Minh Oc Cho", "" + jsonObj);
 	
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
@@ -287,8 +282,8 @@ public class NetWork {
 						if (js.has("quantity")) {
 							book.setQuantity(Integer.parseInt(js.getString("quantity")));
 						}
-						if (js.has("total")){ // thang thach luc tra ve total luc tra ve quantity
-							book.setQuantity(Integer.parseInt(js.getString("total")));
+						if (js.has("total")){  // so luon sach mua cho vao cart
+							book.setNumberBookToBuy(Integer.parseInt(js.getString("total")));
 						}
 						array.add(book);
 					}

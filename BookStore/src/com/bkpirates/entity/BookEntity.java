@@ -10,6 +10,15 @@ public class BookEntity {
 	private String content;
 	private String linkImage;
 	private int like;
+	private int numberBookToBuy;
+	public int getNumberBookToBuy() {
+		return numberBookToBuy;
+	}
+
+	public void setNumberBookToBuy(int numberBookToBuy) {
+		this.numberBookToBuy = numberBookToBuy;
+	}
+
 	public int getLike() {
 		return like;
 	}

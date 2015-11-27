@@ -92,7 +92,7 @@ public class CartFragment extends Fragment {
 	public static int total_money() {
 		int total = 0;
 		for (int i = 0; i < arrList.size(); i++)
-			total += arrList.get(i).getPrice() * arrList.get(i).getQuantity();
+			total += arrList.get(i).getPrice() * arrList.get(i).getNumberBookToBuy();
 		return total;
 	}
 
@@ -178,7 +178,7 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 
 			} else {
 				for (int i = 0; i < arrList.size(); i++) {
-					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getQuantity() + "--" + arrList.get(i).getName());
+					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getNumberBookToBuy() + "--" + arrList.get(i).getName());
 				}
 				total = total_money();
 				subTotal.setText(total + "");
