@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 26, 2015 at 10:26 PM
+-- Generation Time: Nov 27, 2015 at 04:47 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -343,6 +343,7 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
   `UID` int(11) NOT NULL,
   `Payment` int(11) DEFAULT '0',
   `Confirm` int(11) DEFAULT '0',
+  `Date_Output` date DEFAULT NULL,
   PRIMARY KEY (`OID`),
   KEY `UID` (`UID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -351,10 +352,10 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
 -- Dumping data for table `Order_User`
 --
 
-INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`) VALUES
-(1, 195842465, 111111, 1),
-(2, 195875456, 1212, 1),
-(3, 195875465, 3333, 1);
+INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`, `Date_Output`) VALUES
+(1, 195842465, 111111, 1, '2015-11-11'),
+(2, 195875456, 1212, 1, '2015-11-24'),
+(3, 195875465, 3333, 1, '2015-11-28');
 
 -- --------------------------------------------------------
 
