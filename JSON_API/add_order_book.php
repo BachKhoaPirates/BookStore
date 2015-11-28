@@ -11,13 +11,15 @@
         $sql = "SELECT COUNT(OID) FROM Order_User";
         $result = mysqli_query($con, $sql);
         $row = mysqli_fetch_array($result);
-        $count = $row[0];
+        $count = $row[0]+1;
 
+        $date = date('Ymd');
         //
         $sql = "SELECT * FROM Cart WHERE UID = $uid";
         $result = mysqli_query($con, $sql);
         if(!empty($result) && (mysqli_num_rows($result) > 0) ){
-            $sql = "INSERT INTO Order_User(OID, UID, Payment) VALUES($count, $uid, $payment)";
+            mysqli_begin_transaction($con);
+            $sql = "INSERT INTO Order_User(OID, UID, Payment, Confirm, Date_Output) VALUES($count, $uid, $payment, 0, $date)";
             $result = mysqli_query($con, $sql);
             if($result){
                 $sql = "SELECT * FROM Cart WHERE UID = $uid";
@@ -29,16 +31,22 @@
                         $total = $row['Total'];
 
                         //lay so luong sach con lai kho
-                        $sql = "SELECT Quantity FROM Book WHERE BID = $bid";
+                        $sql = "SELECT Quantity_Book FROM Book WHERE BID = $bid";
                         $tmp = mysqli_query($con, $sql);
                         $row = mysqli_fetch_array($tmp);
                         $quantity = $row[0];
 
-                        $sql = "UPDATE Book SET Quantity = $quantity - $total WHERE BID = $bid";
-                        $tmp = mysqli_query($con, $sql);
-                        if(!$tmp){
+                        if($quantity > $total){
+                            $sql = "UPDATE Book SET Quantity_Book = $quantity - $total WHERE BID = $bid";
+                            $tmp = mysqli_query($con, $sql);
+                            if(!$tmp){
+                                $response["success"] = 0;
+                                //echo json_encode($response);
+                                break;
+                            }
+                        }
+                        else{
                             $response["success"] = 0;
-                            //echo json_encode($response);
                             break;
                         }
                         $sql = "INSERT INTO Order_Book(OID, BID, Quantity_Order) VALUES($count, $bid, $total)";
@@ -49,6 +57,11 @@
                 $sql = "DELETE FROM Cart WHERE UID = $uid";
                 mysqli_query($con, $sql);
                 echo json_encode($response);
+                if($response[success]) mysqli_commit($con);
+                else{
+                    mysqli_rollback($con);
+                }
+                mysqli_close($con);
             }
                 else{
                     $response["success"] = 0;
