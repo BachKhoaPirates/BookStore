@@ -23,6 +23,8 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	public static final String HOT_BOOK_LINK = "http://thachpn.name.vn/books/get_hot_books.php";
 	
 	public static final String DISTRIBUTE_LINK = "http://thachpn.name.vn/books/get_distribute.php";
+	public static final String SEARCH_LINK = "http://thachpn.name.vn/books/search.php?key=";
+	public static final String LIST_BOOK_LINK = "http://thachpn.name.vn/books/get_list_books.php";
 	
 	@Override
 	protected void onPreExecute() {

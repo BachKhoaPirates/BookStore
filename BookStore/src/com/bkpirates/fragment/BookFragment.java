@@ -276,12 +276,12 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						tv.setLayoutParams(tv.getLayoutParams());
 						tv.setText(tv.getTag().toString(), BufferType.SPANNABLE);
 						tv.invalidate();
-						makeTextViewResizable(tv, -1, "View Less", false);
+						makeTextViewResizable(tv, -1, "Thu nhỏ", false);
 					} else {
 						tv.setLayoutParams(tv.getLayoutParams());
 						tv.setText(tv.getTag().toString(), BufferType.SPANNABLE);
 						tv.invalidate();
-						makeTextViewResizable(tv, 3, "View More", true);
+						makeTextViewResizable(tv, 3, "Xem thêm", true);
 					}
 
 				}
