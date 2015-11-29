@@ -4,6 +4,7 @@
 		$bid = $_REQUEST['bid'];
         $like = 0;
 		require_once __DIR__.'/db_config.php';
+		//trường hợp đăng nhập, xem có likr book không
 		$con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
         if(isset($_REQUEST['uid'])){
             $uid = $_REQUEST['uid'];
@@ -16,6 +17,13 @@
                 }
             }
         }
+        //tìm số người like
+        $clike = 0;
+        $sql = "SELECT COUNT( UID ) FROM Favorite WHERE BID = $bid";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($result);
+        $clike = $row[0];
+
 		$sql = "SELECT * FROM Book NATURAL JOIN Genre_Publisher NATURAL JOIN Publisher WHERE BID = $bid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){
@@ -32,6 +40,7 @@
             $book['content'] = $row['Content'];
             $book['link'] = IMAGE_URL.$bid.'.jpg';
             $book['like'] = $like;
+            $book['clike'] = $clike;
 			array_push($response['books'], $book);
 
 			echo json_encode($response);
