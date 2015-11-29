@@ -19,7 +19,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	ArrayList<BookEntity> bookArray;
 	ArrayList<DistributeBookEntity> distributeArray;
 	ArrayList<AccountEntity> accountArray;
-	public BookLoaderListener listener;
+	public BookLoaderListener listener = null;
 
 	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
 	public static final String TOP_FAVORITE_BOOK_LINK = "http://thachpn.name.vn/books/get_top_favorite_boooks.php";
@@ -169,7 +169,9 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			Log.d("BookLoader:", "Download not success!");
 		} else
 			Log.d("BookLoader:", "Download success!");
-		//listener.onDownloadSuccess();
+		if (listener != null){
+			listener.onDownloadSuccess();
+		}
 		// super.onPostExecute(result);
 	}
 

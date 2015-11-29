@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.fragment.LoginFragment;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -33,10 +34,14 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 		// TODO Auto-generated method stub
 
 		BookEntity book = params[0];
+		
+		String getURL = URL + book.getBid();
+		if (LoginFragment.checkLogin == 1){
+			getURL = getURL + "&uid=" + LoginFragment.accEntity.getPhone();
+		}
 
 		try {
 			HttpClient client = new DefaultHttpClient();
-			String getURL = URL + book.getBid();
 			HttpGet get = new HttpGet(getURL);
 			HttpResponse responseGet = client.execute(get);
 			HttpEntity resEntityGet = responseGet.getEntity();
@@ -58,11 +63,14 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 					if (js.has("like")){
 						book.setLike(Integer.parseInt(js.getString("like")));
 					}
+					if (js.has("clike")){
+						book.setLikedPersonNumber(Integer.parseInt(js.getString("clike")));
+					}
 				}
 				Log.d("GetBookData:", "Download success!");
 
 			} else {
-				Log.d("GetBookData:", "Download not success!");
+				Log.d("GetBookData:", "Download fail!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,6 +82,8 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 	@Override
 	protected void onPostExecute(Void result) {
 		// TODO Auto-generated method stub
-		listener.onDownloadSuccess();
+		if (listener != null){
+			listener.onDownloadSuccess();
+		}
 	}
 }

@@ -11,6 +11,16 @@ public class BookEntity {
 	private String linkImage;
 	private int like;
 	private int numberBookToBuy;
+	private int likedPersonNumber;
+	
+	public int getLikedPersonNumber() {
+		return likedPersonNumber;
+	}
+
+	public void setLikedPersonNumber(int likedPersonNumber) {
+		this.likedPersonNumber = likedPersonNumber;
+	}
+
 	public int getNumberBookToBuy() {
 		return numberBookToBuy;
 	}
