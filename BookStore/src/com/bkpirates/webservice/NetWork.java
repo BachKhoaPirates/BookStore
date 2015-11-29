@@ -192,7 +192,7 @@ public class NetWork {
 				}
 			}
 		}
-		Log.d("content", content);
+	//	Log.d("content", content);
 		return content;
 	}
 
@@ -254,17 +254,19 @@ public class NetWork {
 	
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
-
+					
 
 					String str = jsonObj.getString("books");
 					JSONArray jsArr = new JSONArray(str);
 					JSONObject js;
-
 					for (int i = 0; i < jsArr.length(); i++) {
+						Log.d(i + "", jsArr.length() + "" );
 						js = new JSONObject(jsArr.getString(i));
+						Log.d(jsArr.getString(i) + "", js + "");
 						BookEntity book = new BookEntity();
 						if (js.has("bid")) {
 							book.setBid(js.getString("bid"));
+							Log.d(book.getBid() , book.getBid());
 						}
 						if (js.has("name")) {
 							book.setName(js.getString("name"));

@@ -4,18 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/nameList"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:textSize="20sp" />
 
     <ListView
-        android:id="@+id/listBooks"
+        android:id="@+id/lvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.9" />
+        />
 
 </LinearLayout>

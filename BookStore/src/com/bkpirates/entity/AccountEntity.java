@@ -5,14 +5,22 @@ public class AccountEntity {
 	private String password;
 	private String name;
 	private String address;
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	private int money;
 	public AccountEntity(){
 		
 	}
-	public AccountEntity(String Phone, String Password, String Name, String Address){
+	public AccountEntity(String Phone, String Password, String Name, String Address,int Money){
 		this.phone = Phone;
 		this.password = Password;
 		this.name = Name;
 		this.address = Address;
+		this.money = Money;
 		
 	}
 	public String getPhone() {

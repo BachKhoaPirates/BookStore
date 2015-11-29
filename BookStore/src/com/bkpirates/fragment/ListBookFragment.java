@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 public class ListBookFragment extends Fragment {
 
-	public static TextView nameList;
 	public static ListView listview;
 	private static ArrayList<BookEntity> arrBooks = new ArrayList<BookEntity>();
  	public static ArrayList<BookEntity> getArrBooks() {
@@ -30,9 +29,8 @@ public class ListBookFragment extends Fragment {
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_listbooks, container, false);
-		nameList = (TextView )view.findViewById(R.id.nameList);
-		listview = (ListView) view.findViewById(R.id.listBooks);
+		View view = inflater.inflate(R.layout.fragment_list, container, false);
+		listview = (ListView) view.findViewById(R.id.lvName);
 		ListBookAdapter adapter = new ListBookAdapter(getContext(), arrBooks);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {

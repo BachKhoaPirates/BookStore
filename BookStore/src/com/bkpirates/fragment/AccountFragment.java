@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 
-import com.bkpirates.adapter.AccountAdapter;
+import com.bkpirates.adapter.AccountAndFunctionAdminAdapter;
+import com.bkpirates.app.AppController;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
@@ -41,6 +42,7 @@ public class AccountFragment extends Fragment {
 
 	private String[] str = {"Favorite Books","Ordered Books", "List Order","Information","Logout"};
 	private ListView listview;
+	private TextView txtNameUsers;
 	private NetWork netWork = new NetWork();
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
 	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
@@ -59,9 +61,11 @@ public class AccountFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_account, null);
 		
 		setAccEntity(LoginFragment.accEntity);
-
+		txtNameUsers = (TextView) view.findViewById(R.id.nameUser);
 		listview = (ListView) view.findViewById(R.id.listview);
-		adapter = new AccountAdapter(getActivity(), R.layout.item_distribute_book, str);
+		
+		txtNameUsers.setText(accEntity.getName());
+		adapter = new AccountAndFunctionAdminAdapter(getActivity(), R.layout.item_distribute_book, str);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -80,7 +84,7 @@ public class AccountFragment extends Fragment {
 				}else if(position == 2){
 					
 				}else if(position == 3){ // thong tin ng dung
-					initiatePopupWindow();
+					AppController.getInstance().initiatePopupWindow(accEntity, getActivity());
 					
 				}else if(position == 4){ //logout
 					accEntity.setPhone(null);
@@ -134,7 +138,7 @@ public class AccountFragment extends Fragment {
 					ListBookFragment listBookFragment = new ListBookFragment();
 					listBookFragment.setArrBooks(favoriteArrayBooks);
 					LayoutInflater mInflater = LayoutInflater.from(getActivity());
-					View mView = mInflater.inflate(R.layout.fragment_listbooks, null);
+					View mView = mInflater.inflate(R.layout.fragment_list, null);
 					FragmentManager fm = getFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
 					ft.replace(R.id.container, listBookFragment);
@@ -178,54 +182,5 @@ public class AccountFragment extends Fragment {
 		}
 	}
 
-	private void initiatePopupWindow() {
-		Button btnOkPopup;
-		Button btnNotOkPopup;
-		final PopupWindow pwindo;
-		int width;
-		int height;
-		TextView phoneText;
-		TextView passText;
-		TextView addressText;
-		TextView nameText;
-
-		width = (int) convertDpToPixel(320, getActivity());
-		height = (int) convertDpToPixel(150, getActivity());
-
-		try {
-
-			LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.popup, null, false);
-			pwindo = new PopupWindow(layout, width, height, true);
-			pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
-			btnOkPopup = (Button) layout.findViewById(R.id.btn_ok_popup);
-			nameText = (TextView) layout.findViewById(R.id.txtView1);
-			addressText = (TextView) layout.findViewById(R.id.txtView2);
-			phoneText = (TextView) layout.findViewById(R.id.txtView3);
-			passText = (TextView) layout.findViewById(R.id.txtView4);
-
-			nameText.setText("Name        : " + accEntity.getName());
-			addressText.setText("Address    : " + accEntity.getAddress());
-			phoneText.setText("Phone       : " + accEntity.getPhone());
-			passText.setText("PassWord : " + accEntity.getPassword());
-			btnOkPopup.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					pwindo.dismiss();
-				}
-			});
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static float convertDpToPixel(float dp, Context context) {
-		Resources resources = context.getResources();
-		DisplayMetrics metrics = resources.getDisplayMetrics();
-		float px = dp * (metrics.densityDpi / 160f);
-		return px;
-	}
 
 }
