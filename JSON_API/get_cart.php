@@ -18,7 +18,7 @@
                 //$book['publisher'] = $row['Publisher'];
                 $book['author'] = $row['Author'];
                 $book['total'] = $row['Total'];
-                //$book['quantity'] = $row['Quantity'];
+                $book['quantity'] = $row['Quantity_Book'];
                 //$book['content'] = $row['Content'];
                 $book['link'] = IMAGE_URL.$row['BID'].'.jpg';
 
