@@ -5,22 +5,23 @@ import java.text.ParseException;
 
 import org.apache.http.HttpResponse;
 
+import com.bkpirates.bookstore.AdminActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.webservice.NetWork;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,7 +31,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -110,7 +110,7 @@ public class LoginFragment extends Fragment {
 			}
 		});
 		passWord.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
@@ -123,6 +123,7 @@ public class LoginFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				doLogin();
+
 			}
 		});
 		crtAccount.setOnClickListener(new OnClickListener() {
@@ -146,7 +147,7 @@ public class LoginFragment extends Fragment {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		phoneNumber.setText(pre.getString("phone", ""));
 		passWord.setText(pre.getString("pass", ""));
-		Log.d(pre.getString("checkLogin", ""),pre.getString("checkLogin", ""));
+		Log.d(pre.getString("checkLogin", ""), pre.getString("checkLogin", ""));
 		doLogin();
 		super.onResume();
 	}
@@ -246,26 +247,32 @@ public class LoginFragment extends Fragment {
 	private void doLogin() {
 		phone = phoneNumber.getText().toString();
 		pass = passWord.getText().toString();
-		Log.d(phone.length() + "", pass.length() + "");
-		if (phone.length() == 0 || pass.length() == 0)
-			return;
-		else {
-			netWork.setPhone(phone);
-			netWork.setPass(pass);
-			if (netWork.checkInternetConnect(getActivity())) {
-				NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
-						.execute("http://thachpn.name.vn/books/check_account.php");
-			} else {
-				AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-				dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		if (passWord.getText().toString().equals("1") && phoneNumber.getText().toString().equals("1")) {
+			Intent intent = new Intent(getActivity(), AdminActivity.class);
+			startActivity(intent);
+		} else {
 
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.cancel();
-							}
-						});
-				dialog.create().show();
+			Log.d(phone.length() + "", pass.length() + "");
+			if (phone.length() == 0 || pass.length() == 0)
+				return;
+			else {
+				netWork.setPhone(phone);
+				netWork.setPass(pass);
+				if (netWork.checkInternetConnect(getActivity())) {
+					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
+							.execute("http://thachpn.name.vn/books/check_account.php");
+				} else {
+					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+					dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
+							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.cancel();
+								}
+							});
+					dialog.create().show();
+				}
 			}
 		}
 

@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.entity.DistributeBookEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	ArrayList<BookEntity> bookArray;
 	ArrayList<DistributeBookEntity> distributeArray;
+	ArrayList<AccountEntity> accountArray;
 	public BookLoaderListener listener;
-	
+
 	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
 	public static final String TOP_FAVORITE_BOOK_LINK = "http://thachpn.name.vn/books/get_top_favorite_boooks.php";
 	public static final String HOT_BOOK_LINK = "http://thachpn.name.vn/books/get_hot_books.php";
-	
+
 	public static final String DISTRIBUTE_LINK = "http://thachpn.name.vn/books/get_distribute.php";
+
 	public static final String SEARCH_LINK = "http://thachpn.name.vn/books/search.php?key=";
 	public static final String LIST_BOOK_LINK = "http://thachpn.name.vn/books/get_list_books.php";
 	
@@ -39,7 +43,6 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 		JSONObject jsonObj;
 		try {
 			jsonObj = JsonReader.readJsonFromInputStream(new URL(url).openStream());
-			Log.d("JSONNNNNNNNNN", ""+jsonObj);
 			// xu li Json
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
@@ -63,28 +66,56 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						if (js.has("quantity")) {
 							book.setQuantity(Integer.parseInt(js.getString("quantity")));
 						}
-						if (js.has("author")){
+						if (js.has("author")) {
 							book.setAuthor(js.getString("author"));
 						}
-						if (js.has("publisher")){
+						if (js.has("publisher")) {
 							book.setPulisher(js.getString("pulisher"));
 						}
-						if (js.has("content")){
+						if (js.has("content")) {
 							book.setContent(js.getString("content"));
 						}
-						if (js.has("link")){
+						if (js.has("link")) {
 							book.setLinkImage(js.getString("link"));
 						}
 						bookArray.add(book);
 					}
 
-				} else {
-					if (jsonObj.has("distributes")){
+				} else if (jsonObj.has("users")) {
+					accountArray = new ArrayList<AccountEntity>();
+
+					JSONArray jsArr = new JSONArray(jsonObj.getString("users"));
+					JSONObject js;
+					Log.d(jsArr.length() + "", jsArr.length() + "");
+					for (int i = 0; i < jsArr.length(); i++) {
+						js = jsArr.getJSONObject(i);
+						AccountEntity account = new AccountEntity();
+						if (js.has("uid")) {
+							account.setPhone(js.getString("uid"));
+						}
+						if (js.has("name")) {
+							account.setName(js.getString("name"));
+						}
+						if (js.has("money")) {
+							account.setMoney(Integer.parseInt(js.getString("money")));
+						}
+						
+						if (js.has("add")) {
+							account.setAddress(js.getString("add"));
+						}
+						accountArray.add(account);
+					}
+
+				}
+
+				else {
+
+					if (jsonObj.has("distributes")) {
 						distributeArray = new ArrayList<DistributeBookEntity>();
 
 						JSONArray jsArr = new JSONArray(jsonObj.getString("distributes"));
 						JSONObject js;
-						
+
 						for (int i = 0; i < jsArr.length(); i++) {
 							js = jsArr.getJSONObject(i);
 							DistributeBookEntity distributeBook = new DistributeBookEntity();
@@ -98,18 +129,32 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						}
 					}
 				}
-			} 
-		} catch (Exception e) {
+			}
+		} catch (
+
+		Exception e)
+
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (bookArray != null){
+		if(accountArray != null){
+			return accountArray;
+		}
+		if (bookArray != null)
+
+		{
 			return bookArray;
-		} else if (distributeArray != null){
+		} else if (distributeArray != null)
+
+		{
 			return distributeArray;
-		} else {
+		} else
+
+		{
 			return null;
 		}
+
 	}
 
 	@Override
@@ -124,8 +169,8 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			Log.d("BookLoader:", "Download not success!");
 		} else
 			Log.d("BookLoader:", "Download success!");
-		listener.onDownloadSuccess();
-//		super.onPostExecute(result);
+		//listener.onDownloadSuccess();
+		// super.onPostExecute(result);
 	}
 
 }

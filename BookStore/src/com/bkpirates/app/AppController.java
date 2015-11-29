@@ -3,6 +3,7 @@ package com.bkpirates.app;
 import java.util.ArrayList;
 
 import com.bkpirates.bookstore.R;
+import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.DistributeBookEntity;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -15,6 +16,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class AppController extends Application {
 
@@ -60,6 +68,51 @@ public class AppController extends Application {
 
 		}
 		return instance;
+	}
+	public static void initiatePopupWindow(AccountEntity accEntity,Context context) {
+		Button btnOkPopup;
+		Button btnNotOkPopup;
+		final PopupWindow pwindo;
+		int width;
+		int height;
+		TextView phoneText;
+		TextView passText;
+		TextView addressText;
+		TextView nameText;
+		TextView moneyText;
+
+		width = (int) convertDpToPixel(320, context);
+		height = (int) convertDpToPixel(175, context);
+
+		try {
+
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View layout = inflater.inflate(R.layout.popup, null, false);
+			pwindo = new PopupWindow(layout, width, height, true);
+			pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+			btnOkPopup = (Button) layout.findViewById(R.id.btn_ok_popup);
+			nameText = (TextView) layout.findViewById(R.id.txtView1);
+			addressText = (TextView) layout.findViewById(R.id.txtView2);
+			phoneText = (TextView) layout.findViewById(R.id.txtView3);
+			passText = (TextView) layout.findViewById(R.id.txtView4);
+			moneyText = (TextView) layout.findViewById(R.id.txtView5);
+
+			nameText.setText("Name        : " + accEntity.getName());
+			addressText.setText("Address    : " + accEntity.getAddress());
+			phoneText.setText("Phone       : " + accEntity.getPhone());
+			passText.setText("PassWord : " + accEntity.getPassword());
+			moneyText.setText("Money       :" + accEntity.getMoney());
+			btnOkPopup.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					pwindo.dismiss();
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static float convertDpToPixel(float dp, Context context) {

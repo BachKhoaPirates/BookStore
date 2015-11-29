@@ -36,6 +36,7 @@ public class CartFragment extends Fragment {
 	private ListView listview;
 	private final String PAYMENT = "http://thachpn.name.vn/books/add_order_book.php";
 	private final String GET_CART = "http://thachpn.name.vn/books/get_cart.php";
+	
 	int total = 0;
 	int checkPayment = 0;
 	private NetWork netWork = new NetWork();
@@ -170,8 +171,7 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String s) {
 		if (s != null) {
-			// Log.d(s, s);
-			// Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
+			 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 			arrList = netWork.checkResultForGetUserBooks(s);
 			if (arrList.size() == 0) {
 				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_LONG).show();

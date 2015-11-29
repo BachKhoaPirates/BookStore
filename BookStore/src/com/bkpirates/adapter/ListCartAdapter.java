@@ -40,8 +40,8 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 	int check = 0;
 	private final int DEFINE_QUANTITY = 50;
 	Integer[] arrQuantity = new Integer[DEFINE_QUANTITY];
-	private final String DELETE_BOOK = "http://thachpn.name.vn/books/delete_cart_book.php";
-	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
+	private final String DELETE_BOOK = "http://thachpn.name.vn/books/update_cart_book.php";
+	private final String ADD_CART = "http://thachpn.name.vn/books/update_cart_book.php";
 	private ArrayAdapter<Integer> adapter = null;
 
 	public ListCartAdapter(Context context, ArrayList<BookEntity> list_product) {

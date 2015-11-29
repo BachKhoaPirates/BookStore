@@ -6,6 +6,7 @@ import com.bkpirates.fragment.HomeFragment;
 import com.bkpirates.fragment.LoginFragment;
 import com.bkpirates.fragment.SearchFragment;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
 
+	public static Activity customerActivity;
 	private ImageView homeButton, searchButton, cartButton, userButton;
 	private TextView topBar;
 
@@ -31,7 +33,9 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTopBar(topBar);
-
+		customerActivity = this;
+		
+		
 		homeButton = (ImageView) findViewById(R.id.home_button);
 		searchButton = (ImageView) findViewById(R.id.search_button);
 		cartButton = (ImageView) findViewById(R.id.cart_button);
