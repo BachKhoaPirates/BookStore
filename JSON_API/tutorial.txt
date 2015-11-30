@@ -1,0 +1,85 @@
+// user
+1. Thêm sách vào giỏ hàng
+	add_cart.php
+	request: uid, bid, total
+	response: success 
+2. Thêm sách yêu thích
+	add_favorite.php
+	request: uid, bid
+	response: success
+3. Đặt hàng sách
+	add_order_book.php
+	request: uid, payment
+	response: success
+4. Kiểm tra tài khoản
+	check_account.php
+	request: uid, pass
+	response: success, name , money (Tổng tiền đã mua), address
+5. Tạo tài khoản
+	create_account.php
+	request: uid, pass, name , add (Địa chỉ)
+	response: success	
+6. Xóa sách yêu thích
+	delete_favorite_book.php
+	request: uid, bid
+	response: success	
+7. Lấy sách đã mua
+	get_bought_books.php
+	request: uid
+	response: success, books[bid, name, price, author, link]	
+8. Lấy sách trong giỏ hàng
+	get_cart.php
+	request: uid
+	response: success, books[bid, name, price, author, link, total, quantity]	//total là sách trong giỏ, quantity là sách còn lại trong kho
+9. Lấy sách đã thích
+	get_user_favorite_books.php
+	request: uid
+	response: success, books[bid, name, price, author, link]	
+//Client
+1. Lấy thông tin sách
+	get_book.php
+	request: bid , uid (nếu đăng nhập, không thì thôi)
+	response: success, books[name, publisher, price, author, link, quantity, content, like, clike]	
+2. Lấy tên phân loại sách
+	get_distribute.php
+	request: 
+	response: success, pid, distributes[distribute]
+3. Lấy sách bán chạy
+	get_hot_books.php
+	request: 
+	response: success, books[bid, name, price, author, link]	
+4. Lấy sách theo phân loại
+	get_list_books.php
+	request: pid, offset (số sách cần lấy)
+	response: success, books[bid, name, price, author, link]
+5. Lấy sách mới
+	get_new_books.php
+	request: 
+	response: success, books[bid, name, price, author, link]
+6. Lấy sách được like nhiều nhất
+	request: 
+	response: success, books[bid, name, price, author, link]	
+7. Tìm kiếm
+	request: key
+	response: success, books[bid, name, price, author, link]		
+//Admin
+1. Xác nhận đơn hàng
+	confirm_order.php
+	request: oid
+	response: success
+2. Xóa đơn hàng
+	delete_order.php
+	request: oid
+	response: success
+3. Lấy danh sách user mua nhiều
+	get_top_users.php
+	request: 
+	response: success, uid, name, add, money
+4. Lấy danh sách đang order
+	get_list_order.php
+	request: 
+	response: success, orders[payment, oid, name, date]	
+5. Lấy danh sách đã mua theo ngày
+	get_list_boughts.php
+	request: date (theo định dạng yyyymmdd)
+	response: success, orders[payment, oid, name, date]
