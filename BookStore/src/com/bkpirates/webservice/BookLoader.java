@@ -104,6 +104,9 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 					}
 
 				}
+				else if(jsonObj.has("orders")){
+					
+				}
 
 				else {
 
@@ -166,7 +169,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			Log.d("BookLoader:", "Download not success!");
 		} else
 			Log.d("BookLoader:", "Download success!");
-		//listener.onDownloadSuccess();
+		listener.onDownloadSuccess();
 		// super.onPostExecute(result);
 	}
 

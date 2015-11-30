@@ -136,6 +136,7 @@ public class LoginFragment extends Fragment {
 				ft.replace(R.id.container, caf);
 				ft.addToBackStack(null);
 				ft.commit();
+				fm.executePendingTransactions();
 			}
 		});
 
@@ -156,10 +157,14 @@ public class LoginFragment extends Fragment {
 	public void onPause() {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pre.edit();
-		editor.putString("phone", phoneNumber.getText().toString());
-		editor.putString("pass", passWord.getText().toString());
-		editor.putString("checkLogin", checkLogin + "");
-		editor.commit();
+		if (!phoneNumber.getText().toString().equals("1") && !passWord.getText().toString().equals("1")) {
+
+			editor.putString("phone", phoneNumber.getText().toString());
+			editor.putString("pass", passWord.getText().toString());
+			editor.putString("checkLogin", checkLogin + "");
+			editor.commit();
+		}
+
 		super.onPause();
 	}
 
@@ -188,12 +193,23 @@ public class LoginFragment extends Fragment {
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
 					checkLogin = 1;
+					//login thanh cong thi luu tai khoan vao file
+					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = pre.edit();
+					editor.putString("checkLogin", 1 + "");
+					editor.putString("phone", phone);
+					editor.putString("pass", pass);
+					editor.commit();
+					
+					
+					
 					FragmentManager fm = getActivity().getSupportFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
 					AccountFragment fragment = new AccountFragment();
 					ft.replace(R.id.container, fragment);
-					// ft.addToBackStack(null);
+					ft.addToBackStack(null);
 					ft.commit();
+					getActivity().getSupportFragmentManager().executePendingTransactions();
 				} else {
 
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());

@@ -101,12 +101,7 @@ public class CrtAccountFragment extends Fragment {
 				check = netWork.checkAccountForCreateAccount(s);
 				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
-					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-					SharedPreferences.Editor editor = pre.edit();
-					editor.putString("checkLogin", 1 + "");
-					editor.putString("phone", phone);
-					editor.putString("pass", pass);
-					editor.commit();
+					
 					getActivity().getSupportFragmentManager().popBackStack();
 					getActivity().getSupportFragmentManager().beginTransaction()
 							.replace(R.id.container, new LoginFragment()).commit();

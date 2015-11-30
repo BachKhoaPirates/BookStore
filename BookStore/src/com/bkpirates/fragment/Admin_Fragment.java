@@ -1,6 +1,7 @@
 package com.bkpirates.fragment;
 
 import com.bkpirates.adapter.AccountAndFunctionAdminAdapter;
+import com.bkpirates.bookstore.AdminActivity;
 import com.bkpirates.bookstore.R;
 
 import android.os.Bundle;
@@ -18,8 +19,8 @@ import android.widget.Toast;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
-	final String[] str = { "Tài khoản mua nhiều nhất", "Sách mua nhiều nhất trong tháng",
-			"Nhà xuất bản được mua nhiều nhất", "Thể loại sách được mua nhiều nhất", "Nhập thêm sách", "Thoát" };
+	final String[] str = { "Tài khoản mua nhiều nhất", "Danh sách đơn hàng đã chuyển đến",
+			"Danh sách đơn hàng chưa chuyển đến", "Thể loại sách được mua nhiều nhất", "Nhập thêm sách", "Thoát" };
 	private ArrayAdapter<String> adapter = null;
 
 	@Override
@@ -37,11 +38,15 @@ public class Admin_Fragment extends Fragment {
 					FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 					TopUsersFragment tef = new TopUsersFragment();
 					fragmentTransaction.replace(R.id.containerAdmin, tef);
+					fragmentTransaction.addToBackStack(null);
 					fragmentTransaction.commit();
 					getActivity().getSupportFragmentManager().executePendingTransactions();
 
 				} else if (position == 1) {
-					Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
+					
+				}
+				else if(position == 5 ){
+					AdminActivity.adminActivity.finish();
 				}
 			}
 		});

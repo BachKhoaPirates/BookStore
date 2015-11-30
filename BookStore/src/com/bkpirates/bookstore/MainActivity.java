@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
@@ -106,7 +107,7 @@ public class MainActivity extends FragmentActivity {
 
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
-
+				Toast.makeText(MainActivity.this, LoginFragment.checkLogin + "", Toast.LENGTH_SHORT).show();
 				if (LoginFragment.checkLogin == 0) {
 					while (fm.getBackStackEntryCount() > 1) {
 						fm.popBackStackImmediate();

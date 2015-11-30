@@ -56,6 +56,9 @@ public class CartFragment extends Fragment {
 			
 			
 		}
+		else {
+			Toast.makeText(getActivity(), "check Interner", Toast.LENGTH_SHORT).show();
+		}
 		
 		
 
@@ -71,10 +74,8 @@ public class CartFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				Log.d(arrList.size() + "s",arrList.size() + "s");
 				netWork.setPayment(total);
 				PaymentAsyncTask pat = (PaymentAsyncTask) new PaymentAsyncTask().execute(PAYMENT);
-				Log.d(arrList.size() + "",arrList.size() + "");
 				int n = arrList.size();
 				for (int i = n-1;i >= 0 ;i --){
 					//result :success
@@ -174,12 +175,12 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 			 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 			arrList = netWork.checkResultForGetUserBooks(s);
 			if (arrList.size() == 0) {
-				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_SHORT).show();
 
 			} else {
-				for (int i = 0; i < arrList.size(); i++) {
-					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getNumberBookToBuy() + "--" + arrList.get(i).getName());
-				}
+//				for (int i = 0; i < arrList.size(); i++) {
+//					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getNumberBookToBuy() + "--" + arrList.get(i).getName());
+//				}
 				total = total_money();
 				subTotal.setText(total + "");
 				adapter = new ListCartAdapter(getContext(), arrList);

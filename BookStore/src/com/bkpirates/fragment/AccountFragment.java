@@ -17,30 +17,27 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("InflateParams")
 public class AccountFragment extends Fragment {
 
-	private String[] str = {"Favorite Books","Ordered Books", "List Order","Information","Logout"};
+	private String[] str = { "Favorite Books", "Ordered Books", "List Order", "Information", "Logout" };
+	private final String GET_FAVORITE_BOOKS = "http://thachpn.name.vn/books/get_user_favorite_books.php";
+	private final String GET_ORDER_BOOKS = "http://thachpn.name.vn/books/get_bought_books.php";
 	private ListView listview;
 	private TextView txtNameUsers;
 	private NetWork netWork = new NetWork();
@@ -59,11 +56,11 @@ public class AccountFragment extends Fragment {
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_account, null);
-		
+
 		setAccEntity(LoginFragment.accEntity);
 		txtNameUsers = (TextView) view.findViewById(R.id.nameUser);
 		listview = (ListView) view.findViewById(R.id.listview);
-		
+
 		txtNameUsers.setText(accEntity.getName());
 		adapter = new AccountAndFunctionAdminAdapter(getActivity(), R.layout.item_distribute_book, str);
 		listview.setAdapter(adapter);
@@ -71,22 +68,22 @@ public class AccountFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 				// TODO Auto-generated method stub
-				if(position == 0){ // sach thich
+				if (position == 0) { // sach thich
 
 					netWork.setPhone(accEntity.getPhone());
 					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
-							.execute("http://thachpn.name.vn/books/get_user_favorite_books.php");		
-				}else if(position == 1) // sach da mua
+							.execute(GET_FAVORITE_BOOKS);
+				} else if (position == 1) // sach da mua
 				{
 					netWork.setPhone(accEntity.getPhone());
 					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
-							.execute("http://thachpn.name.vn/books/get_bought_books.php");	
-				}else if(position == 2){
-					
-				}else if(position == 3){ // thong tin ng dung
+							.execute(GET_ORDER_BOOKS);
+				} else if (position == 2) {
+
+				} else if (position == 3) { // thong tin ng dung
 					AppController.getInstance().initiatePopupWindow(accEntity, getActivity());
-					
-				}else if(position == 4){ //logout
+
+				} else if (position == 4) { // logout
 					accEntity.setPhone(null);
 					accEntity.setPassword(null);
 					LoginFragment.checkLogin = 0;
@@ -104,9 +101,8 @@ public class AccountFragment extends Fragment {
 					fm.executePendingTransactions();
 				}
 			}
-			
-		});
 
+		});
 
 		return view;
 	}
@@ -131,8 +127,7 @@ public class AccountFragment extends Fragment {
 				
 				favoriteArrayBooks = netWork.checkResultForGetUserBooks(s);
 				if (favoriteArrayBooks.size() == 0) {
-					// Toast.makeText(getActivity(), "Not found anything in
-					// cart", Toast.LENGTH_LONG).show();
+					 Toast.makeText(getActivity(), "Not found anything", Toast.LENGTH_SHORT).show();
 
 				} else {
 					ListBookFragment listBookFragment = new ListBookFragment();
@@ -181,6 +176,5 @@ public class AccountFragment extends Fragment {
 
 		}
 	}
-
 
 }
