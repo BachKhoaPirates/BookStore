@@ -35,12 +35,13 @@ import android.widget.Toast;
 @SuppressLint("InflateParams")
 public class AccountFragment extends Fragment {
 
-	private String[] str = { "Favorite Books", "Ordered Books", "List Order", "Information", "Logout" };
+	private String[] str = { "Favorite Books", "Ordered Books", "Information", "Logout" };
 	private final String GET_FAVORITE_BOOKS = "http://thachpn.name.vn/books/get_user_favorite_books.php";
 	private final String GET_ORDER_BOOKS = "http://thachpn.name.vn/books/get_bought_books.php";
 	private ListView listview;
 	private TextView txtNameUsers;
 	private NetWork netWork = new NetWork();
+	private final String TAG = "AccountFragment";
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
 	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
 	private AccountEntity accEntity = new AccountEntity();
@@ -78,12 +79,10 @@ public class AccountFragment extends Fragment {
 					netWork.setPhone(accEntity.getPhone());
 					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
 							.execute(GET_ORDER_BOOKS);
-				} else if (position == 2) {
-
-				} else if (position == 3) { // thong tin ng dung
+				} else if (position == 2) { // thong tin ng dung
 					AppController.getInstance().initiatePopupWindow(accEntity, getActivity());
 
-				} else if (position == 4) { // logout
+				} else if (position == 3) { // logout
 					accEntity.setPhone(null);
 					accEntity.setPassword(null);
 					LoginFragment.checkLogin = 0;
@@ -131,9 +130,7 @@ public class AccountFragment extends Fragment {
 
 				} else {
 					ListBookFragment listBookFragment = new ListBookFragment();
-					listBookFragment.setArrBooks(favoriteArrayBooks);
-					LayoutInflater mInflater = LayoutInflater.from(getActivity());
-					View mView = mInflater.inflate(R.layout.fragment_list, null);
+					ListBookFragment.setArrBooks(favoriteArrayBooks);
 					FragmentManager fm = getFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
 					ft.replace(R.id.container, listBookFragment);
@@ -152,8 +149,6 @@ public class AccountFragment extends Fragment {
 			HttpResponse response = null;
 
 			try {
-				Log.d("respone", url);
-				Log.d("respone", url);
 
 				response = netWork.makeRquestGetUserBooks(url);
 			} catch (IOException e) {

@@ -47,6 +47,7 @@ public class LoginFragment extends Fragment {
 	NetWork netWork = new NetWork();
 	private int check = 0;
 	public static int checkLogin = 0;
+	private final String CHECK_ACCOUNT = "http://thachpn.name.vn/books/check_account.php";
 
 	public static AccountEntity accEntity = new AccountEntity();
 
@@ -159,16 +160,16 @@ public class LoginFragment extends Fragment {
 		SharedPreferences.Editor editor = pre.edit();
 		if (!phoneNumber.getText().toString().equals("1") && !passWord.getText().toString().equals("1")) {
 
+			editor.putString("checkLogin", checkLogin + "");
 			editor.putString("phone", phoneNumber.getText().toString());
 			editor.putString("pass", passWord.getText().toString());
-			editor.putString("checkLogin", checkLogin + "");
 			editor.commit();
 		}
 
 		super.onPause();
 	}
 
-	public class NetWorkAsyncTask extends AsyncTask<String, Void, String> {
+	public class LoginAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
 		@Override
@@ -187,11 +188,11 @@ public class LoginFragment extends Fragment {
 			if (s != null) {
 				accEntity = netWork.checkAccountForLogin(s);
 				check = Integer.parseInt(accEntity.getPassword());
-				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
 					// Login success
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
+					
 					checkLogin = 1;
 					//login thanh cong thi luu tai khoan vao file
 					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -275,8 +276,8 @@ public class LoginFragment extends Fragment {
 				netWork.setPhone(phone);
 				netWork.setPass(pass);
 				if (netWork.checkInternetConnect(getActivity())) {
-					NetWorkAsyncTask nw = (NetWorkAsyncTask) new NetWorkAsyncTask()
-							.execute("http://thachpn.name.vn/books/check_account.php");
+					LoginAsyncTask nw = (LoginAsyncTask) new LoginAsyncTask()
+							.execute(CHECK_ACCOUNT);
 				} else {
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
 					dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")

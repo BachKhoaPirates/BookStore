@@ -42,12 +42,15 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	int check = 0;
 	private Context context;
 	private BookEntity book;
-	private int numberBookToBuy = 1;
+	private int numberBookToBuy = 1;	
 	private LinearLayout btnBuy;
 	private ImageView btnLike;
 	TextView number;
 	TextView content, status, author, pulisher;
 	TextView numberFavorite;
+	private final String TAG = "BookFragment";
+	private int tempLike;
+	
 	NetWork netWork = new NetWork();
 	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
 	private final String ADD_FAVORITE = "http://thachpn.name.vn/books/add_favorite_book.php";
@@ -60,6 +63,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		this.book.setAuthor(book.getAuthor());
 		this.book.setPrice(book.getPrice());
 		this.book.setLinkImage(book.getLinkImage());
+		this.book.setLike(book.getLike());
+		this.book.setLikedPersonNumber(book.getLikedPersonNumber());
 	}
 
 	@Override
@@ -75,6 +80,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		
 		number.setText(Integer.toString(numberBookToBuy));
 		
+		if (book.getLike() == 1)
+			btnLike.setImageResource(R.drawable.like);
+		Log.d(TAG, book.getLike() + "-" + book.getLikedPersonNumber());
 		increase_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -172,17 +180,19 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 			}
 		});
-		if (book.getLike() == 1)
-			btnLike.setImageResource(R.drawable.like);
-		Log.d(book.getLike() + "", book.getLike() + "");
+		
 		btnLike.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				if (LoginFragment.checkLogin == 1) {
+					Log.d(TAG, book.getLike() + "");
 					if (book.getLike() == 0) {
 
 						btnLike.setImageResource(R.drawable.like);
+						int temp = book.getLikedPersonNumber();
+						book.setLikedPersonNumber(--temp);
+						numberFavorite.setText(temp + "");
 						netWork.setBookEntity(book);
 						netWork.setPhone(LoginFragment.accEntity.getPhone());
 						Toast.makeText(getActivity(), book.getBid() + "", Toast.LENGTH_LONG).show();
@@ -190,6 +200,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 								.execute(ADD_FAVORITE);
 					}
 					else {
+						int temp = book.getLikedPersonNumber();
+						book.setLikedPersonNumber(++temp);
+						numberFavorite.setText(temp + "");
 						btnLike.setImageResource(R.drawable.unlike);
 						
 					}

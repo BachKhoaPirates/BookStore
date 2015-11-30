@@ -32,6 +32,7 @@ import android.widget.Toast;
 public class CartFragment extends Fragment {
 
 	public static TextView subTotal;
+	private final String TAG =  "CartFragment";
 	private ImageView payment;
 	private ListView listview;
 	private final String PAYMENT = "http://thachpn.name.vn/books/add_order_book.php";
@@ -52,6 +53,7 @@ public class CartFragment extends Fragment {
 
 		if(netWork.checkInternetConnect(getActivity())){
 			netWork.setPhone(LoginFragment.accEntity.getPhone());
+			Log.d(TAG, LoginFragment.accEntity.getPhone());
 			GetFromCartAsyncTask addCart = (GetFromCartAsyncTask) new GetFromCartAsyncTask().execute(GET_CART);
 			
 			
@@ -75,6 +77,7 @@ public class CartFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				netWork.setPayment(total);
+				Log.d(TAG, netWork.getPayment() + "");
 				PaymentAsyncTask pat = (PaymentAsyncTask) new PaymentAsyncTask().execute(PAYMENT);
 				int n = arrList.size();
 				for (int i = n-1;i >= 0 ;i --){
@@ -108,8 +111,6 @@ public class CartFragment extends Fragment {
 		@Override
 		protected void onPostExecute(String s) {
 			if (s != null) {
-					// Log.d(s, s);
-					//Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 				checkPayment = netWork.checkForAddCartAndFavoriteList(s);
 				if(checkPayment == 1){
 					Toast.makeText(getActivity(), "Payment success", Toast.LENGTH_SHORT).show();
@@ -172,8 +173,8 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected void onPostExecute(String s) {
 		if (s != null) {
-			 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
 			arrList = netWork.checkResultForGetUserBooks(s);
+			Log.d(TAG, TAG);
 			if (arrList.size() == 0) {
 				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_SHORT).show();
 

@@ -40,7 +40,7 @@ public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String>{
 		}
 		
 		holder.name.setText(arrList[position]);
-		if(arrList.length != 5){
+		if(arrList.length != 4){
 			
 			Log.d(arrList.length + "", arrList.length + "son ");
 			holder.name.setTextColor(context.getResources().getColor(R.color.white));

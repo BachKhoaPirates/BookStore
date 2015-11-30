@@ -115,7 +115,7 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 					dialog.create();
 					dialog.show();
 						
-				}else if(tempQuantity >= arrQuantity[position1] && arrQuantity[position1]!=1){
+				}else if(tempQuantity >= arrQuantity[position1]){
 					listBook.get(position).setNumberBookToBuy(arrQuantity[position1]);
 					holder.numberToBuy.setText("Quantity:"+ arrQuantity[position1]);
 					CartFragment.subTotal.setText(CartFragment.total_money() + "");
@@ -138,8 +138,6 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		holder.deleteButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				HttpResponse response = null;
-				String content = null;
 				netWork.setBookEntity(listBook.get(position));
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
 				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
@@ -188,10 +186,10 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 
 		@Override
 		protected String doInBackground(String... params) {
-			String url = params[0];
+			String url = params[0]; 	
 			HttpResponse response = null;
 			try {
-				response = netWork.makeRquestAddToCart(url);
+				response = netWork.makeRquestAddFavoriteList(url);
 			} catch (IOException e) {
 				return null;
 			}

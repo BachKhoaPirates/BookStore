@@ -237,7 +237,9 @@ public class NetWork {
 				if (json.has("address")) {
 					accEntity.setAddress(json.getString("address"));
 				}
-				
+				if (json.has("money")) {
+					accEntity.setMoney(Integer.parseInt(json.getString("money")));
+				}
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -286,6 +288,12 @@ public class NetWork {
 						}
 						if (js.has("total")){  // so luon sach mua cho vao cart
 							book.setNumberBookToBuy(Integer.parseInt(js.getString("total")));
+						}
+						if (js.has("like")){
+							book.setLike(Integer.parseInt(js.getString("like")));
+						}
+						if (js.has("clike")){
+							book.setLikedPersonNumber(Integer.parseInt(js.getString("clike")));
 						}
 						array.add(book);
 					}
