@@ -178,9 +178,6 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_SHORT).show();
 
 			} else {
-//				for (int i = 0; i < arrList.size(); i++) {
-//					Log.d(arrList.get(i).getPrice() + "", arrList.get(i).getNumberBookToBuy() + "--" + arrList.get(i).getName());
-//				}
 				total = total_money();
 				subTotal.setText(total + "");
 				adapter = new ListCartAdapter(getContext(), arrList);

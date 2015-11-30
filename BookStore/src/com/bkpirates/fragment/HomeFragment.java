@@ -11,7 +11,6 @@ import com.bkpirates.webservice.BookLoader;
 import com.bkpirates.webservice.BookLoaderListener;
 import com.bkpirates.widget.HorizontalListView;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;

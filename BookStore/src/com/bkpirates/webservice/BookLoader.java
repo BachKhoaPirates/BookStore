@@ -19,7 +19,7 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	ArrayList<BookEntity> bookArray;
 	ArrayList<DistributeBookEntity> distributeArray;
 	ArrayList<AccountEntity> accountArray;
-	public BookLoaderListener listener;
+	public BookLoaderListener listener = null;
 
 	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
 	public static final String TOP_FAVORITE_BOOK_LINK = "http://thachpn.name.vn/books/get_top_favorite_boooks.php";
@@ -27,6 +27,9 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	public static final String DISTRIBUTE_LINK = "http://thachpn.name.vn/books/get_distribute.php";
 
+	public static final String SEARCH_LINK = "http://thachpn.name.vn/books/search.php?key=";
+	public static final String LIST_BOOK_LINK = "http://thachpn.name.vn/books/get_list_books.php";
+	
 	@Override
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
@@ -169,7 +172,10 @@ public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			Log.d("BookLoader:", "Download not success!");
 		} else
 			Log.d("BookLoader:", "Download success!");
-		listener.onDownloadSuccess();
+
+		if (listener != null){
+			listener.onDownloadSuccess();
+		}
 		// super.onPostExecute(result);
 	}
 

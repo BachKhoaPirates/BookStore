@@ -43,7 +43,6 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	private Context context;
 	private BookEntity book;
 	private int numberBookToBuy = 1;
-	private int numberFavo = 0;
 	private LinearLayout btnBuy;
 	private ImageView btnLike;
 	TextView number;
@@ -55,7 +54,12 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 	public BookFragment(Context context, BookEntity book) {
 		this.content = content;
-		this.book = book;
+		this.book = new BookEntity(); 
+		this.book.setBid(book.getBid()); 
+		this.book.setName(book.getName());
+		this.book.setAuthor(book.getAuthor());
+		this.book.setPrice(book.getPrice());
+		this.book.setLinkImage(book.getLinkImage());
 	}
 
 	@Override
@@ -68,12 +72,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		btnBuy = (LinearLayout) view.findViewById(R.id.buy_button);
 		btnLike = (ImageView) view.findViewById(R.id.like_button);
 		numberFavorite = (TextView) view.findViewById(R.id.number_favorite);
-		numberFavorite.setText(Integer.toString(numberFavo));
-		
 		
 		number.setText(Integer.toString(numberBookToBuy));
-		// Toast.makeText(getActivity(), book.getQuantity(),
-		// Toast.LENGTH_LONG).show();
+		
 		increase_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -212,6 +213,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		} else {
 			status.setText("Status: Hết hàng.");
 		}
+		numberFavorite.setText(Integer.toString(book.getLikedPersonNumber()));
 
 		content.setText(book.getContent());
 		makeTextViewResizable(content, 3, "Xem thêm", true);
@@ -276,12 +278,12 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						tv.setLayoutParams(tv.getLayoutParams());
 						tv.setText(tv.getTag().toString(), BufferType.SPANNABLE);
 						tv.invalidate();
-						makeTextViewResizable(tv, -1, "View Less", false);
+						makeTextViewResizable(tv, -1, "Thu gọn", false);
 					} else {
 						tv.setLayoutParams(tv.getLayoutParams());
 						tv.setText(tv.getTag().toString(), BufferType.SPANNABLE);
 						tv.invalidate();
-						makeTextViewResizable(tv, 3, "View More", true);
+						makeTextViewResizable(tv, 3, "Xem thêm", true);
 					}
 
 				}
