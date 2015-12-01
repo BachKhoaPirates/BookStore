@@ -14,6 +14,7 @@
 				$response["success"] = 1;
 				$response["name"] = $result["Name"];
                 $response["money"] = $result["SUM(Payment)"];
+                if($response[money]==null) $response['money'] = 0;
 				$response["address"] = $result["Address"];
 				echo json_encode($response);
 			}
