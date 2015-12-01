@@ -41,35 +41,21 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 	private final int DEFINE_QUANTITY = 50;
 	Integer[] arrQuantity = new Integer[DEFINE_QUANTITY];
 	private final String DELETE_BOOK = "http://thachpn.name.vn/books/update_cart_book.php";
-	private final String ADD_CART = "http://thachpn.name.vn/books/update_cart_book.php";
+	private final String CHANGE_QUANTITY = "http://thachpn.name.vn/books/update_cart_book.php";
 	private ArrayAdapter<Integer> adapter = null;
-
-	public ListCartAdapter(Context context, ArrayList<BookEntity> list_product) {
-		super(context, R.layout.cart_books, list_product);
+	private final String TAG = "ListCartAdapter";
+	public ListCartAdapter(Context context,int resource ,ArrayList<BookEntity> list_product) {
+		super(context,  resource, list_product);
 		this.context = context;
 		this.listBook = list_product;
+		Log.d(TAG,TAG + " son");
 	}
-
-	@Override
-	public int getCount() {
-		return listBook.size();
-	}
-
-	@Override
-	public BookEntity getItem(int position) {
-
-		return listBook.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
-
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
+		Log.d(TAG, "convertView != NULL");
 		if (convertView == null) {
+			Log.d(TAG, "convertView == NULL");
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.cart_books, parent, false);
 			holder = new ViewHolder();
@@ -115,15 +101,15 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 					dialog.create();
 					dialog.show();
 						
-				}else if(tempQuantity >= arrQuantity[position1]){
+				}else if(tempQuantity >= arrQuantity[position1] && arrQuantity[position1] != 1){
 					listBook.get(position).setNumberBookToBuy(arrQuantity[position1]);
 					holder.numberToBuy.setText("Quantity:"+ arrQuantity[position1]);
 					CartFragment.subTotal.setText(CartFragment.total_money() + "");
 					netWork.setBookEntity(listBook.get(position));
 					netWork.setPhone(LoginFragment.accEntity.getPhone());
 					netWork.setNumberBookToBuy(arrQuantity[position1]);
-					AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
-							.execute(ADD_CART);
+					ChangeQuantityAsyncTast change = (ChangeQuantityAsyncTast) new ChangeQuantityAsyncTast()
+							.execute(CHANGE_QUANTITY);
 					
 				}
 				
@@ -140,7 +126,7 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 			public void onClick(View v) {
 				netWork.setBookEntity(listBook.get(position));
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
-				AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+				 DeleteCartAsyncTast dct = (DeleteCartAsyncTast) new DeleteCartAsyncTast()
 						.execute(DELETE_BOOK);
 				CartFragment.arrList.remove(position);
 				CartFragment.adapter.notifyDataSetChanged();
@@ -157,12 +143,56 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		TextView price;
 		TextView numberToBuy;
 		ImageView deleteButton;
-		// TextView increase;
-		// TextView decrease;
 		Spinner spinner;
 	}
+	public class ChangeQuantityAsyncTast extends AsyncTask<String, Void, String> {
+		ProgressDialog pb;
 
-	public class AddToCartAndFavoriteListAsyncTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		@Override
+		protected void onPostExecute(String s) {
+			if (s != null) {
+				check = netWork.checkForAddCartAndFavoriteList(s);
+				if (check == 1)
+					Log.d(check + "", check + "");
+				else
+					Log.d(check + "", check + "");
+			} else {
+			}
+
+			super.onPostExecute(s);
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			String url = params[0]; 	
+			HttpResponse response = null;
+			try {
+				response = netWork.makeRquestAddToCart(url);
+			} catch (IOException e) {
+				return null;
+			}
+			if (response != null) {
+				String content = null;
+				try {
+					content = netWork.processHTTPResponce(response);
+					return content;
+				} catch (IOException e) {
+					return null;
+				} catch (ParseException e) {
+					return null;
+				}
+			}
+
+			return null;
+		}
+	}
+
+	public class DeleteCartAsyncTast extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
 		@Override

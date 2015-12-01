@@ -174,15 +174,20 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String s) {
 		if (s != null) {
 			arrList = netWork.checkResultForGetUserBooks(s);
-			Log.d(TAG, TAG);
 			if (arrList.size() == 0) {
 				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_SHORT).show();
 
 			} else {
 				total = total_money();
+				Log.d(TAG, arrList.get(0).getName());
 				subTotal.setText(total + "");
-				adapter = new ListCartAdapter(getContext(), arrList);
+				adapter = new ListCartAdapter(getContext(), R.layout.cart_books, arrList);
+				if( adapter == null ){
+					Log.d(TAG, "size of cart :" +arrList.size() + "");
+					
+				}
 				listview.setAdapter(adapter);
+				
 			}
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

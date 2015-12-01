@@ -31,6 +31,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class NetWork {
+	private final String TAG = "NetWork";
 	String phone;
 	String pass;
 	String name;
@@ -150,7 +151,7 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
-	// AddFavoriteList and Delete Book in Cart are same request so you can use this function for both
+	// Add_Favorite_List and Delete_Book, and Delete_favorite in Cart are same request so you can use this function for both
 	public HttpResponse makeRquestAddFavoriteList(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
@@ -230,6 +231,7 @@ public class NetWork {
 			if (json.has("success")) {
 				success = json.getInt("success");
 			}
+			Log.d(TAG, "success Login :" + success);
 			if (success != 0) {
 				if (json.has("name")) {
 					accEntity.setName(json.getString("name"));
@@ -253,22 +255,19 @@ public class NetWork {
 		ArrayList<BookEntity> array = new ArrayList<BookEntity>();
 		try {
 			JSONObject jsonObj = new JSONObject(result);
-	
+			Log.d(TAG, TAG);
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
 					
-
 					String str = jsonObj.getString("books");
 					JSONArray jsArr = new JSONArray(str);
 					JSONObject js;
 					for (int i = 0; i < jsArr.length(); i++) {
 						Log.d(i + "", jsArr.length() + "" );
 						js = new JSONObject(jsArr.getString(i));
-						Log.d(jsArr.getString(i) + "", js + "");
 						BookEntity book = new BookEntity();
 						if (js.has("bid")) {
 							book.setBid(js.getString("bid"));
-							Log.d(book.getBid() , book.getBid());
 						}
 						if (js.has("name")) {
 							book.setName(js.getString("name"));

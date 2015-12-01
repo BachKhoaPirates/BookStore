@@ -1,4 +1,4 @@
-	package com.bkpirates.fragment;
+package com.bkpirates.fragment;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -42,7 +42,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	int check = 0;
 	private Context context;
 	private BookEntity book;
-	private int numberBookToBuy = 1;	
+	private int numberBookToBuy = 1;
 	private LinearLayout btnBuy;
 	private ImageView btnLike;
 	TextView number;
@@ -50,21 +50,20 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	TextView numberFavorite;
 	private final String TAG = "BookFragment";
 	private int tempLike;
-	
+
 	NetWork netWork = new NetWork();
 	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
 	private final String ADD_FAVORITE = "http://thachpn.name.vn/books/add_favorite_book.php";
+	private final String DELETE_FAVORITE = "http://thachpn.name.vn/books/delete_favorite_book.php";
 
 	public BookFragment(Context context, BookEntity book) {
 		this.content = content;
-		this.book = new BookEntity(); 
-		this.book.setBid(book.getBid()); 
+		this.book = new BookEntity();
+		this.book.setBid(book.getBid());
 		this.book.setName(book.getName());
 		this.book.setAuthor(book.getAuthor());
 		this.book.setPrice(book.getPrice());
 		this.book.setLinkImage(book.getLinkImage());
-		this.book.setLike(book.getLike());
-		this.book.setLikedPersonNumber(book.getLikedPersonNumber());
 	}
 
 	@Override
@@ -77,12 +76,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		btnBuy = (LinearLayout) view.findViewById(R.id.buy_button);
 		btnLike = (ImageView) view.findViewById(R.id.like_button);
 		numberFavorite = (TextView) view.findViewById(R.id.number_favorite);
-		
 		number.setText(Integer.toString(numberBookToBuy));
-		
-		if (book.getLike() == 1)
-			btnLike.setImageResource(R.drawable.like);
-		Log.d(TAG, book.getLike() + "-" + book.getLikedPersonNumber());
+
 		increase_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -140,24 +135,26 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		// TextView numberFavorite = (TextView)
 		// view.findViewById(R.id.number_favorite);
 		// numberFavorite.setText("("+book.get);
+
+	
 		btnBuy.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				
 				// TODO Auto-generated method stub
-				if(LoginFragment.checkLogin == 1){
-					
+				if (LoginFragment.checkLogin == 1) {
+
 					netWork.setBookEntity(book);
 					netWork.setPhone(LoginFragment.accEntity.getPhone());
 					netWork.setNumberBookToBuy(numberBookToBuy);
 					if (book.getQuantity() > 0) {
 						Toast.makeText(getActivity(), netWork.getNumberBookToBuy() + "", Toast.LENGTH_SHORT).show();
-						
+
 						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
 								.execute(ADD_CART);
 					} else {
-						
+
 						AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 						dialog.setTitle("");
 						dialog.setMessage("Sorry because not enough quantity");
@@ -165,46 +162,50 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								dialog.dismiss();
-								
+
 							}
 						});
-						
+
 						dialog.setCancelable(false);
 						dialog.create();
 						dialog.show();
-						
+
 					}
-				}else{
-					Toast.makeText(getActivity(), "You must login to add this book in your cart", Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(getActivity(), "You must login to add this book in your cart", Toast.LENGTH_SHORT)
+							.show();
 				}
 
 			}
 		});
-		
+
 		btnLike.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				Log.d(TAG, book.getLike() + "");
 				if (LoginFragment.checkLogin == 1) {
 					Log.d(TAG, book.getLike() + "");
 					if (book.getLike() == 0) {
 
 						btnLike.setImageResource(R.drawable.like);
 						int temp = book.getLikedPersonNumber();
+						book.setLikedPersonNumber(++temp);
+						numberFavorite.setText(temp + "");
+						netWork.setBookEntity(book);
+						netWork.setPhone(LoginFragment.accEntity.getPhone());
+						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
+								.execute(ADD_FAVORITE);
+					} else {
+						btnLike.setImageResource(R.drawable.unlike);
+						int temp = book.getLikedPersonNumber();
 						book.setLikedPersonNumber(--temp);
 						numberFavorite.setText(temp + "");
 						netWork.setBookEntity(book);
 						netWork.setPhone(LoginFragment.accEntity.getPhone());
-						Toast.makeText(getActivity(), book.getBid() + "", Toast.LENGTH_LONG).show();
 						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
-								.execute(ADD_FAVORITE);
-					}
-					else {
-						int temp = book.getLikedPersonNumber();
-						book.setLikedPersonNumber(++temp);
-						numberFavorite.setText(temp + "");
-						btnLike.setImageResource(R.drawable.unlike);
-						
+								.execute(DELETE_FAVORITE);
+
 					}
 
 				} else {
@@ -227,6 +228,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 			status.setText("Status: Hết hàng.");
 		}
 		numberFavorite.setText(Integer.toString(book.getLikedPersonNumber()));
+		if (book.getLike() == 1) {
+			btnLike.setImageResource(R.drawable.like);
+		}
 
 		content.setText(book.getContent());
 		makeTextViewResizable(content, 3, "Xem thêm", true);
@@ -306,6 +310,40 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		return ssb;
 	}
 
+	// public class GetLikeUser extends AsyncTask<String, Void, String>{
+	//
+	// @Override
+	// protected String doInBackground(String... params) {
+	// String url = params[0];
+	// HttpResponse response = null;
+	// if (url.equals(ADD_CART)) {
+	// try {
+	// response = netWork.makeRquestAddToCart(url);
+	// } catch (IOException e) {
+	// return null;
+	// }
+	// if (response != null) {
+	// String content = null;
+	// try {
+	// content = netWork.processHTTPResponce(response);
+	// return content;
+	// } catch (IOException e) {
+	// return null;
+	// } catch (ParseException e) {
+	// return null;
+	// }
+	// }
+	// }
+	// return null;
+	//
+	// }
+	// @Override
+	// protected void onPostExecute(String s){
+	// super.onPostExecute(s);
+	// }
+	//
+	// }
+	//
 	public class AddToCartAndFavoriteListAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
@@ -319,9 +357,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 			if (s != null) {
 				check = netWork.checkForAddCartAndFavoriteList(s);
 				if (check == 1)
-					Toast.makeText(getActivity(), "Add Success", Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
 				else
-					Toast.makeText(getActivity(), "Add unsuccess" + check, Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "unsuccess" , Toast.LENGTH_SHORT).show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("Fail");
@@ -381,7 +419,25 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					}
 				}
 
+			}else if(url.equals(DELETE_FAVORITE)){
+				try {
+					response = netWork.makeRquestAddFavoriteList(url);
+				} catch (IOException e) {
+					return null;
+				}
+				if (response != null) {
+					String content = null;
+					try {
+						content = netWork.processHTTPResponce(response);
+						return content;
+					} catch (IOException e) {
+						return null;
+					} catch (ParseException e) {
+						return null;
+					}
+				}
 			}
+			
 
 			return null;
 		}

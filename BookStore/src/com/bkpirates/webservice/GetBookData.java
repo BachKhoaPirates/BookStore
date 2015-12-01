@@ -18,7 +18,7 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 
 	private final String URL = "http://thachpn.name.vn/books/get_book.php?bid=";
 	public GetBookDataListener listener;
-
+	private final String TAG  = "GetBookData";
 	public interface GetBookDataListener {
 		public void onDownloadSuccess();
 	}
@@ -62,6 +62,7 @@ public class GetBookData extends AsyncTask<BookEntity, Void, Void> {
 					}
 					if (js.has("like")){
 						book.setLike(Integer.parseInt(js.getString("like")));
+						Log.d(TAG, book.getLike() + "");
 					}
 					if (js.has("clike")){
 						book.setLikedPersonNumber(Integer.parseInt(js.getString("clike")));
