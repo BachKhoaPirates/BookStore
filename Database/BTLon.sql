@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 30, 2015 at 06:46 PM
+-- Generation Time: Dec 01, 2015 at 01:19 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -311,9 +311,9 @@ CREATE TABLE IF NOT EXISTS `Order_Book` (
 --
 
 INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity_Order`) VALUES
-(1, 2, 1),
-(2, 4, 3),
-(3, 6, 9);
+(1, 3, 0),
+(1, 4, 2),
+(1, 12, 0);
 
 --
 -- Triggers `Order_Book`
@@ -338,7 +338,7 @@ DELIMITER ;
 --
 
 CREATE TABLE IF NOT EXISTS `Order_User` (
-  `OID` int(11) NOT NULL AUTO_INCREMENT,
+  `OID` int(11) NOT NULL,
   `UID` int(11) NOT NULL,
   `Payment` int(11) DEFAULT '0',
   `Confirm` int(11) DEFAULT '0',
@@ -346,16 +346,14 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
   `Profit` int(11) DEFAULT NULL,
   PRIMARY KEY (`OID`),
   KEY `UID` (`UID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `Order_User`
 --
 
 INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`, `Date_Output`, `Profit`) VALUES
-(1, 195842465, 123123, 10, '2015-11-04', NULL),
-(2, 195875465, 232323, 1, '2015-11-04', NULL),
-(3, 195875656, 23432423, 0, '2015-11-11', NULL);
+(1, 195875465, 1, 1, '2015-12-09', 1111111);
 
 -- --------------------------------------------------------
 
