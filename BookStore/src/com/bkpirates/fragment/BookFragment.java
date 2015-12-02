@@ -12,13 +12,13 @@ import com.bkpirates.webservice.GetBookData.GetBookDataListener;
 import com.bkpirates.webservice.NetWork;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.app.AlertDialog;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -40,7 +40,7 @@ import android.widget.Toast;
 public class BookFragment extends Fragment implements GetBookDataListener {
 
 	int check = 0;
-	private Context context;
+//	private Context context;
 	private BookEntity book;
 	private int numberBookToBuy = 1;
 	private LinearLayout btnBuy;
@@ -49,7 +49,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	TextView content, status, author, pulisher;
 	TextView numberFavorite;
 	private final String TAG = "BookFragment";
-	private int tempLike;
+//	private int tempLike;
 
 	NetWork netWork = new NetWork();
 	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
@@ -57,7 +57,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	private final String DELETE_FAVORITE = "http://thachpn.name.vn/books/delete_favorite_book.php";
 
 	public BookFragment(Context context, BookEntity book) {
-		this.content = content;
+//		this.content = content;
 		this.book = new BookEntity();
 		this.book.setBid(book.getBid());
 		this.book.setName(book.getName());
@@ -85,8 +85,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 				if (book.getQuantity() <= numberBookToBuy) {
 
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-					dialog.setTitle("");
-					dialog.setMessage("Cannot increase quantity");
+					dialog.setTitle("Lỗi");
+					dialog.setMessage("Số sách hiện có không đủ!");
 					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -155,8 +155,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					} else {
 						Log.d(TAG, TAG);
 						AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-						dialog.setTitle("");
-						dialog.setMessage("Sorry because not enough quantity");
+						dialog.setTitle("Lỗi");
+						dialog.setMessage("Số sách hiện có không đủ!");
 						dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
@@ -171,7 +171,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 					}
 				} else {
-					Toast.makeText(getActivity(), "You must login to add this book in your cart", Toast.LENGTH_SHORT)
+					Toast.makeText(getActivity(), "Bạn cần đăng nhập để thực hiện chức năng này!", Toast.LENGTH_LONG)
 							.show();
 				}
 
@@ -207,7 +207,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					}
 
 				} else {
-					Toast.makeText(getActivity(), "You must login to like this book", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Bạn cần đăng nhập để thực hiện chức năng này!", Toast.LENGTH_LONG)
+					.show();
 				}
 			}
 		});
@@ -221,9 +222,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		pulisher.setText(book.getPulisher());
 		author.setText(book.getAuthor());
 		if (book.getQuantity() > 0) {
-			status.setText("Status: Còn hàng.");
+			status.setText("Tình trạng: Còn hàng.");
 		} else {
-			status.setText("Status: Hết hàng.");
+			status.setText("Tình trạng: Hết hàng.");
 		}
 		numberFavorite.setText(Integer.toString(book.getLikedPersonNumber()));
 		if (book.getLike() == 1) {
@@ -320,13 +321,13 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 			if (s != null) {
 				check = netWork.checkForAddCartAndFavoriteList(s);
 				if (check == 1)
-					Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Thêm sách thành công!", Toast.LENGTH_LONG).show();
 				else
-					Toast.makeText(getActivity(), "unsuccess" , Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Lỗi khi thêm sách!" , Toast.LENGTH_LONG).show();
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Fail");
-				builder.setMessage("Check for Connect Server");
+				builder.setTitle("Lỗi");
+				builder.setMessage("Vui lòng kết nối mạng!");
 				builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 
 					@Override

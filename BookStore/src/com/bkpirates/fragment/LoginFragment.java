@@ -6,6 +6,7 @@ import java.text.ParseException;
 import org.apache.http.HttpResponse;
 
 import com.bkpirates.bookstore.AdminActivity;
+import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.webservice.NetWork;
@@ -30,13 +31,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class LoginFragment extends Fragment {
+
+	private final String TAG;
 
 	private Button signIn;
 	private Button crtAccount;
@@ -50,6 +53,10 @@ public class LoginFragment extends Fragment {
 	private final String CHECK_ACCOUNT = "http://thachpn.name.vn/books/check_account.php";
 
 	public static AccountEntity accEntity = new AccountEntity();
+
+	public LoginFragment(String tag) {
+		this.TAG = tag;
+	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_login, null);
@@ -192,30 +199,36 @@ public class LoginFragment extends Fragment {
 					// Login success
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
-					
+
 					checkLogin = 1;
-					//login thanh cong thi luu tai khoan vao file
+					// login thanh cong thi luu tai khoan vao file
 					SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = pre.edit();
 					editor.putString("checkLogin", 1 + "");
 					editor.putString("phone", phone);
 					editor.putString("pass", pass);
 					editor.commit();
-					
-					
+
+					hideVirtualKeyboard();
 					
 					FragmentManager fm = getActivity().getSupportFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
-					AccountFragment fragment = new AccountFragment();
-					ft.replace(R.id.container, fragment);
-					ft.addToBackStack(null);
+
+					if (TAG == MainActivity.AccountTag) {
+						AccountFragment fragment = new AccountFragment();
+						ft.replace(R.id.container, fragment);
+					} else if (TAG == MainActivity.CartTag) {
+						CartFragment fragment = new CartFragment();
+						ft.replace(R.id.container, fragment);
+					}
+					// ft.addToBackStack(null);
 					ft.commit();
-					getActivity().getSupportFragmentManager().executePendingTransactions();
+					fm.executePendingTransactions();
 				} else {
 
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-					dialog.setTitle("");
-					dialog.setMessage("Wrong Account!! Please try again");
+					dialog.setTitle("Lỗi");
+					dialog.setMessage("Tài khoản hoặc mật khẩu không đúng!");
 					dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -276,11 +289,10 @@ public class LoginFragment extends Fragment {
 				netWork.setPhone(phone);
 				netWork.setPass(pass);
 				if (netWork.checkInternetConnect(getActivity())) {
-					LoginAsyncTask nw = (LoginAsyncTask) new LoginAsyncTask()
-							.execute(CHECK_ACCOUNT);
+					LoginAsyncTask nw = (LoginAsyncTask) new LoginAsyncTask().execute(CHECK_ACCOUNT);
 				} else {
 					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-					dialog.setTitle(" Error").setCancelable(false).setMessage("Not connected with Internet")
+					dialog.setTitle("Lỗi").setCancelable(false).setMessage("Vui lòng kiểm tra kết nối mạng!")
 							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
 								@Override
@@ -293,6 +305,15 @@ public class LoginFragment extends Fragment {
 			}
 		}
 
+	}
+
+	private void hideVirtualKeyboard() {
+		// hide the virtual key board
+		InputMethodManager inputManager = (InputMethodManager) getActivity()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputManager.hideSoftInputFromWindow(
+				(null == getActivity().getCurrentFocus()) ? null : getActivity().getCurrentFocus().getWindowToken(),
+				InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 
 }

@@ -66,7 +66,7 @@ public class ListBookAdapter extends ArrayAdapter<BookEntity> {
 		ImageLoader.getInstance().displayImage(listBook.get(position).getLinkImage(), holder.image);
         Log.d("LinkUrl", ""+listBook.get(position).getLinkImage());
 		holder.author.setText(listBook.get(position).getAuthor());
-		holder.price.setText(Integer.toString(listBook.get(position).getPrice()));
+		holder.price.setText(Integer.toString(listBook.get(position).getPrice())+" VNĐ");
 		holder.name.setText(listBook.get(position).getName());
 		return convertView;
 	}

@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class CartFragment extends Fragment {
 			
 		}
 		else {
-			Toast.makeText(getActivity(), "check Interner", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Vui lòng kiểm tra kết nối mạng!", Toast.LENGTH_LONG).show();
 		}
 		
 		
@@ -113,15 +114,15 @@ public class CartFragment extends Fragment {
 			if (s != null) {
 				checkPayment = netWork.checkForAddCartAndFavoriteList(s);
 				if(checkPayment == 1){
-					Toast.makeText(getActivity(), "Payment success", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Đặt hàng thành công!", Toast.LENGTH_LONG).show();
 				}else{
-					Toast.makeText(getActivity(), "Payment unsuccess", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Có lỗi khi đặt hàng!", Toast.LENGTH_LONG).show();
 				}
 										
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle("Fail");
-				builder.setMessage("Check for Connect Server");
+				builder.setTitle("Lỗi");
+				builder.setMessage("Vui lòng kiểm tra kết nối mạng!");
 				builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 
 					@Override
@@ -175,12 +176,12 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 		if (s != null) {
 			arrList = netWork.checkResultForGetUserBooks(s);
 			if (arrList.size() == 0) {
-				Toast.makeText(getActivity(), "Not found anything in cart", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), "Không có sách nào trong giỏ hàng!", Toast.LENGTH_LONG).show();
 
 			} else {
 				total = total_money();
 				Log.d(TAG, arrList.get(0).getName());
-				subTotal.setText(total + "VND");
+				subTotal.setText("Tổng: "+total + " VNĐ");
 				adapter = new ListCartAdapter(getContext(), R.layout.cart_books, arrList);
 				if( adapter == null ){
 					Log.d(TAG, "size of cart :" +arrList.size() + "");
@@ -191,8 +192,8 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 			}
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("Fail");
-			builder.setMessage("Check for Connect Server");
+			builder.setTitle("Lỗi");
+			builder.setMessage("Vui lòng kiểm tra kết nối mạng!");
 			builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 
 				@Override
@@ -235,11 +236,14 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 
 	}
 
-	private void startBookFragment(BookEntity book) {
-		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
-		trans.addToBackStack(null);
-		trans.commit();
+	private void startBookFragment(BookEntity book) {	
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+//		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		ft.replace(R.id.container, new BookFragment(getContext(), book));
+		ft.addToBackStack(null);
+		ft.commit();
+		fm.executePendingTransactions();
 	}
 
 }

@@ -97,11 +97,11 @@ public class AppController extends Application {
 			passText = (TextView) layout.findViewById(R.id.txtView4);
 			moneyText = (TextView) layout.findViewById(R.id.txtView5);
 
-			nameText.setText("Name        : " + accEntity.getName());
-			addressText.setText("Address    : " + accEntity.getAddress());
-			phoneText.setText("Phone       : " + accEntity.getPhone());
-			passText.setText("PassWord : " + accEntity.getPassword());
-			moneyText.setText("Money       :" + accEntity.getMoney());
+			nameText.setText(   "Tên         : " + accEntity.getName());
+			addressText.setText("Địa chỉ     : " + accEntity.getAddress());
+			phoneText.setText(  "SĐT         : " + accEntity.getPhone());
+			passText.setText(   "Mật khẩu    : " + accEntity.getPassword());
+			moneyText.setText(  "Tiền đã mua : " + accEntity.getMoney());
 			btnOkPopup.setOnClickListener(new OnClickListener() {
 
 				@Override

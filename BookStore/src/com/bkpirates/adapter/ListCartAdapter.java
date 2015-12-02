@@ -13,7 +13,6 @@ import com.bkpirates.fragment.LoginFragment;
 import com.bkpirates.webservice.NetWork;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.R.integer;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -75,7 +73,7 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		holder.numberToBuy.setText("Quantity:" + listBook.get(position).getNumberBookToBuy() + "");
 		holder.name.setText(listBook.get(position).getName());
 		holder.author.setText(listBook.get(position).getAuthor());
-		holder.price.setText(Integer.toString(listBook.get(position).getPrice()));
+		holder.price.setText(Integer.toString(listBook.get(position).getPrice())+" VNĐ");
 		int tempQuantity = listBook.get(position).getQuantity();
 		for (int i = 0; i < DEFINE_QUANTITY; i++)
 			arrQuantity[i] = i + 1;

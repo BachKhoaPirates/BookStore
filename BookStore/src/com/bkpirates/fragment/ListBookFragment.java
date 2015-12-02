@@ -8,6 +8,7 @@ import com.bkpirates.entity.BookEntity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class ListBookFragment extends Fragment {
 
@@ -41,12 +41,14 @@ public class ListBookFragment extends Fragment {
 		});
 		return view;
 	}
-	private void startBookFragment(BookEntity book){
-		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
-		trans.replace(((ViewGroup)getView().getParent()).getId(),
-				new BookFragment(getContext(), book));
-		trans.addToBackStack(null);
-		trans.commit();
+	private void startBookFragment(BookEntity book){		
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+//		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		ft.replace(R.id.container, new BookFragment(getContext(), book));
+		ft.addToBackStack(null);
+		ft.commit();
+		fm.executePendingTransactions();
 	}
 	
 }

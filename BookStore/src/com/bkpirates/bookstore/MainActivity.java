@@ -16,18 +16,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
 	public static Activity customerActivity;
-	private ImageView homeButton, searchButton, cartButton, userButton;
+	private ImageView homeButton, searchButton, cartButton, accButton;
 	private TextView topBar;
 
-	private static final String HomeTag = "Home";
-	private static final String SearchTag = "Search";
-	private static final String CartTag = "Cart";
-	private static final String AccountTag = "Account";
+	public static final String HomeTag = "Home";
+	public static final String SearchTag = "Search";
+	public static final String CartTag = "Cart";
+	public static final String AccountTag = "Account";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class MainActivity extends FragmentActivity {
 		homeButton = (ImageView) findViewById(R.id.home_button);
 		searchButton = (ImageView) findViewById(R.id.search_button);
 		cartButton = (ImageView) findViewById(R.id.cart_button);
-		userButton = (ImageView) findViewById(R.id.user_button);
+		accButton = (ImageView) findViewById(R.id.user_button);
 
 		setBottomBar();
 		homeButton.setImageResource(R.drawable.home_select);
@@ -63,7 +62,7 @@ public class MainActivity extends FragmentActivity {
 
 				if (fm.getBackStackEntryCount() > 0) {
 					ft.remove(fm.findFragmentById(R.id.container)).commit();
-					fm.popBackStackImmediate(HomeTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+					fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 				}
 				Log.d("BACKSTACK", "" + fm.getBackStackEntryCount());
 			}
@@ -101,18 +100,19 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-
+				
 				setBottomBar();
 				cartButton.setImageResource(R.drawable.cart_select);
-
+				
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
-				Toast.makeText(MainActivity.this, LoginFragment.checkLogin + "", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(MainActivity.this, LoginFragment.checkLogin + "", Toast.LENGTH_SHORT).show();
 				if (LoginFragment.checkLogin == 0) {
+					
 					while (fm.getBackStackEntryCount() > 1) {
 						fm.popBackStackImmediate();
 					}
-					ft.replace(R.id.container, new LoginFragment());
+					ft.replace(R.id.container, new LoginFragment(CartTag));
 					if (fm.getBackStackEntryCount() == 0) {
 						ft.addToBackStack(HomeTag);
 					}
@@ -142,13 +142,13 @@ public class MainActivity extends FragmentActivity {
 
 		});
 
-		userButton.setOnClickListener(new View.OnClickListener() {
+		accButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
 				setBottomBar();
-				userButton.setImageResource(R.drawable.user_select);
+				accButton.setImageResource(R.drawable.user_select);
 
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
@@ -157,7 +157,7 @@ public class MainActivity extends FragmentActivity {
 					while (fm.getBackStackEntryCount() > 1) {
 						fm.popBackStackImmediate();
 					}
-					ft.replace(R.id.container, new LoginFragment());
+					ft.replace(R.id.container, new LoginFragment(AccountTag));
 					if (fm.getBackStackEntryCount() == 0) {
 						ft.addToBackStack(HomeTag);
 					}
@@ -196,7 +196,7 @@ public class MainActivity extends FragmentActivity {
 		homeButton.setImageResource(R.drawable.home_unselect);
 		searchButton.setImageResource(R.drawable.search_unselect);
 		cartButton.setImageResource(R.drawable.cart_unselect);
-		userButton.setImageResource(R.drawable.user_unselect);
+		accButton.setImageResource(R.drawable.user_unselect);
 	}
 
 	@Override

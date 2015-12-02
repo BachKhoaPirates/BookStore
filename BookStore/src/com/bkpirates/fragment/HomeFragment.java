@@ -14,6 +14,7 @@ import com.bkpirates.widget.HorizontalListView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -201,11 +202,13 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 	}
 
 	private void startBookFragment(BookEntity book) {
-		FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+		FragmentManager fm = getActivity().getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
 //		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
-		trans.replace(R.id.container, new BookFragment(getContext(), book));
-		trans.addToBackStack(null);
-		trans.commit();
+		ft.replace(R.id.container, new BookFragment(getContext(), book));
+		ft.addToBackStack(null);
+		ft.commit();
+		fm.executePendingTransactions();
 	}
 
 }

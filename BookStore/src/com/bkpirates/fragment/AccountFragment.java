@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 
 import com.bkpirates.adapter.AccountAndFunctionAdminAdapter;
 import com.bkpirates.app.AppController;
+import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
@@ -22,7 +23,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +35,13 @@ import android.widget.Toast;
 @SuppressLint("InflateParams")
 public class AccountFragment extends Fragment {
 
-	private String[] str = { "Favorite Books", "Ordered Books", "Information", "Logout" };
+	private String[] str = { "Sách đã thích", "Sách đã mua", "Thông tin tài khoản", "Đăng xuất" };
 	private final String GET_FAVORITE_BOOKS = "http://thachpn.name.vn/books/get_user_favorite_books.php";
 	private final String GET_ORDER_BOOKS = "http://thachpn.name.vn/books/get_bought_books.php";
 	private ListView listview;
 	private TextView txtNameUsers;
 	private NetWork netWork = new NetWork();
-	private final String TAG = "AccountFragment";
+//	private final String TAG = "AccountFragment";
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
 	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
 	private AccountEntity accEntity = new AccountEntity();
@@ -94,7 +94,7 @@ public class AccountFragment extends Fragment {
 					editor.commit();
 					FragmentManager fm = getFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
-					LoginFragment lg = new LoginFragment();
+					LoginFragment lg = new LoginFragment(MainActivity.AccountTag);
 					ft.replace(R.id.container, lg);
 					ft.commit();
 					fm.executePendingTransactions();
@@ -126,7 +126,7 @@ public class AccountFragment extends Fragment {
 				
 				favoriteArrayBooks = netWork.checkResultForGetUserBooks(s);
 				if (favoriteArrayBooks.size() == 0) {
-					 Toast.makeText(getActivity(), "Not found anything", Toast.LENGTH_SHORT).show();
+					 Toast.makeText(getActivity(), "Không có sách nào!", Toast.LENGTH_LONG).show();
 
 				} else {
 					ListBookFragment listBookFragment = new ListBookFragment();

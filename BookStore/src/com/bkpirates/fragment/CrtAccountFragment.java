@@ -9,23 +9,19 @@ import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.webservice.NetWork;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 @SuppressLint("NewApi")
 public class CrtAccountFragment extends Fragment {
@@ -99,17 +95,19 @@ public class CrtAccountFragment extends Fragment {
 			}
 			if (s != null) {
 				check = netWork.checkAccountForCreateAccount(s);
-				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
+//				Toast.makeText(getActivity(), check + "", Toast.LENGTH_LONG).show();
 				if (check == 1) {
 					
+					//back to LoginFragment
 					getActivity().getSupportFragmentManager().popBackStack();
-					getActivity().getSupportFragmentManager().beginTransaction()
-							.replace(R.id.container, new LoginFragment()).commit();
+//					getActivity().getSupportFragmentManager().beginTransaction()
+//							.replace(R.id.container, new LoginFragment()).commit();
+					Toast.makeText(getContext(), "Tạo tài khoản thành công!", Toast.LENGTH_LONG).show();
 				} else {
-					Toast.makeText(getActivity(), netWork.getPhone() + netWork.getAddress() + netWork.getName() + netWork.getPass(), Toast.LENGTH_LONG).show();
+//					Toast.makeText(getActivity(), netWork.getPhone() + netWork.getAddress() + netWork.getName() + netWork.getPass(), Toast.LENGTH_LONG).show();
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-					builder.setTitle("Fail");
-					builder.setMessage("Account existed");
+					builder.setTitle("Lỗi");
+					builder.setMessage("Tài khoản đã tồn tại!");
 					builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 
 						@Override
