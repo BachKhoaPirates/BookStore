@@ -48,14 +48,13 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		super(context,  resource, list_product);
 		this.context = context;
 		this.listBook = list_product;
-		Log.d(TAG,TAG + " son");
 	}
+	//position la vi tri trong listview
+	//position1 la vi tri trong spinner
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
-		Log.d(TAG, "convertView != NULL");
 		if (convertView == null) {
-			Log.d(TAG, "convertView == NULL");
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.cart_books, parent, false);
 			holder = new ViewHolder();
@@ -77,17 +76,18 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 		holder.name.setText(listBook.get(position).getName());
 		holder.author.setText(listBook.get(position).getAuthor());
 		holder.price.setText(Integer.toString(listBook.get(position).getPrice()));
-		final int tempQuantity = listBook.get(position).getQuantity();
+		int tempQuantity = listBook.get(position).getQuantity();
 		for (int i = 0; i < DEFINE_QUANTITY; i++)
 			arrQuantity[i] = i + 1;
 		adapter = new ArrayAdapter<Integer>(context, android.R.layout.simple_spinner_item, arrQuantity);
 		adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 		holder.spinner.setAdapter(adapter);
-		
+		holder.spinner.setSelection(listBook.get(position).getNumberBookToBuy()-1); //vi tri spinner bat dau tu 0
 		holder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position1, long id) {
-				if(arrQuantity[position1] > tempQuantity){
+				if(arrQuantity[position1] > listBook.get(position).getQuantity()){ //neu k du sach
+					Log.d(TAG, "dddddddddddddddmmmmmmmmmmmmmmmmmm");
 					AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 					dialog.setTitle("");
 					dialog.setMessage("Sorry because not enough quantity");
@@ -101,10 +101,10 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 					dialog.create();
 					dialog.show();
 						
-				}else if(tempQuantity >= arrQuantity[position1] && arrQuantity[position1] != 1){
+				}else if(listBook.get(position).getQuantity() >= arrQuantity[position1]){ // neu du sach
 					listBook.get(position).setNumberBookToBuy(arrQuantity[position1]);
 					holder.numberToBuy.setText("Quantity:"+ arrQuantity[position1]);
-					CartFragment.subTotal.setText(CartFragment.total_money() + "");
+					CartFragment.subTotal.setText(CartFragment.total_money() + "VND");
 					netWork.setBookEntity(listBook.get(position));
 					netWork.setPhone(LoginFragment.accEntity.getPhone());
 					netWork.setNumberBookToBuy(arrQuantity[position1]);
@@ -125,12 +125,13 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 			@Override
 			public void onClick(View v) {
 				netWork.setBookEntity(listBook.get(position));
+				Log.d(TAG, netWork.getBookEntity().getBid());
 				netWork.setPhone(LoginFragment.accEntity.getPhone());
 				 DeleteCartAsyncTast dct = (DeleteCartAsyncTast) new DeleteCartAsyncTast()
 						.execute(DELETE_BOOK);
 				CartFragment.arrList.remove(position);
 				CartFragment.adapter.notifyDataSetChanged();
-				CartFragment.subTotal.setText(CartFragment.total_money() + "");
+				CartFragment.subTotal.setText(CartFragment.total_money() + "VND");
 			}
 		});
 		return convertView;

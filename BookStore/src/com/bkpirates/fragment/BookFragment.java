@@ -149,12 +149,11 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 					netWork.setPhone(LoginFragment.accEntity.getPhone());
 					netWork.setNumberBookToBuy(numberBookToBuy);
 					if (book.getQuantity() > 0) {
-						Toast.makeText(getActivity(), netWork.getNumberBookToBuy() + "", Toast.LENGTH_SHORT).show();
 
 						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
 								.execute(ADD_CART);
 					} else {
-
+						Log.d(TAG, TAG);
 						AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 						dialog.setTitle("");
 						dialog.setMessage("Sorry because not enough quantity");
@@ -183,7 +182,6 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 			@Override
 			public void onClick(View v) {
-				Log.d(TAG, book.getLike() + "");
 				if (LoginFragment.checkLogin == 1) {
 					Log.d(TAG, book.getLike() + "");
 					if (book.getLike() == 0) {
@@ -309,41 +307,6 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		}
 		return ssb;
 	}
-
-	// public class GetLikeUser extends AsyncTask<String, Void, String>{
-	//
-	// @Override
-	// protected String doInBackground(String... params) {
-	// String url = params[0];
-	// HttpResponse response = null;
-	// if (url.equals(ADD_CART)) {
-	// try {
-	// response = netWork.makeRquestAddToCart(url);
-	// } catch (IOException e) {
-	// return null;
-	// }
-	// if (response != null) {
-	// String content = null;
-	// try {
-	// content = netWork.processHTTPResponce(response);
-	// return content;
-	// } catch (IOException e) {
-	// return null;
-	// } catch (ParseException e) {
-	// return null;
-	// }
-	// }
-	// }
-	// return null;
-	//
-	// }
-	// @Override
-	// protected void onPostExecute(String s){
-	// super.onPostExecute(s);
-	// }
-	//
-	// }
-	//
 	public class AddToCartAndFavoriteListAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
@@ -401,7 +364,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						return null;
 					}
 				}
-			} else if (url.equals(ADD_FAVORITE)) {
+			} else if (url.equals(ADD_FAVORITE) || url.equals(DELETE_FAVORITE)) {
 				try {
 					response = netWork.makeRquestAddFavoriteList(url);
 				} catch (IOException e) {
@@ -416,26 +379,9 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						return null;
 					} catch (ParseException e) {
 						return null;
-					}
+					}	
 				}
 
-			}else if(url.equals(DELETE_FAVORITE)){
-				try {
-					response = netWork.makeRquestAddFavoriteList(url);
-				} catch (IOException e) {
-					return null;
-				}
-				if (response != null) {
-					String content = null;
-					try {
-						content = netWork.processHTTPResponce(response);
-						return content;
-					} catch (IOException e) {
-						return null;
-					} catch (ParseException e) {
-						return null;
-					}
-				}
 			}
 			
 

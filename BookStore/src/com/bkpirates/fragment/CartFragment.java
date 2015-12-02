@@ -180,7 +180,7 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 			} else {
 				total = total_money();
 				Log.d(TAG, arrList.get(0).getName());
-				subTotal.setText(total + "");
+				subTotal.setText(total + "VND");
 				adapter = new ListCartAdapter(getContext(), R.layout.cart_books, arrList);
 				if( adapter == null ){
 					Log.d(TAG, "size of cart :" +arrList.size() + "");
