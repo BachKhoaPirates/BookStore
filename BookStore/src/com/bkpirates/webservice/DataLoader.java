@@ -12,14 +12,13 @@ import com.bkpirates.entity.DistributeBookEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-public class BookLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
+public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	ArrayList<BookEntity> bookArray;
 	ArrayList<DistributeBookEntity> distributeArray;
 	ArrayList<AccountEntity> accountArray;
-	public BookLoaderListener listener = null;
+	public DataLoaderListener listener = null;
 
 	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
 	public static final String TOP_FAVORITE_BOOK_LINK = "http://thachpn.name.vn/books/get_top_favorite_boooks.php";

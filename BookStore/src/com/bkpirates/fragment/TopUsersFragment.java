@@ -1,62 +1,169 @@
 package com.bkpirates.fragment;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import com.bkpirates.adapter.TopUsersAdminAdapter;
 import com.bkpirates.app.AppController;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
-import com.bkpirates.webservice.BookLoader;
-import com.bkpirates.webservice.BookLoaderListener;
-import com.bkpirates.webservice.NetWorkAdmin;
+import com.bkpirates.webservice.DataLoader;
+import com.bkpirates.webservice.DataLoaderListener;
 
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class TopUsersFragment extends Fragment implements BookLoaderListener{
+public class TopUsersFragment extends Fragment implements DataLoaderListener {
+
 	private ListView listview;
-	private NetWorkAdmin netWorkAdmin = new NetWorkAdmin();
-	private ArrayList<AccountEntity> accEntity ;
-	private final String GET_TOP_USERS = "http://thachpn.name.vn/books/get_top_users.php";
-	BookLoader bld1 = new BookLoader();
-	@SuppressWarnings("unchecked")
+	private Button beginBtn, endBtn, getBtn;
+	private String beginDate, endDate;
+	private TextView beginDateTv, endDateTv;
+	private DatePickerDialog.OnDateSetListener beginDateCallBack;
+	private DatePickerDialog.OnDateSetListener endDateCallBack;
+	private DatePickerDialog dateDialog;
+
+	private ArrayList<AccountEntity> arrAcc;
+	private final String GET_TOP_USERS = "http://thachpn.name.vn/books/admin_get_top_users.php";
+	private DataLoader bld;
+	private ProgressDialog dialog;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_list, container, false);
-		listview = (ListView) view.findViewById(R.id.lvName);
-		bld1.listener = this;
-		try {
-			accEntity = (ArrayList<AccountEntity>) bld1.execute(GET_TOP_USERS).get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		TopUsersAdminAdapter adapter = new TopUsersAdminAdapter(getActivity(),R.layout.item_distribute_book, accEntity);
-		listview.setAdapter(adapter);
+		View view = inflater.inflate(R.layout.fragment_admin_top, container, false);
+
+		bld = new DataLoader();
+		bld.listener = this;
 		
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		dialog = new ProgressDialog(getContext());
+		dialog.setMessage("Loading...");
+		dialog.setCancelable(false);
+		
+		listview = (ListView) view.findViewById(R.id.lView);
+
+		beginBtn = (Button) view.findViewById(R.id.begin_btn);
+		endBtn = (Button) view.findViewById(R.id.end_btn);
+		getBtn = (Button) view.findViewById(R.id.get_btn);
+
+		beginDateTv = (TextView) view.findViewById(R.id.begin_date);
+		endDateTv = (TextView) view.findViewById(R.id.end_date);
+
+		setCallBack();
+
+		beginBtn.setOnClickListener(new OnClickListener() {
+
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				AppController.getInstance().initiatePopupWindow(accEntity.get(position), getActivity());
+			public void onClick(View v) {
+
+				// Creating an object of DatePickerDialog in context
+				// dateCallback is called which defined below
+				dateDialog = new DatePickerDialog(getContext(), beginDateCallBack, 2014, 12, 12);
+				// Showing the DatePickerDialog
+				dateDialog.show();
 			}
 		});
+
+		endBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				// Creating an object of DatePickerDialog in context
+				// dateCallback is called which defined below
+				dateDialog = new DatePickerDialog(getContext(), endDateCallBack, 2014, 12, 12);
+				// Showing the DatePickerDialog
+				dateDialog.show();
+			}
+		});
+
+		getBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				dialog.show();
+				
+				if (beginDate == null) {
+					Toast.makeText(getContext(), "Chưa nhập ngày bắt đầu!", Toast.LENGTH_LONG).show();
+				}
+				if (endDate == null) {
+					Toast.makeText(getContext(), "Chưa nhập ngày kết thúc!", Toast.LENGTH_LONG).show();
+				}
+
+				
+				try {
+					arrAcc = (ArrayList<AccountEntity>) bld
+							.execute(GET_TOP_USERS + "?datein=" + beginDate + "&dateout=" + endDate).get();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+
 		return view;
 	}
+
+	private void setCallBack() {
+		beginDateCallBack = new OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				monthOfYear++;
+				beginDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
+				beginDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
+						+ Integer.toString(year));
+			}
+		};
+
+		endDateCallBack = new OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+				monthOfYear++;
+				endDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
+				endDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
+						+ Integer.toString(year));
+			}
+		};
+
+	}
+
 	@Override
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
+		if (dialog.isShowing()){
+			dialog.dismiss();
+		}
 		
+		if (arrAcc == null){
+			Toast.makeText(getContext(), "Không tìm thấy tài khoản nào!", Toast.LENGTH_LONG).show();
+		} else {
+			TopUsersAdminAdapter adapter = new TopUsersAdminAdapter(getContext(), arrAcc);
+			listview.setAdapter(adapter);
+			
+			View header = getActivity().getLayoutInflater().inflate(R.layout.divider, null); 
+			listview.addHeaderView(header);
+			
+			listview.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					AppController.getInstance().initiatePopupWindow(arrAcc.get(position), getActivity());
+				}
+			});
+		}
 	}
 
 }

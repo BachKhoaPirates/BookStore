@@ -74,7 +74,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="Sách Mua Nhiều"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/text_color" />
 
         <com.bkpirates.widget.HorizontalListView
             android:id="@+id/hotbooklist"
@@ -98,7 +99,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="Sách Mới"
-            android:textSize="20sp" />
+            android:textSize="20sp" 
+            android:textColor="@color/text_color" />
 
         <com.bkpirates.widget.HorizontalListView
             android:id="@+id/newbooklist"
@@ -122,7 +124,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="Sách Được Yêu Thích"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/text_color"  />
 
         <com.bkpirates.widget.HorizontalListView
             android:id="@+id/favoritebooklist"

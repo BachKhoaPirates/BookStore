@@ -129,7 +129,7 @@ public class ListCartAdapter extends ArrayAdapter<BookEntity> {
 						.execute(DELETE_BOOK);
 				CartFragment.arrList.remove(position);
 				CartFragment.adapter.notifyDataSetChanged();
-				CartFragment.subTotal.setText(CartFragment.total_money() + "VND");
+				CartFragment.subTotal.setText("Tổng: "+CartFragment.total_money() + " VNĐ");
 			}
 		});
 		return convertView;

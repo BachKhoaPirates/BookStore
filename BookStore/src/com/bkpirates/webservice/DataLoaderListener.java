@@ -1,5 +1,5 @@
 package com.bkpirates.webservice;
 
-public interface BookLoaderListener {
+public interface DataLoaderListener {
 	public void onDownloadSuccess();
 }

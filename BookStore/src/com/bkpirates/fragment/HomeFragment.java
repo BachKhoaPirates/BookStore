@@ -7,8 +7,8 @@ import com.bkpirates.adapter.ViewPagerBannerAdapter;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BannerEntity;
 import com.bkpirates.entity.BookEntity;
-import com.bkpirates.webservice.BookLoader;
-import com.bkpirates.webservice.BookLoaderListener;
+import com.bkpirates.webservice.DataLoader;
+import com.bkpirates.webservice.DataLoaderListener;
 import com.bkpirates.widget.HorizontalListView;
 
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 
-public class HomeFragment extends Fragment implements BookLoaderListener {
+public class HomeFragment extends Fragment implements DataLoaderListener {
 
 	private HorizontalListView hotBookList, newBookList, favoriteBookList;
 	private ArrayList<BookEntity> hotBookArray, newBookArray, favoriteBookArray;
@@ -50,19 +50,19 @@ public class HomeFragment extends Fragment implements BookLoaderListener {
 
 		try {
 			if (hotBookArray == null) {
-				BookLoader bld1 = new BookLoader();
+				DataLoader bld1 = new DataLoader();
 				bld1.listener = this;
-				hotBookArray = (ArrayList<BookEntity>) bld1.execute(BookLoader.HOT_BOOK_LINK).get();
+				hotBookArray = (ArrayList<BookEntity>) bld1.execute(DataLoader.HOT_BOOK_LINK).get();
 			}
 			if (newBookArray == null) {
-				BookLoader bld2 = new BookLoader();
+				DataLoader bld2 = new DataLoader();
 				bld2.listener = this;
-				newBookArray = (ArrayList<BookEntity>) bld2.execute(BookLoader.NEW_BOOK_LINK).get();
+				newBookArray = (ArrayList<BookEntity>) bld2.execute(DataLoader.NEW_BOOK_LINK).get();
 			}
 			if (favoriteBookArray == null) {
-				BookLoader bld3 = new BookLoader();
+				DataLoader bld3 = new DataLoader();
 				bld3.listener = this;
-				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(BookLoader.TOP_FAVORITE_BOOK_LINK).get();
+				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(DataLoader.TOP_FAVORITE_BOOK_LINK).get();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

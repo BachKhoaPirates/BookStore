@@ -6,7 +6,6 @@ import com.bkpirates.bookstore.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
@@ -35,7 +33,8 @@ public class Admin_Fragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 				if (position == 0) {
-					FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+					FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
+							.beginTransaction();
 					TopUsersFragment tef = new TopUsersFragment();
 					fragmentTransaction.replace(R.id.containerAdmin, tef);
 					fragmentTransaction.addToBackStack(null);
@@ -43,15 +42,35 @@ public class Admin_Fragment extends Fragment {
 					getActivity().getSupportFragmentManager().executePendingTransactions();
 
 				} else if (position == 1) {
-					
-				}
-				else if(position == 5 ){
+
+				} else if (position == 5) {
 					AdminActivity.adminActivity.finish();
 				}
 			}
 		});
 
 		return view;
+	}
+
+	public static String convertDateToString(int year, int month, int day) {
+		String date;
+		String monthStr, dayStr;
+
+		if (month < 10) {
+			monthStr = "0" + Integer.toString(month);
+		} else {
+			monthStr = Integer.toString(month);
+		}
+
+		if (day < 10) {
+			dayStr = "0" + Integer.toString(day);
+		} else {
+			dayStr = Integer.toString(day);
+		}
+
+		date = Integer.toString(year) + monthStr + dayStr;
+
+		return date;
 	}
 
 }

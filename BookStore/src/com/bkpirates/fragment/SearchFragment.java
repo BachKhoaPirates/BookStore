@@ -7,8 +7,8 @@ import com.bkpirates.app.AppController;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.entity.DistributeBookEntity;
-import com.bkpirates.webservice.BookLoader;
-import com.bkpirates.webservice.BookLoaderListener;
+import com.bkpirates.webservice.DataLoader;
+import com.bkpirates.webservice.DataLoaderListener;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -24,8 +24,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class SearchFragment extends Fragment implements BookLoaderListener {
+public class SearchFragment extends Fragment implements DataLoaderListener {
 
 	private ArrayList<DistributeBookEntity> arrayDistribute = null;
 	private ListView lView;
@@ -42,10 +43,10 @@ public class SearchFragment extends Fragment implements BookLoaderListener {
 		super.onCreate(savedInstanceState);
 
 		if (AppController.getInstance().getDistributeArray() == null) {
-			BookLoader bld = new BookLoader();
+			DataLoader bld = new DataLoader();
 			bld.listener = this;
 			try {
-				arrayDistribute = (ArrayList<DistributeBookEntity>) bld.execute(BookLoader.DISTRIBUTE_LINK).get();
+				arrayDistribute = (ArrayList<DistributeBookEntity>) bld.execute(DataLoader.DISTRIBUTE_LINK).get();
 				AppController.getInstance().setDistributeArray(arrayDistribute);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -75,10 +76,10 @@ public class SearchFragment extends Fragment implements BookLoaderListener {
 				// TODO Auto-generated method stub
 				dialog.show();
 				check = 1;
-				BookLoader bld = new BookLoader();
+				DataLoader bld = new DataLoader();
 				bld.listener = SearchFragment.this;
 				try {
-					arrayBook = (ArrayList<BookEntity>) bld.execute(BookLoader.LIST_BOOK_LINK + "?pid="
+					arrayBook = (ArrayList<BookEntity>) bld.execute(DataLoader.LIST_BOOK_LINK + "?pid="
 							+ arrayDistribute.get(position).getPid() + "&offset=" + LIMIT).get();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -116,15 +117,19 @@ public class SearchFragment extends Fragment implements BookLoaderListener {
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
 		if (check == 1) {
-
-			FragmentManager fm = getActivity().getSupportFragmentManager();
-			FragmentTransaction ft = fm.beginTransaction();
-			ft.replace(R.id.container, new BookOfDistribute(arrayBook));
-			ft.addToBackStack(null);
-			ft.commit();
-			fm.executePendingTransactions();
-			if (dialog.isShowing())
-				dialog.dismiss();
+			if (arrayBook != null){
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				ft.replace(R.id.container, new BookOfDistribute(arrayBook));
+				ft.addToBackStack(null);
+				ft.commit();
+				fm.executePendingTransactions();
+				if (dialog.isShowing()){
+					dialog.dismiss();
+				}
+			} else {
+				Toast.makeText(getContext(), "Không tìm thấy sách nào!", Toast.LENGTH_LONG).show();
+			}
 		}
 
 	}
@@ -140,10 +145,10 @@ public class SearchFragment extends Fragment implements BookLoaderListener {
 			// edit text empty, do nothing
 		} else {
 			check = 1;
-			BookLoader bld = new BookLoader();
+			DataLoader bld = new DataLoader();
 			bld.listener = SearchFragment.this;
 			try {
-				arrayBook = (ArrayList<BookEntity>) bld.execute(BookLoader.SEARCH_LINK + ed_text).get();
+				arrayBook = (ArrayList<BookEntity>) bld.execute(DataLoader.SEARCH_LINK + ed_text).get();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
