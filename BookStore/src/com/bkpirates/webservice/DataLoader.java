@@ -28,7 +28,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 	public static final String SEARCH_LINK = "http://thachpn.name.vn/books/search.php?key=";
 	public static final String LIST_BOOK_LINK = "http://thachpn.name.vn/books/get_list_books.php";
-	
+
 	@Override
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
@@ -49,7 +49,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 					JSONArray jsArr = new JSONArray(jsonObj.getString("books"));
 					JSONObject js;
-
+					Log.d("JSON", ""+jsArr);
 					for (int i = 0; i < jsArr.length(); i++) {
 						js = jsArr.getJSONObject(i);
 						BookEntity book = new BookEntity();
@@ -85,7 +85,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
 					JSONArray jsArr = new JSONArray(jsonObj.getString("users"));
 					JSONObject js;
-					Log.d(jsArr.length() + "", jsArr.length() + "");
+					Log.d("JSON", ""+jsArr);
 					for (int i = 0; i < jsArr.length(); i++) {
 						js = jsArr.getJSONObject(i);
 						AccountEntity account = new AccountEntity();
@@ -98,62 +98,47 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						if (js.has("money")) {
 							account.setMoney(Integer.parseInt(js.getString("money")));
 						}
-						
+
 						if (js.has("add")) {
 							account.setAddress(js.getString("add"));
 						}
 						accountArray.add(account);
 					}
 
-				}
-				else if(jsonObj.has("orders")){
-					
-				}
+				} else if (jsonObj.has("orders")) {
 
-				else {
+				} else if (jsonObj.has("distributes")) {
+					distributeArray = new ArrayList<DistributeBookEntity>();
 
-					if (jsonObj.has("distributes")) {
-						distributeArray = new ArrayList<DistributeBookEntity>();
-
-						JSONArray jsArr = new JSONArray(jsonObj.getString("distributes"));
-						JSONObject js;
-
-						for (int i = 0; i < jsArr.length(); i++) {
-							js = jsArr.getJSONObject(i);
-							DistributeBookEntity distributeBook = new DistributeBookEntity();
-							if (js.has("pid")) {
-								distributeBook.setPid(js.getString("pid"));
-							}
-							if (js.has("distribute")) {
-								distributeBook.setName(js.getString("distribute"));
-							}
-							distributeArray.add(distributeBook);
+					JSONArray jsArr = new JSONArray(jsonObj.getString("distributes"));
+					JSONObject js;
+					Log.d("JSON", ""+jsArr);
+					for (int i = 0; i < jsArr.length(); i++) {
+						js = jsArr.getJSONObject(i);
+						DistributeBookEntity distributeBook = new DistributeBookEntity();
+						if (js.has("pid")) {
+							distributeBook.setPid(js.getString("pid"));
 						}
+						if (js.has("distribute")) {
+							distributeBook.setName(js.getString("distribute"));
+						}
+						distributeArray.add(distributeBook);
 					}
 				}
+
 			}
-		} catch (
-
-		Exception e)
-
-		{
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(accountArray != null){
+		
+		if (accountArray != null) {
 			return accountArray;
-		}
-		if (bookArray != null)
-
-		{
+		} else if (bookArray != null) {
 			return bookArray;
-		} else if (distributeArray != null)
-
-		{
+		} else if (distributeArray != null) {
 			return distributeArray;
-		} else
-
-		{
+		} else {
 			return null;
 		}
 
@@ -172,7 +157,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 		} else
 			Log.d("BookLoader:", "Download success!");
 
-		if (listener != null){
+		if (listener != null) {
 			listener.onDownloadSuccess();
 		}
 		// super.onPostExecute(result);

@@ -17,8 +17,8 @@ import android.widget.ListView;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
-	final String[] str = { "Tài khoản mua nhiều nhất", "Danh sách đơn hàng đã chuyển đến",
-			"Danh sách đơn hàng chưa chuyển đến", "Thể loại sách được mua nhiều nhất", "Nhập thêm sách", "Thoát" };
+	final String[] str = { "Xếp hạng", "Danh sách đơn hàng đã chuyển đến",
+			"Danh sách đơn hàng chưa chuyển đến", "Nhập thêm sách", "Thoát" };
 	private ArrayAdapter<String> adapter = null;
 
 	@Override
@@ -35,7 +35,7 @@ public class Admin_Fragment extends Fragment {
 				if (position == 0) {
 					FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
 							.beginTransaction();
-					TopUsersFragment tef = new TopUsersFragment();
+					RankFragment tef = new RankFragment();
 					fragmentTransaction.replace(R.id.containerAdmin, tef);
 					fragmentTransaction.addToBackStack(null);
 					fragmentTransaction.commit();
@@ -43,7 +43,7 @@ public class Admin_Fragment extends Fragment {
 
 				} else if (position == 1) {
 
-				} else if (position == 5) {
+				} else if (position == 4) {
 					AdminActivity.adminActivity.finish();
 				}
 			}
