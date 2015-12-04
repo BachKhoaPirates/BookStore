@@ -35,7 +35,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RankFragment extends Fragment implements DataLoaderListener {
+public class RankAdminFragment extends Fragment implements DataLoaderListener {
 
 	private String beginDate, endDate;
 
@@ -51,9 +51,6 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 	private ArrayList<AccountEntity> arrAcc;
 	private ArrayList<BookEntity> arrBook;
 	private ArrayList<DistributeBookEntity> arrDistribute;
-	private final String GET_TOP_USERS = "http://thachpn.name.vn/books/admin_get_top_users.php";
-	private final String GET_TOP_BOOK = "http://thachpn.name.vn/books/admin_get_top_books.php";
-	private final String GET_TOP_DISTRIBUTE = "http://thachpn.name.vn/books/admin_get_top_distribute.php";
 
 	private DataLoader bld;
 	private ProgressDialog dialog;
@@ -73,10 +70,12 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.rank_types_arrays,
 				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		spinner.setPrompt(getString(R.string.rank_types_prompt));
+		// spinner.setPrompt(getString(R.string.rank_types_prompt));
 		spinner.setAdapter(adapter);
 
 		listview = (ListView) view.findViewById(R.id.lView);
+		View header = getActivity().getLayoutInflater().inflate(R.layout.divider, null);
+		listview.addHeaderView(header);
 
 		beginBtn = (Button) view.findViewById(R.id.begin_btn);
 		endBtn = (Button) view.findViewById(R.id.end_btn);
@@ -125,22 +124,24 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 					Toast.makeText(getContext(), "Chưa nhập ngày kết thúc!", Toast.LENGTH_LONG).show();
 				} else {
 					dialog.show();
-					type = spinner.getSelectedItemPosition() + 1;
+					type = spinner.getSelectedItemPosition();
 					String str = "?datein=" + beginDate + "&dateout=" + endDate;
 
 					bld = new DataLoader();
-					bld.listener = RankFragment.this;
+					bld.listener = RankAdminFragment.this;
 					try {
 						switch (type) {
+						case 0:
+							arrAcc = (ArrayList<AccountEntity>) bld
+									.execute(getString(R.string.ADMIN_GET_TOP_USERS) + str).get();
+							break;
 						case 1:
-							arrAcc = (ArrayList<AccountEntity>) bld.execute(GET_TOP_USERS + str).get();
+							arrBook = (ArrayList<BookEntity>) bld.execute(getString(R.string.ADMIN_GET_TOP_BOOK) + str)
+									.get();
 							break;
 						case 2:
-							arrBook = (ArrayList<BookEntity>) bld.execute(GET_TOP_BOOK + str).get();
-							break;
-						case 3:
-							arrDistribute = (ArrayList<DistributeBookEntity>) bld.execute(GET_TOP_DISTRIBUTE + str)
-									.get();
+							arrDistribute = (ArrayList<DistributeBookEntity>) bld
+									.execute(getString(R.string.ADMIN_GET_TOP_DISTRIBUTE) + str).get();
 							break;
 						}
 
@@ -181,14 +182,10 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 	@Override
 	public void onDownloadSuccess() {
 		// TODO Auto-generated method stub
-		if (dialog.isShowing()) {
-			dialog.dismiss();
-		}
-
 		resultNotNULL = false;
 
 		switch (type) {
-		case 1:
+		case 0:
 			if (arrAcc != null) {
 				resultNotNULL = true;
 				TopUsersAdminAdapter adapter = new TopUsersAdminAdapter(getContext(), arrAcc);
@@ -202,7 +199,7 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 				});
 			}
 			break;
-		case 2:
+		case 1:
 			if (arrBook != null) {
 				resultNotNULL = true;
 				ListBookAdapter adapter = new ListBookAdapter(getContext(), arrBook);
@@ -211,41 +208,42 @@ public class RankFragment extends Fragment implements DataLoaderListener {
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						Log.d("POSITION: ", ""+position); 
+						Log.d("POSITION: ", "" + position);
 						startBookFragment(arrBook.get(position));
-//						Log.d("NAME: ", ""+arrBook.get(position).getName());
 					}
 				});
 			}
 			break;
-		case 3:
+		case 2:
 			if (arrDistribute != null) {
 				resultNotNULL = true;
 				ListDistributeAdapter adapter = new ListDistributeAdapter(getContext(), arrDistribute);
 				listview.setAdapter(adapter);
-				
+
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						//do nothing
+						// do nothing
 					}
 				});
 			}
 			break;
 		}
 
-		if (resultNotNULL == true) {
-			View header = getActivity().getLayoutInflater().inflate(R.layout.divider, null);
-			listview.addHeaderView(header);
-		} else {
+		if (dialog.isShowing()) {
+			dialog.dismiss();
+		}
+
+		if (resultNotNULL == false) {
 			Toast.makeText(getContext(), "Không tìm thấy tài khoản nào!", Toast.LENGTH_LONG).show();
 		}
+
 	}
 
 	private void startBookFragment(BookEntity book) {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		ft.replace(R.id.container, new BookFragment(getContext(), book));
+		ft.replace(R.id.containerAdmin, new BookFragment(getContext(), book));
 		ft.addToBackStack(null);
 		ft.commit();
 		fm.executePendingTransactions();

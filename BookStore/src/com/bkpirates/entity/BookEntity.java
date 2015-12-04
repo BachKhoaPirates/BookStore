@@ -12,6 +12,7 @@ public class BookEntity {
 	private int like;
 	private int numberBookToBuy;
 	private int likedPersonNumber;
+	public static final int IMAGE_SIZE = 200;
 	
 	public int getLikedPersonNumber() {
 		return likedPersonNumber;
@@ -37,7 +38,6 @@ public class BookEntity {
 		this.like = like;
 	}
 
-	public static final int IMAGE_SIZE = 200;
 
 	public BookEntity() {}
 

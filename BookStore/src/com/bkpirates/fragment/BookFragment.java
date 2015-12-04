@@ -325,7 +325,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 			if (s != null) {
 				check = netWork.checkForAddCartAndFavoriteList(s);
 				if (check == 1)
-					Toast.makeText(getActivity(), "Thêm sách thành công!", Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "Thành công!", Toast.LENGTH_LONG).show();
 				else
 					Toast.makeText(getActivity(), "Lỗi khi thêm sách!" , Toast.LENGTH_LONG).show();
 			} else {

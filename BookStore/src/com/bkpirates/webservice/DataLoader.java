@@ -9,15 +9,18 @@ import org.json.JSONObject;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.entity.DistributeBookEntity;
+import com.bkpirates.entity.OrderAdminEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 
-	ArrayList<BookEntity> bookArray;
-	ArrayList<DistributeBookEntity> distributeArray;
-	ArrayList<AccountEntity> accountArray;
+	private ArrayList<BookEntity> bookArray;
+	private ArrayList<DistributeBookEntity> distributeArray;
+	private ArrayList<AccountEntity> accountArray;
+	private ArrayList<OrderAdminEntity> orderArray;
+	
 	public DataLoaderListener listener = null;
 
 	public static final String NEW_BOOK_LINK = "http://thachpn.name.vn/books/get_new_books.php";
@@ -106,7 +109,30 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 					}
 
 				} else if (jsonObj.has("orders")) {
-
+					orderArray = new ArrayList<OrderAdminEntity>();
+					JSONArray jsArr = new JSONArray(jsonObj.getString("orders"));
+					JSONObject js;
+					Log.d("JSON", ""+jsArr);
+					for (int i = 0; i < jsArr.length(); i++) {
+						js = jsArr.getJSONObject(i);
+						OrderAdminEntity order = new OrderAdminEntity();
+						if (js.has("oid")) {
+							order.setOid(js.getString("oid"));
+						}
+						if (js.has("date")) {
+							order.setDate(js.getString("date"));
+						}
+						if (js.has("payment")){
+							order.setTotalMoney(js.getString("payment"));
+						}
+						if (js.has("name")){
+							order.setOrderPerson(js.getString("name"));
+						}
+						if (js.has("address")){
+							order.setOrderPersonAddress(js.getString("address"));
+						}
+						orderArray.add(order);
+					}
 				} else if (jsonObj.has("distributes")) {
 					distributeArray = new ArrayList<DistributeBookEntity>();
 
@@ -138,6 +164,8 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			return bookArray;
 		} else if (distributeArray != null) {
 			return distributeArray;
+		} else if (orderArray != null){
+			return orderArray;
 		} else {
 			return null;
 		}

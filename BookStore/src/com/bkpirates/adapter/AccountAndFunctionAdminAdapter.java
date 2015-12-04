@@ -1,30 +1,27 @@
 package com.bkpirates.adapter;
 
-import java.util.ArrayList;
-
 import com.bkpirates.bookstore.R;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String>{
+public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String> {
 
 	private Context context;
 	String[] arrList;
+
 	public AccountAndFunctionAdminAdapter(Context context, int resource, String[] objects) {
 		super(context, resource, objects);
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.arrList = objects;
 	}
-	
+
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -33,18 +30,14 @@ public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String>{
 			convertView = inflater.inflate(R.layout.item_distribute_book, parent, false);
 			holder = new ViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.name);
-			
+
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
+
 		holder.name.setText(arrList[position]);
-		if(arrList.length != 4){
-			
-			Log.d(arrList.length + "", arrList.length + "son ");
-			holder.name.setTextColor(context.getResources().getColor(R.color.white));
-		}
+		holder.name.setTextColor(context.getResources().getColor(R.color.white));
 		return convertView;
 	}
 
@@ -52,7 +45,4 @@ public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String>{
 		TextView name;
 	}
 
-	
-
-	
 }

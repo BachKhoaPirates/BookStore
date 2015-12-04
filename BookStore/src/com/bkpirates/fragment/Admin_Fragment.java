@@ -6,6 +6,7 @@ import com.bkpirates.bookstore.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +18,7 @@ import android.widget.ListView;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
-	final String[] str = { "Xếp hạng", "Danh sách đơn hàng đã chuyển đến",
-			"Danh sách đơn hàng chưa chuyển đến", "Nhập thêm sách", "Thoát" };
+	final String[] str = { "Xếp hạng", "Danh sách đơn hàng", "Nhập thêm sách", "Thoát" };
 	private ArrayAdapter<String> adapter = null;
 
 	@Override
@@ -32,18 +32,23 @@ public class Admin_Fragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+				
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				
 				if (position == 0) {
-					FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
-							.beginTransaction();
-					RankFragment tef = new RankFragment();
-					fragmentTransaction.replace(R.id.containerAdmin, tef);
-					fragmentTransaction.addToBackStack(null);
-					fragmentTransaction.commit();
-					getActivity().getSupportFragmentManager().executePendingTransactions();
-
+					RankAdminFragment frag = new RankAdminFragment();
+					ft.replace(R.id.containerAdmin, frag);
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
 				} else if (position == 1) {
-
-				} else if (position == 4) {
+					ListOrderAdminFragment frag = new ListOrderAdminFragment();
+					ft.replace(R.id.containerAdmin, frag);
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
+				} else if (position == 3) {
 					AdminActivity.adminActivity.finish();
 				}
 			}
