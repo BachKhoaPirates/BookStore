@@ -49,7 +49,8 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 	TextView content, status, author, pulisher;
 	TextView numberFavorite;
 	private final String TAG = "BookFragment";
-//	private int tempLike;
+	
+	private int tempLike;
 
 	NetWork netWork = new NetWork();
 	private final String ADD_CART = "http://thachpn.name.vn/books/add_cart.php";
@@ -177,14 +178,15 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 
 			}
 		});
-
+		
 		btnLike.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				
 				if (LoginFragment.checkLogin == 1) {
 					Log.d(TAG, book.getLike() + "");
-					if (book.getLike() == 0) {
+					if (tempLike == 0) {
 
 						btnLike.setImageResource(R.drawable.like);
 						int temp = book.getLikedPersonNumber();
@@ -194,6 +196,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						netWork.setPhone(LoginFragment.accEntity.getPhone());
 						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
 								.execute(ADD_FAVORITE);
+						tempLike = 1;
 					} else {
 						btnLike.setImageResource(R.drawable.unlike);
 						int temp = book.getLikedPersonNumber();
@@ -203,7 +206,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 						netWork.setPhone(LoginFragment.accEntity.getPhone());
 						AddToCartAndFavoriteListAsyncTask add = (AddToCartAndFavoriteListAsyncTask) new AddToCartAndFavoriteListAsyncTask()
 								.execute(DELETE_FAVORITE);
-
+						tempLike = 0;
 					}
 
 				} else {
@@ -230,6 +233,7 @@ public class BookFragment extends Fragment implements GetBookDataListener {
 		if (book.getLike() == 1) {
 			btnLike.setImageResource(R.drawable.like);
 		}
+		tempLike = book.getLike();
 
 		content.setText(book.getContent());
 		makeTextViewResizable(content, 3, "Xem thêm", true);
