@@ -17,6 +17,9 @@
                 $order['date'] = $row['Date_Output'];
                 $order['name'] = $row['Name'];
                 $order['oid'] = $row['OID'];
+                $order['profit'] = $row['Profit'];
+                $order['address'] = $row['Address'];
+
 
                 array_push($response['orders'],$order);
             }

@@ -43,13 +43,11 @@
                             if(!$tmp){
                                 $response["success"] = 0;
                                 //echo json_encode($response);
-                                echo "1";
                                 break;
                             }
                         }
                         else{
                             $response["success"] = 0;
-                            echo "2";
                             break;
                         }
                         $sql = "INSERT INTO Order_Book(OID, BID, Quantity_Order) VALUES($oid, $bid, $total)";
@@ -59,7 +57,6 @@
                 }
                 $sql = "DELETE FROM Cart WHERE UID = $uid";
                 mysqli_query($con, $sql);
-                echo $price_add;
                 $sql = "UPDATE Order_User SET Profit = $payment - $price_add WHERE OID = $oid";
                 mysqli_query($con, $sql);
 

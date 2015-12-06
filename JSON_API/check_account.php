@@ -5,17 +5,25 @@
 		$pass = $_REQUEST['pass'];
 		require_once __DIR__.'/db_config.php';
 		$con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
-		$sql = "SELECT SUM(Payment), UID, Address, Password, Name FROM User NATURAL JOIN Order_User WHERE UID = $uid";
+		$sql = "SELECT UID, Address, Password, Name FROM User WHERE UID = $uid";
 		$result = mysqli_query($con, $sql);
 		if(!empty($result)){
-			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-			if($pass == $result["Password"] ){
+			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+			if($pass == $row["Password"] ){
 
 				$response["success"] = 1;
-				$response["name"] = $result["Name"];
-                $response["money"] = $result["SUM(Payment)"];
-                if($response[money]==null) $response['money'] = 0;
-				$response["address"] = $result["Address"];
+				$response["name"] = $row["Name"];
+				$response["address"] = $row["Address"];
+
+                $sql = "SELECT SUM(Payment) FROM Order_User WHERE UID = $uid";
+                $result = mysqli_query($con, $sql);
+                $row = mysqli_fetch_array($result);
+                if($row[0] != null){
+                    $response['money'] = $row[0];
+                }
+                else{
+                    $response['money'] = 0;
+                }
 				echo json_encode($response);
 			}
 			else{

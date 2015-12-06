@@ -33,7 +33,7 @@
             $response['books'] = array();
             $book = array();
 			$book['name'] = $row['Name_Book'];
-			$book['publisher'] = $row['Name'];
+			$book['publisher'] = $row['Name_Publisher'];
 			$book['author'] = $row['Author'];
 			$book['price'] = $row['Price'];
 			$book['quantity'] = $row['Quantity_Book'];
