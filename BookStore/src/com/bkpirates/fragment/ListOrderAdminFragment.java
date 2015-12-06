@@ -13,6 +13,9 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,7 +73,13 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 		getBtn = (Button) view.findViewById(R.id.get_btn);
 
 		beginDateTv = (TextView) view.findViewById(R.id.begin_date);
+		if (beginDate != null) {
+			beginDateTv.setText(Admin_Fragment.convertStringToDate(beginDate));
+		}
 		endDateTv = (TextView) view.findViewById(R.id.end_date);
+		if (endDate != null) {
+			endDateTv.setText(Admin_Fragment.convertStringToDate(endDate));
+		}
 
 		setCallBack();
 
@@ -120,10 +129,12 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 					try {
 						switch (type) {
 						case 0:
-							orderArray = (ArrayList<OrderAdminEntity>) bld.execute(getString(R.string.ADMIN_GET_LIST_BOUGHT) +str).get();
+							orderArray = (ArrayList<OrderAdminEntity>) bld
+									.execute(getString(R.string.ADMIN_GET_LIST_BOUGHT) + str).get();
 							break;
 						case 1:
-							orderArray = (ArrayList<OrderAdminEntity>) bld.execute(getString(R.string.ADMIN_GET_LIST_ORDER) +str).get();
+							orderArray = (ArrayList<OrderAdminEntity>) bld
+									.execute(getString(R.string.ADMIN_GET_LIST_ORDER) + str).get();
 							break;
 						}
 
@@ -144,8 +155,7 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				monthOfYear++;
 				beginDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
-				beginDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
-						+ Integer.toString(year));
+				beginDateTv.setText(Admin_Fragment.convertStringToDate(beginDate));
 			}
 		};
 
@@ -154,8 +164,7 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				monthOfYear++;
 				endDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
-				endDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
-						+ Integer.toString(year));
+				endDateTv.setText(Admin_Fragment.convertStringToDate(endDate));
 			}
 		};
 
@@ -168,14 +177,13 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 			dialog.dismiss();
 		}
 
-		if (orderArray != null){
+		if (orderArray != null) {
 			OrderAdminAdapter adapter = new OrderAdminAdapter(getContext(), orderArray);
 			listview.setAdapter(adapter);
-			
-			
+
 			switch (type) {
 			case 0:
-				
+
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -186,6 +194,16 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						position = position - 1;
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						FragmentTransaction ft = fm.beginTransaction();
+						Log.d("OIDDDDDD", orderArray.get(position).getOid());
+						Log.d("positionnnnnnnnn", position + "");
+						ft.replace(R.id.containerAdmin, new OrderFragment(orderArray.get(position).getOid(),
+								orderArray.get(position).getTotalMoney()));
+						ft.addToBackStack(null);
+						ft.commit();
+						fm.executePendingTransactions();
 					}
 				});
 				break;
@@ -194,13 +212,4 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 			Toast.makeText(getContext(), "Không tìm thấy đơn hàng nào!", Toast.LENGTH_LONG).show();
 		}
 	}
-
-//	private void startBookFragment(BookEntity book) {
-//		FragmentManager fm = getActivity().getSupportFragmentManager();
-//		FragmentTransaction ft = fm.beginTransaction();
-//		ft.replace(R.id.containerAdmin, new BookFragment(getContext(), book));
-//		ft.addToBackStack(null);
-//		ft.commit();
-//		fm.executePendingTransactions();
-//	}
 }

@@ -3,7 +3,6 @@ package com.bkpirates.adapter;
 import com.bkpirates.bookstore.R;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,15 @@ import android.widget.TextView;
 public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String> {
 
 	private Context context;
-	String[] arrList;
-
-	public AccountAndFunctionAdminAdapter(Context context, int resource, String[] objects) {
+	private String[] arrList;
+	private final String TAG;
+	
+	public AccountAndFunctionAdminAdapter(Context context, int resource, String[] objects, String tag) {
 		super(context, resource, objects);
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.arrList = objects;
+		this.TAG = tag;
 	}
 
 	@Override
@@ -37,7 +38,9 @@ public class AccountAndFunctionAdminAdapter extends ArrayAdapter<String> {
 		}
 
 		holder.name.setText(arrList[position]);
-		holder.name.setTextColor(context.getResources().getColor(R.color.white));
+		if (TAG == "ADMIN"){
+			holder.name.setTextColor(context.getResources().getColor(R.color.white));
+		}
 		return convertView;
 	}
 

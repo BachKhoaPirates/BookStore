@@ -63,7 +63,7 @@ public class AccountFragment extends Fragment {
 		listview = (ListView) view.findViewById(R.id.listview);
 
 		txtNameUsers.setText(accEntity.getName());
-		adapter = new AccountAndFunctionAdminAdapter(getActivity(), R.layout.item_distribute_book, str);
+		adapter = new AccountAndFunctionAdminAdapter(getActivity(), R.layout.item_distribute_book, str, "ACC");
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

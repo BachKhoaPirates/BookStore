@@ -3,8 +3,7 @@
 
     <string name="app_name">Book Store</string>
     <string name="action_settings">Settings</string>
-	<string name="CodeColor" >"#ff7f00"</string>
-	
+    <string name="CodeColor">"#ff7f00"</string>
     <string name="rank_types_prompt">Chọn thể loại xếp hạng</string>
 
     <string-array name="rank_types_arrays">
@@ -12,16 +11,18 @@
         <item>Sách được mua nhiều nhất</item>
         <item>Thể loại được mua nhiều nhất</item>
     </string-array>
-    
     <string-array name="order_types_arrays">
         <item>Đơn hàng đã chuyển đến</item>
         <item>Đơn hàng chưa chuyển đến</item>
     </string-array>
-    
+
     <string name="ADMIN_GET_TOP_USERS">http://thachpn.name.vn/books/admin_get_top_users.php</string>
     <string name="ADMIN_GET_TOP_BOOK">http://thachpn.name.vn/books/admin_get_top_books.php</string>
     <string name="ADMIN_GET_TOP_DISTRIBUTE">http://thachpn.name.vn/books/admin_get_top_distribute.php</string>
     <string name="ADMIN_GET_LIST_ORDER">http://thachpn.name.vn/books/admin_get_list_order.php</string>
     <string name="ADMIN_GET_LIST_BOUGHT">http://thachpn.name.vn/books/admin_get_list_boughts.php</string>
-    
+    <string name="ADMIN_GET_LIST_BOOK_IN_ORDER"> http://thachpn.name.vn/books/admin_get_list_books_order.php</string>
+    <string name="ADMIN_CONFIRM_ORDER">  http://thachpn.name.vn/books/admin_confirm_order.php</string>
+    <string name="ADMIN_DELETE_ORDER">  http://thachpn.name.vn/books/admin_delete_order.php</string>
+
 </resources>

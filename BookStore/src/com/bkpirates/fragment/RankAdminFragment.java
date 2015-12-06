@@ -82,7 +82,13 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 		getBtn = (Button) view.findViewById(R.id.get_btn);
 
 		beginDateTv = (TextView) view.findViewById(R.id.begin_date);
+		if (beginDate != null) {
+			beginDateTv.setText(Admin_Fragment.convertStringToDate(beginDate));
+		}
 		endDateTv = (TextView) view.findViewById(R.id.end_date);
+		if (endDate != null) {
+			endDateTv.setText(Admin_Fragment.convertStringToDate(endDate));
+		}
 
 		setCallBack();
 
@@ -162,8 +168,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				monthOfYear++;
 				beginDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
-				beginDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
-						+ Integer.toString(year));
+				beginDateTv.setText(Admin_Fragment.convertStringToDate(beginDate));
 			}
 		};
 
@@ -172,8 +177,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				monthOfYear++;
 				endDate = Admin_Fragment.convertDateToString(year, monthOfYear, dayOfMonth);
-				endDateTv.setText(Integer.toString(dayOfMonth) + "/" + Integer.toString(monthOfYear) + "/"
-						+ Integer.toString(year));
+				endDateTv.setText(Admin_Fragment.convertStringToDate(endDate));
 			}
 		};
 
@@ -194,6 +198,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						position = position -1;
 						AppController.getInstance().initiatePopupWindow(arrAcc.get(position), getActivity());
 					}
 				});
@@ -208,6 +213,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						position = position -1;
 						Log.d("POSITION: ", "" + position);
 						startBookFragment(arrBook.get(position));
 					}
