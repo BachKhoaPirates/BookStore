@@ -197,8 +197,6 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 						position = position - 1;
 						FragmentManager fm = getActivity().getSupportFragmentManager();
 						FragmentTransaction ft = fm.beginTransaction();
-						Log.d("OIDDDDDD", orderArray.get(position).getOid());
-						Log.d("positionnnnnnnnn", position + "");
 						ft.replace(R.id.containerAdmin, new OrderFragment(orderArray.get(position).getOid(),
 								orderArray.get(position).getTotalMoney()));
 						ft.addToBackStack(null);

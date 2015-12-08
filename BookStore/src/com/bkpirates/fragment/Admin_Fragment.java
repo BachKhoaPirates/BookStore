@@ -50,7 +50,7 @@ public class Admin_Fragment extends Fragment {
 					ft.commit();
 					fm.executePendingTransactions();
 				} else if (position == 2) {
-					InsertBookAdminFragment frag = new InsertBookAdminFragment();
+					InsertQuantityBookAdminFragment frag = new InsertQuantityBookAdminFragment();
 					ft.replace(R.id.containerAdmin, frag);
 					ft.addToBackStack(null);
 					ft.commit();

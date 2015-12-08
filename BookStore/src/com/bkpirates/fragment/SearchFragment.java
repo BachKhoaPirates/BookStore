@@ -62,7 +62,7 @@ public class SearchFragment extends Fragment implements DataLoaderListener {
 		View view = inflater.inflate(R.layout.fragment_search, container, false);
 
 		dialog = new ProgressDialog(getContext());
-		dialog.setMessage("Đang tải...");
+		dialog.setMessage("Loading...");
 		dialog.setCancelable(false);
 
 		lView = (ListView) view.findViewById(R.id.category);
