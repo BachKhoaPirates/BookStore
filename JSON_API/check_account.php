@@ -11,6 +11,12 @@
 			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 			if($pass == $row["Password"] ){
 
+                if($uid=123456789){
+                    $response['success'] = 2;
+                    echo json_encode($response);
+                    break;
+                }
+
 				$response["success"] = 1;
 				$response["name"] = $row["Name"];
 				$response["address"] = $row["Address"];
