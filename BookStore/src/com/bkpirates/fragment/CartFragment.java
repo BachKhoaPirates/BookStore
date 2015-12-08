@@ -112,7 +112,9 @@ public class CartFragment extends Fragment {
 		@Override
 		protected void onPostExecute(String s) {
 			if (s != null) {
+				Log.d(TAG, s);
 				checkPayment = netWork.checkForAddCartAndFavoriteList(s);
+				Log.d(TAG, checkPayment + "");
 				if(checkPayment == 1){
 					Toast.makeText(getActivity(), "Đặt hàng thành công!", Toast.LENGTH_LONG).show();
 				}else{
@@ -215,7 +217,7 @@ public class GetFromCartAsyncTask extends AsyncTask<String, Void, String> {
 		String url = params[0];
 		HttpResponse response = null;
 		try {
-			response = netWork.makeRquestGetUserBooks(url);
+			response = netWork.makeRquestGetUserBooksAndGetOrders(url);
 		} catch (IOException e) {
 			return null;
 		}

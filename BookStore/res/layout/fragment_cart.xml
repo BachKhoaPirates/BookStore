@@ -30,7 +30,7 @@
             android:textStyle="bold"
             android:textSize="20sp" 
             android:textColor="@color/red_color"
-            android:gravity="center" />
+             />
 
         <ImageView
             android:id="@+id/payment"

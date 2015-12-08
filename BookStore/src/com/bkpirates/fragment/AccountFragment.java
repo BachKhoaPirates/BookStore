@@ -12,6 +12,7 @@ import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.entity.OrderAdminEntity;
 import com.bkpirates.webservice.NetWork;
 
 import android.annotation.SuppressLint;
@@ -35,17 +36,21 @@ import android.widget.Toast;
 @SuppressLint("InflateParams")
 public class AccountFragment extends Fragment {
 
-	private String[] str = { "Sách đã thích", "Sách đã mua", "Thông tin tài khoản", "Đăng xuất" };
+	private String[] str = { "Sách đã thích", "Sách đã mua", "Danh sách đơn hàng", "Thông tin tài khoản", "Đăng xuất" };
 	private final String GET_FAVORITE_BOOKS = "http://thachpn.name.vn/books/get_user_favorite_books.php";
 	private final String GET_ORDER_BOOKS = "http://thachpn.name.vn/books/get_bought_books.php";
+	private final String GET_ORDER = "http://thachpn.name.vn/books/get_order.php";
 	private ListView listview;
 	private TextView txtNameUsers;
 	private NetWork netWork = new NetWork();
-//	private final String TAG = "AccountFragment";
+	// private final String TAG = "AccountFragment";
 	private ArrayList<BookEntity> favoriteArrayBooks = new ArrayList<BookEntity>();
 	public static ArrayList<BookEntity> orderArrayBooks = new ArrayList<BookEntity>();
 	private AccountEntity accEntity = new AccountEntity();
 	private ArrayAdapter<String> adapter = null;
+	//
+	private ArrayList<OrderAdminEntity> arrayOrder = new ArrayList<OrderAdminEntity>();
+	
 
 	public AccountEntity getAccEntity() {
 		return accEntity;
@@ -79,10 +84,15 @@ public class AccountFragment extends Fragment {
 					netWork.setPhone(accEntity.getPhone());
 					GetUserBooksAsyncTask nw = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
 							.execute(GET_ORDER_BOOKS);
-				} else if (position == 2) { // thong tin ng dung
+				}
+				else if (position == 2){
+					netWork.setPhone(accEntity.getPhone());
+					GetUserOrderAsyncTask order = (GetUserOrderAsyncTask) new GetUserOrderAsyncTask()
+							.execute(GET_ORDER);
+				}
+				else if (position == 3) { // thong tin ng dung
 					AppController.getInstance().initiatePopupWindow(accEntity, getActivity());
-
-				} else if (position == 3) { // logout
+				} else if (position == 4) { // logout
 					accEntity.setPhone(null);
 					accEntity.setPassword(null);
 					LoginFragment.checkLogin = 0;
@@ -103,10 +113,9 @@ public class AccountFragment extends Fragment {
 
 		});
 
-		return view;
-	}
-
-	private class GetUserBooksAsyncTask extends AsyncTask<String, Void, String> {
+	return view;
+}
+	private class GetUserOrderAsyncTask extends AsyncTask<String, Void, String> {
 		ProgressDialog pb;
 
 		@Override
@@ -123,17 +132,21 @@ public class AccountFragment extends Fragment {
 				pb.dismiss();
 			}
 			if (s != null) {
-				
-				favoriteArrayBooks = netWork.checkResultForGetUserBooks(s);
-				if (favoriteArrayBooks.size() == 0) {
-					 Toast.makeText(getActivity(), "Không có sách nào!", Toast.LENGTH_LONG).show();
+
+				arrayOrder = netWork.getOrdersUsers(s);
+				if (arrayOrder.size() == 0) {
+					Toast.makeText(getActivity(), "Không có đơn hàng nào!", Toast.LENGTH_LONG).show();
 
 				} else {
-					ListBookFragment listBookFragment = new ListBookFragment();
-					ListBookFragment.setArrBooks(favoriteArrayBooks);
+					for( int i = 0;i < arrayOrder.size(); i ++){
+						arrayOrder.get(i).setOrderPerson(accEntity.getName());
+						arrayOrder.get(i).setOrderPersonAddress(accEntity.getAddress());
+					}
+					ListOrderUserFragment order = new ListOrderUserFragment();
+					ListOrderUserFragment.setArrayOrder(arrayOrder);
 					FragmentManager fm = getFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
-					ft.replace(R.id.container, listBookFragment);
+					ft.replace(R.id.container, order);
 					ft.addToBackStack(null);
 					ft.commit();
 					fm.executePendingTransactions();
@@ -150,7 +163,7 @@ public class AccountFragment extends Fragment {
 
 			try {
 
-				response = netWork.makeRquestGetUserBooks(url);
+				response = netWork.makeRquestGetUserBooksAndGetOrders(url);
 			} catch (IOException e) {
 				return null;
 			}
@@ -171,5 +184,72 @@ public class AccountFragment extends Fragment {
 
 		}
 	}
+
+
+private class GetUserBooksAsyncTask extends AsyncTask<String, Void, String> {
+	ProgressDialog pb;
+
+	@Override
+	protected void onPreExecute() {
+		pb = new ProgressDialog(getActivity());
+		pb.setMessage("Loading...");
+		pb.show();
+		super.onPreExecute();
+	}
+
+	@Override
+	protected void onPostExecute(String s) {
+		if (pb != null) {
+			pb.dismiss();
+		}
+		if (s != null) {
+
+			favoriteArrayBooks = netWork.checkResultForGetUserBooks(s);
+			if (favoriteArrayBooks.size() == 0) {
+				Toast.makeText(getActivity(), "Không có sách nào!", Toast.LENGTH_LONG).show();
+
+			} else {
+				ListBookFragment listBookFragment = new ListBookFragment();
+				ListBookFragment.setArrBooks(favoriteArrayBooks);
+				FragmentManager fm = getFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				ft.replace(R.id.container, listBookFragment);
+				ft.addToBackStack(null);
+				ft.commit();
+				fm.executePendingTransactions();
+			}
+		}
+
+		super.onPostExecute(s);
+	}
+
+	@Override
+	protected String doInBackground(String... params) {
+		String url = params[0];
+		HttpResponse response = null;
+
+		try {
+
+			response = netWork.makeRquestGetUserBooksAndGetOrders(url);
+		} catch (IOException e) {
+			return null;
+		}
+		if (response != null) {
+
+			String content = null;
+			try {
+				content = netWork.processHTTPResponce(response);
+
+				return content;
+			} catch (IOException e) {
+				return null;
+			} catch (ParseException e) {
+				return null;
+			}
+		}
+		return null;
+
+	}
+}
 
 }
