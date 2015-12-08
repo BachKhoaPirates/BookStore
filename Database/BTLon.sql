@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2015 at 11:52 PM
+-- Generation Time: Dec 08, 2015 at 08:47 PM
 -- Server version: 5.5.44-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.11
 
@@ -389,7 +389,8 @@ INSERT INTO `Order_Book` (`OID`, `BID`, `Quantity_Order`) VALUES
 (1, 4, 2),
 (1, 7, 65),
 (1, 12, 0),
-(2, 7, 5);
+(2, 7, 5),
+(3, 10, 999);
 
 --
 -- Triggers `Order_Book`
@@ -421,7 +422,8 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
   `Date_Output` date DEFAULT NULL,
   `Profit` int(11) DEFAULT NULL,
   PRIMARY KEY (`OID`),
-  KEY `UID` (`UID`)
+  KEY `UID` (`UID`),
+  KEY `OID` (`OID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -430,7 +432,8 @@ CREATE TABLE IF NOT EXISTS `Order_User` (
 
 INSERT INTO `Order_User` (`OID`, `UID`, `Payment`, `Confirm`, `Date_Output`, `Profit`) VALUES
 (1, 195875465, 1, 1, '2015-12-09', 1111111),
-(2, 195875456, 121231, 123213, '2015-11-24', 32132);
+(2, 195875456, 121231, 123213, '2015-11-24', 32132),
+(3, 195875656, 535345345, 1, '2015-12-01', 312213);
 
 -- --------------------------------------------------------
 

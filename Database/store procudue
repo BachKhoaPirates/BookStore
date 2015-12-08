@@ -1,0 +1,13 @@
+//M Làm 1 cái store procudue như này nhé:
+//ban đầu
+
+DELIMITER //
+CREATE PROCEDURE test_sp ()  begin
+các câu lệnh select ,update khi có order 
+END//
+delimiter;
+
+// thế thôi
+// Goi lai ca ham kia thi dung
+Call test_sp
+//test_sp ten ham
