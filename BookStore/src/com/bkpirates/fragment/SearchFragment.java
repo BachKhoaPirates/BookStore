@@ -120,7 +120,7 @@ public class SearchFragment extends Fragment implements DataLoaderListener {
 			if (arrayBook != null){
 				FragmentManager fm = getActivity().getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
-				ft.replace(R.id.container, new BookOfDistribute(arrayBook));
+				ft.replace(R.id.container, new BookGridView(arrayBook));
 				ft.addToBackStack(null);
 				ft.commit();
 				fm.executePendingTransactions();

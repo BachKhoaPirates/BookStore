@@ -35,7 +35,7 @@
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Số lượng:           "
+            android:text="Số lượng:        "
             android:gravity="center"
             />
         
@@ -55,7 +55,7 @@
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Giá mỗi quyển: "
+            android:text="Giá nhập vào: "
             android:gravity="center"
             />
         

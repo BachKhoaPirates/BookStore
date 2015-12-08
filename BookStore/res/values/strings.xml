@@ -22,7 +22,9 @@
     <string name="ADMIN_GET_LIST_ORDER">http://thachpn.name.vn/books/admin_get_list_order.php</string>
     <string name="ADMIN_GET_LIST_BOUGHT">http://thachpn.name.vn/books/admin_get_list_boughts.php</string>
     <string name="ADMIN_GET_LIST_BOOK_IN_ORDER"> http://thachpn.name.vn/books/admin_get_list_books_order.php</string>
-    <string name="ADMIN_CONFIRM_ORDER">  http://thachpn.name.vn/books/admin_confirm_order.php</string>
-    <string name="ADMIN_DELETE_ORDER">  http://thachpn.name.vn/books/admin_delete_order.php</string>
+    <string name="ADMIN_CONFIRM_ORDER">http://thachpn.name.vn/books/admin_confirm_order.php</string>
+    <string name="ADMIN_DELETE_ORDER">http://thachpn.name.vn/books/admin_delete_order.php</string>
+    
+    <string name="ADMIN_UPDATE_QUANTITY"> http://thachpn.name.vn/books/admin_update_book.php</string>
 
 </resources>

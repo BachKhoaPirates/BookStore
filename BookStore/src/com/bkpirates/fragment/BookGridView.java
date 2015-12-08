@@ -19,12 +19,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-public class BookOfDistribute extends Fragment{
+public class BookGridView extends Fragment{
 	
 	private GridView gView;
 	private ArrayList<BookEntity> arr;
 	
-	public BookOfDistribute(ArrayList<BookEntity> arr){
+	public BookGridView(ArrayList<BookEntity> arr){
 		this.arr = arr;
 	}
 	
