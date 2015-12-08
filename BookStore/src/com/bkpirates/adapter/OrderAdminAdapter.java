@@ -57,6 +57,11 @@ public class OrderAdminAdapter extends ArrayAdapter<OrderAdminEntity> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
+		if(orderArray.get(position).getCheckOrder() == 1) // set color of confirm order of users
+		{
+			holder.oid.setTextColor(context.getResources().getColor(R.color.green));
+			holder.date.setTextColor(context.getResources().getColor(R.color.green));
+		}
 		holder.oid.setText("MSĐH: " + orderArray.get(position).getOid());
 		holder.date.setText("Ngày: " + orderArray.get(position).getDate());
 		holder.totalMoney.setText("Tổng tiền: " + orderArray.get(position).getTotalMoney()+" VNĐ");

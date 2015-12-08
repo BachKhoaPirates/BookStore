@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.entity.OrderAdminEntity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -38,6 +39,7 @@ public class NetWork {
 	String address;
 	int numberBookToBuy;
 	int payment;
+
 	public int getPayment() {
 		return payment;
 	}
@@ -54,8 +56,8 @@ public class NetWork {
 		this.numberBookToBuy = numberBookToBuy;
 	}
 
-
 	BookEntity bookEntity = new BookEntity();
+
 	public BookEntity getBookEntity() {
 		return bookEntity;
 	}
@@ -131,7 +133,8 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
-	public HttpResponse makeRquestGetUserBooks(String url) throws ClientProtocolException, IOException {
+
+	public HttpResponse makeRquestGetUserBooksAndGetOrders(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
@@ -140,39 +143,42 @@ public class NetWork {
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
+
 	public HttpResponse makeRquestAddToCart(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
 		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
 		nameValuePairList.add(new BasicNameValuePair("uid", phone));
 		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));
-		nameValuePairList.add(new BasicNameValuePair("total", numberBookToBuy + ""));		
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
-		httpPost.setEntity(entity);
-		return httpClient.execute(httpPost);
-	}
-	// Add_Favorite_List and Delete_Book, and Delete_favorite in Cart are same request so you can use this function for both
-	public HttpResponse makeRquestAddFavoriteList(String url) throws ClientProtocolException, IOException {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
-		nameValuePairList.add(new BasicNameValuePair("uid", phone));
-		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));	
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
-		httpPost.setEntity(entity);
-		return httpClient.execute(httpPost);
-	}
-	public HttpResponse makeRquestPayment(String url) throws ClientProtocolException, IOException {
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
-		nameValuePairList.add(new BasicNameValuePair("uid", phone));
-		nameValuePairList.add(new BasicNameValuePair("payment", payment + ""));	
+		nameValuePairList.add(new BasicNameValuePair("total", numberBookToBuy + ""));
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);
 	}
 
+	// Add_Favorite_List and Delete_Book, and Delete_favorite in Cart are same
+	// request so you can use this function for both
+	public HttpResponse makeRquestAddFavoriteList(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		nameValuePairList.add(new BasicNameValuePair("bid", bookEntity.getBid()));
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
+
+	public HttpResponse makeRquestPayment(String url) throws ClientProtocolException, IOException {
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+		nameValuePairList.add(new BasicNameValuePair("uid", phone));
+		nameValuePairList.add(new BasicNameValuePair("payment", payment + ""));
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+		httpPost.setEntity(entity);
+		return httpClient.execute(httpPost);
+	}
 
 	static InputStream is = null;
 
@@ -193,7 +199,7 @@ public class NetWork {
 				}
 			}
 		}
-	//	Log.d("content", content);
+		// Log.d("content", content);
 		return content;
 	}
 
@@ -246,11 +252,51 @@ public class NetWork {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		accEntity.setPassword(success + ""); // cho success vao password
 		return accEntity;
 
 	}
+
+	public ArrayList<OrderAdminEntity> getOrdersUsers(String result) {
+		ArrayList<OrderAdminEntity> array = new ArrayList<OrderAdminEntity>();
+		try {
+			JSONObject jsonObj = new JSONObject(result);
+			Log.d(TAG, TAG);
+			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
+				if (jsonObj.has("orders")) {
+
+					String str = jsonObj.getString("orders");
+					JSONArray jsArr = new JSONArray(str);
+					JSONObject js;
+					for (int i = 0; i < jsArr.length(); i++) {
+						Log.d(i + "", jsArr.length() + "");
+						js = new JSONObject(jsArr.getString(i));
+						OrderAdminEntity order = new OrderAdminEntity();
+						if (js.has("oid")) {
+							order.setOid(js.getString("oid"));
+						}
+						if (js.has("payment")) {
+							order.setTotalMoney(js.getString("payment"));
+						}
+						if (js.has("date")) {
+							order.setDate(js.getString("date"));
+						}
+						if (js.has("confirm")) {
+							order.setCheckOrder(Integer.parseInt(js.getString("confirm")));
+						}
+						array.add(order);
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return array;
+
+	}
+
 	public ArrayList<BookEntity> checkResultForGetUserBooks(String result) {
 		ArrayList<BookEntity> array = new ArrayList<BookEntity>();
 		try {
@@ -258,12 +304,12 @@ public class NetWork {
 			Log.d(TAG, TAG);
 			if (jsonObj.has("success") && jsonObj.getString("success").equals("1")) {
 				if (jsonObj.has("books")) {
-					
+
 					String str = jsonObj.getString("books");
 					JSONArray jsArr = new JSONArray(str);
 					JSONObject js;
 					for (int i = 0; i < jsArr.length(); i++) {
-						Log.d(i + "", jsArr.length() + "" );
+						Log.d(i + "", jsArr.length() + "");
 						js = new JSONObject(jsArr.getString(i));
 						BookEntity book = new BookEntity();
 						if (js.has("bid")) {
@@ -278,20 +324,19 @@ public class NetWork {
 						if (js.has("price")) {
 							book.setPrice(Integer.parseInt(js.getString("price")));
 						}
-						if (js.has("link"))
-						{
+						if (js.has("link")) {
 							book.setLinkImage(js.getString("link"));
 						}
 						if (js.has("quantity")) {
 							book.setQuantity(Integer.parseInt(js.getString("quantity")));
 						}
-						if (js.has("total")){  // so luon sach mua cho vao cart
+						if (js.has("total")) { // so luon sach mua cho vao cart
 							book.setNumberBookToBuy(Integer.parseInt(js.getString("total")));
 						}
-						if (js.has("like")){
+						if (js.has("like")) {
 							book.setLike(Integer.parseInt(js.getString("like")));
 						}
-						if (js.has("clike")){
+						if (js.has("clike")) {
 							book.setLikedPersonNumber(Integer.parseInt(js.getString("clike")));
 						}
 						array.add(book);

@@ -7,7 +7,13 @@ public class OrderAdminEntity {
 	private String totalMoney;
 	private String orderPerson;
 	private String orderPersonAddress;
-	
+	private int checkOrder; 
+	public int getCheckOrder() {
+		return checkOrder;
+	}
+	public void setCheckOrder(int checkOrder) {
+		this.checkOrder = checkOrder;
+	}
 	public String getOid() {
 		return oid;
 	}
