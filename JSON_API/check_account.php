@@ -11,7 +11,7 @@
 			$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 			if($pass == $row["Password"] ){
 
-                if($uid=123456789){
+                if($uid==123456789){
                     $response['success'] = 2;
                     echo json_encode($response);
                     break;

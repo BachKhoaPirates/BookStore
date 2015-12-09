@@ -2,19 +2,27 @@
     $response = array();
     require_once __DIR__.'/db_config.php';
 
-    if(isset($_REQUEST['name']) && isset($_REQUEST['author']) && isset($_REQUEST['price']) && isset($_REQUEST['bid']) && isset($_REQUEST['content']) && isset($_REQUEST['nid']) && isset($_REQUEST['pid'])){
+    if(isset($_REQUEST['name']) && isset($_REQUEST['author']) && isset($_REQUEST['price']) && isset($_REQUEST['quantity']) && isset($_REQUEST['content']) && isset($_REQUEST['price_add']) && isset($_REQUEST['nid']) && isset($_REQUEST['pid']) && isset($_REQUEST['image']) ){
 
         $name = $_REQUEST['name'];
         $author = $_REQUEST['author'];
         $price = $_REQUEST['price'];
+        $quantity = $_REQUEST['quantity'];
         $content = $_REQUEST['content'];
+        $price_add = $_REQUEST['price_add'];
         $pid = $_REQUEST['pid'];
         $nid = $_REQUEST['nid'];
-        $bid = $_REQUEST['bid'];
+        $image = $_REQUEST['image'];
 
         $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)or die("Error");
 
-        $sql = "UPDATE Book SET Name_Book = $name, Author = $author, Price = $price, Content = $content WHERE BID = $bid";
+        //tao BID
+        $sql = "SELECT BID from Book order by BID DESC limit 1";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($result);
+        $bid = $row[0] + 1;
+
+        $sql = "INSERT INTO Book(BID, Name_Book, Author, Price, Quantity_Book, Content, Price_Add) VALUES('$bid', '$name', '$author', '$price', '$quantity', '$content', '$price_add')";
         $result = mysqli_query($con, $sql);
         if($result){
 
@@ -49,6 +57,7 @@
             }
             $sql = "INSERT INTO Genre_Publisher(NID, BID) VALUES($nid, $bid)";
             mysqli_query($con, $sql);
+            file_put_contents('image/'.$bid.'.jpg', base64_decode($image));
             $response['success'] = 1;
             echo json_encode($response);
         }
