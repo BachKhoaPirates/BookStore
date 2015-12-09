@@ -66,20 +66,20 @@ public class InsertNewBooksFragment extends AppCompatActivity implements OnClick
 		
 	}
 
-	private void setWidgets() {
-		editName = (EditText) findViewById(R.id.editName);
-		editAuthor = (EditText) findViewById(R.id.editAuthor);
-		editContent = (EditText) findViewById(R.id.editContent);
-		editPushlier = (EditText) findViewById(R.id.editPushlier);
-		editQuantity = (EditText) findViewById(R.id.editQuantity);
-		editPrice = (EditText) findViewById(R.id.editPrice);
-		editGenre = (EditText) findViewById(R.id.editGenre);
-
-		btnChoose = (Button) findViewById(R.id.btnChoose);
-		btnUpload = (Button) findViewById(R.id.btnUpload);
-
-		image = (ImageView) findViewById(R.id.imageView);
-	}
+//	private void setWidgets() {
+//		editName = (EditText) findViewById(R.id.editName);
+//		editAuthor = (EditText) findViewById(R.id.editAuthor);
+//		editContent = (EditText) findViewById(R.id.editContent);
+//		editPushlier = (EditText) findViewById(R.id.editPushlier);
+//		editQuantity = (EditText) findViewById(R.id.editQuantity);
+//		editPrice = (EditText) findViewById(R.id.editPrice);
+//		editGenre = (EditText) findViewById(R.id.editGenre);
+//
+//		btnChoose = (Button) findViewById(R.id.btnChoose);
+//		btnUpload = (Button) findViewById(R.id.btnUpload);
+//
+//		image = (ImageView) findViewById(R.id.imageView);
+//	}
 
 	@Override
 	public void onClick(View v) {

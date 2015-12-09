@@ -33,7 +33,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		setTopBar(topBar);
-		//customerActivity = this;
+		customerActivity = this;
 		
 		
 		homeButton = (ImageView) findViewById(R.id.home_button);

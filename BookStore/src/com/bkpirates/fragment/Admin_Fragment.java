@@ -2,6 +2,7 @@ package com.bkpirates.fragment;
 
 import com.bkpirates.adapter.AccountAndFunctionAdminAdapter;
 import com.bkpirates.bookstore.AdminActivity;
+import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 
 import android.content.Intent;
@@ -56,7 +57,7 @@ public class Admin_Fragment extends Fragment {
 					ft.commit();
 					fm.executePendingTransactions();
 				}else if(position == 3){
-				
+				    MainActivity.customerActivity.finish();
 					Intent intent = new Intent(getActivity(), InsertNewBooksFragment.class);
 					startActivity(intent);
 				}

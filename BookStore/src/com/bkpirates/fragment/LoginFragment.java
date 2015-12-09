@@ -156,7 +156,6 @@ public class LoginFragment extends Fragment {
 		SharedPreferences pre = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 		phoneNumber.setText(pre.getString("phone", ""));
 		passWord.setText(pre.getString("pass", ""));
-		Log.d(pre.getString("checkLogin", ""), pre.getString("checkLogin", ""));
 		doLogin();
 		super.onResume();
 	}
@@ -196,8 +195,11 @@ public class LoginFragment extends Fragment {
 				accEntity = netWork.checkAccountForLogin(s);
 				check = Integer.parseInt(accEntity.getPassword());
 				if (check == 2) {
+					
 					Intent intent = new Intent(getActivity(), AdminActivity.class);
 					startActivity(intent);
+					phoneNumber.setText("");
+					passWord.setText("");
 				} else if (check == 1) {
 					// Login success
 					accEntity.setPhone(phone);
@@ -281,7 +283,6 @@ public class LoginFragment extends Fragment {
 		phone = phoneNumber.getText().toString();
 		pass = passWord.getText().toString();
 
-		Log.d(phone.length() + "", pass.length() + "");
 		if (phone.length() == 0 || pass.length() == 0)
 			return;
 		else {
