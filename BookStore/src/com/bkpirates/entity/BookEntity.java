@@ -9,11 +9,20 @@ public class BookEntity {
 	private String pulisher;
 	private String content;
 	private String linkImage;
+	private String genre;
+
+
 	private int like;
 	private int numberBookToBuy;
 	private int likedPersonNumber;
 	public static final int IMAGE_SIZE = 200;
-	
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}	
 	public int getLikedPersonNumber() {
 		return likedPersonNumber;
 	}

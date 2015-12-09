@@ -4,11 +4,11 @@ import com.bkpirates.adapter.AccountAndFunctionAdminAdapter;
 import com.bkpirates.bookstore.AdminActivity;
 import com.bkpirates.bookstore.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,7 @@ import android.widget.ListView;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
-	final String[] str = { "Xếp hạng", "Danh sách đơn hàng", "Nhập thêm sách", "Thoát" };
+	final String[] str = { "Xếp hạng", "Danh sách đơn hàng", "Update số lượng sách","Nhập thêm sách", "Thoát" };
 	private ArrayAdapter<String> adapter = null;
 
 	@Override
@@ -55,7 +55,12 @@ public class Admin_Fragment extends Fragment {
 					ft.addToBackStack(null);
 					ft.commit();
 					fm.executePendingTransactions();
-				} else if (position == 3) {
+				}else if(position == 3){
+				
+					Intent intent = new Intent(getActivity(), InsertNewBooksFragment.class);
+					startActivity(intent);
+				}
+				else if (position == 4) {
 					AdminActivity.adminActivity.finish();
 				}
 			}

@@ -195,7 +195,10 @@ public class LoginFragment extends Fragment {
 			if (s != null) {
 				accEntity = netWork.checkAccountForLogin(s);
 				check = Integer.parseInt(accEntity.getPassword());
-				if (check == 1) {
+				if (check == 2) {
+					Intent intent = new Intent(getActivity(), AdminActivity.class);
+					startActivity(intent);
+				} else if (check == 1) {
 					// Login success
 					accEntity.setPhone(phone);
 					accEntity.setPassword(pass);
@@ -210,7 +213,7 @@ public class LoginFragment extends Fragment {
 					editor.commit();
 
 					hideVirtualKeyboard();
-					
+
 					FragmentManager fm = getActivity().getSupportFragmentManager();
 					FragmentTransaction ft = fm.beginTransaction();
 
@@ -277,34 +280,28 @@ public class LoginFragment extends Fragment {
 	private void doLogin() {
 		phone = phoneNumber.getText().toString();
 		pass = passWord.getText().toString();
-		if (passWord.getText().toString().equals("1") && phoneNumber.getText().toString().equals("1")) {
-			Intent intent = new Intent(getActivity(), AdminActivity.class);
-			startActivity(intent);
-		} else {
 
-			Log.d(phone.length() + "", pass.length() + "");
-			if (phone.length() == 0 || pass.length() == 0)
-				return;
-			else {
-				netWork.setPhone(phone);
-				netWork.setPass(pass);
-				if (netWork.checkInternetConnect(getActivity())) {
-					LoginAsyncTask nw = (LoginAsyncTask) new LoginAsyncTask().execute(CHECK_ACCOUNT);
-				} else {
-					AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-					dialog.setTitle("Lỗi").setCancelable(false).setMessage("Vui lòng kiểm tra kết nối mạng!")
-							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		Log.d(phone.length() + "", pass.length() + "");
+		if (phone.length() == 0 || pass.length() == 0)
+			return;
+		else {
+			netWork.setPhone(phone);
+			netWork.setPass(pass);
+			if (netWork.checkInternetConnect(getActivity())) {
+				LoginAsyncTask nw = (LoginAsyncTask) new LoginAsyncTask().execute(CHECK_ACCOUNT);
+			} else {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+				dialog.setTitle("Lỗi").setCancelable(false).setMessage("Vui lòng kiểm tra kết nối mạng!")
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.cancel();
-								}
-							});
-					dialog.create().show();
-				}
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+				dialog.create().show();
 			}
 		}
-
 	}
 
 	private void hideVirtualKeyboard() {
