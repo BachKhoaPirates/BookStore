@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
 import com.bkpirates.entity.DistributeBookEntity;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,7 +19,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	private ArrayList<BookEntity> bookArray;
 	private ArrayList<DistributeBookEntity> distributeArray;
 	private ArrayList<AccountEntity> accountArray;
-	private ArrayList<OrderAdminEntity> orderArray;
+	private ArrayList<OrderEntity> orderArray;
 	
 	public DataLoaderListener listener = null;
 
@@ -109,13 +109,13 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 					}
 
 				} else if (jsonObj.has("orders")) {
-					orderArray = new ArrayList<OrderAdminEntity>();
+					orderArray = new ArrayList<OrderEntity>();
 					JSONArray jsArr = new JSONArray(jsonObj.getString("orders"));
 					JSONObject js;
 					Log.d("JSON", ""+jsArr);
 					for (int i = 0; i < jsArr.length(); i++) {
 						js = jsArr.getJSONObject(i);
-						OrderAdminEntity order = new OrderAdminEntity();
+						OrderEntity order = new OrderEntity();
 						if (js.has("oid")) {
 							order.setOid(js.getString("oid"));
 						}

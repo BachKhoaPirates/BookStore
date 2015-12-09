@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -258,8 +258,8 @@ public class NetWork {
 
 	}
 
-	public ArrayList<OrderAdminEntity> getOrdersUsers(String result) {
-		ArrayList<OrderAdminEntity> array = new ArrayList<OrderAdminEntity>();
+	public ArrayList<OrderEntity> getOrdersUsers(String result) {
+		ArrayList<OrderEntity> array = new ArrayList<OrderEntity>();
 		try {
 			JSONObject jsonObj = new JSONObject(result);
 			Log.d(TAG, TAG);
@@ -272,7 +272,7 @@ public class NetWork {
 					for (int i = 0; i < jsArr.length(); i++) {
 						Log.d(i + "", jsArr.length() + "");
 						js = new JSONObject(jsArr.getString(i));
-						OrderAdminEntity order = new OrderAdminEntity();
+						OrderEntity order = new OrderEntity();
 						if (js.has("oid")) {
 							order.setOid(js.getString("oid"));
 						}

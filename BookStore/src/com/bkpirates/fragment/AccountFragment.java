@@ -12,7 +12,7 @@ import com.bkpirates.bookstore.MainActivity;
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.AccountEntity;
 import com.bkpirates.entity.BookEntity;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 import com.bkpirates.webservice.NetWork;
 
 import android.annotation.SuppressLint;
@@ -49,7 +49,7 @@ public class AccountFragment extends Fragment {
 	private AccountEntity accEntity = new AccountEntity();
 	private ArrayAdapter<String> adapter = null;
 	//
-	private ArrayList<OrderAdminEntity> arrayOrder = new ArrayList<OrderAdminEntity>();
+	private ArrayList<OrderEntity> arrayOrder = new ArrayList<OrderEntity>();
 	
 
 	public AccountEntity getAccEntity() {

@@ -2,31 +2,30 @@ package com.bkpirates.fragment;
 
 import java.util.ArrayList;
 
-import com.bkpirates.adapter.ListBookAdapter;
 import com.bkpirates.adapter.OrderAdminAdapter;
 import com.bkpirates.bookstore.R;
-import com.bkpirates.entity.BookEntity;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class ListOrderUserFragment extends Fragment {
 	public static ListView listview;
-	private static ArrayList<OrderAdminEntity> arrayOrder = new ArrayList<OrderAdminEntity>();
+	private static ArrayList<OrderEntity> arrayOrder = new ArrayList<OrderEntity>();
  	
-	public static ArrayList<OrderAdminEntity> getArrayOrder() {
+	public static ArrayList<OrderEntity> getArrayOrder() {
 		return arrayOrder;
 	}
 
-	public static void setArrayOrder(ArrayList<OrderAdminEntity> arrayOrder) {
+	public static void setArrayOrder(ArrayList<OrderEntity> arrayOrder) {
 		ListOrderUserFragment.arrayOrder = arrayOrder;
 	}
 
@@ -39,7 +38,13 @@ public class ListOrderUserFragment extends Fragment {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getActivity(), position + "",Toast.LENGTH_LONG  ).show();
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+				ft.replace(((ViewGroup) getView().getParent()).getId(), new OrderFragmentAccount(arrayOrder.get(position).getOid(),
+						arrayOrder.get(position).getTotalMoney()));
+				ft.addToBackStack(null);
+				ft.commit();
+				fm.executePendingTransactions();
 			}
 		});
 		return view;

@@ -3,7 +3,7 @@ package com.bkpirates.adapter;
 import java.util.ArrayList;
 
 import com.bkpirates.bookstore.R;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class OrderAdminAdapter extends ArrayAdapter<OrderAdminEntity> {
+public class OrderAdminAdapter extends ArrayAdapter<OrderEntity> {
 
 	private Context context;
-	private ArrayList<OrderAdminEntity> orderArray;
+	private ArrayList<OrderEntity> orderArray;
 
-	public OrderAdminAdapter(Context context, ArrayList<OrderAdminEntity> arr) {
+	public OrderAdminAdapter(Context context, ArrayList<OrderEntity> arr) {
 		// TODO Auto-generated constructor stub
 		super(context, R.layout.item_distribute_book, arr);
 		this.context = context;
@@ -30,7 +30,7 @@ public class OrderAdminAdapter extends ArrayAdapter<OrderAdminEntity> {
 	}
 
 	@Override
-	public OrderAdminEntity getItem(int position) {
+	public OrderEntity getItem(int position) {
 		return orderArray.get(position);
 	}
 

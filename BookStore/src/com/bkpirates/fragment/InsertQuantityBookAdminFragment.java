@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,26 +71,24 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 				} else {
 					addQuantity = Integer.parseInt(quantityEdit.getText().toString().trim());
 					price = Integer.parseInt(priceEdit.getText().toString().trim());
-					Log.d("quantity", "" + addQuantity);
-					Log.d("price", "" + price);
-
-					book.setQuantity(book.getQuantity() + addQuantity);
-					priceTv.setText(price + " VNĐ");
-					quantityTv.setText("Số lượng: " + book.getQuantity());
 
 					SendRequest rq = new SendRequest();
-					int result=0;
+					int result = 0;
 					try {
 						result = rq.execute(getString(R.string.ADMIN_UPDATE_QUANTITY) + "?bid=" + book.getBid()
 								+ "&price_add=" + price + "&quantity_add=" + addQuantity).get();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					
-					if (result == 0){
+
+					if (result == 0) {
 						Toast.makeText(getContext(), "Cập nhật không thành công!", Toast.LENGTH_SHORT).show();
 					} else {
 						Toast.makeText(getContext(), "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+						//update view
+						book.setQuantity(book.getQuantity() + addQuantity);
+						priceTv.setText("Giá nhập vào: "+price + " VNĐ");
+						quantityTv.setText("Số lượng: " + book.getQuantity());
 						// clear edit text
 						quantityEdit.setText("");
 						priceEdit.setText("");
@@ -123,7 +120,7 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 				return false;
 			}
 		});
-		
+
 		return view;
 	}
 
@@ -150,13 +147,15 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 		if (edText.getText().toString().trim().length() == 0) {
 			return false;
 		}
-
+		int n;
 		try {
-			Integer.parseInt(edText.getText().toString().trim());
+			n = Integer.parseInt(edText.getText().toString().trim());
 		} catch (NumberFormatException e) {
 			return false;
 		}
-
+		if (n <= 0){
+			return false;
+		}
 		return true;
 	}
 
@@ -169,7 +168,7 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 			DataLoader bld = new DataLoader();
 			bld.listener = InsertQuantityBookAdminFragment.this;
 			try {
-				arrayBook = (ArrayList<BookEntity>) bld.execute(DataLoader.SEARCH_LINK + ed_text).get();
+				arrayBook = (ArrayList<BookEntity>) bld.execute(getString(R.string.ADMIN_SEARCH) +"?key="+ ed_text).get();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -185,7 +184,7 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 		ImageLoader.getInstance().displayImage(book.getLinkImage(), image);
 		bidTv.setText("MS :" + book.getBid());
 		authorTv.setText(book.getAuthor());
-		priceTv.setText(Integer.toString(book.getPrice()) + " VNĐ");
+		priceTv.setText("Giá nhập vào: "+Integer.toString(book.getPrice()) + " VNĐ");
 		nameTv.setText(book.getName());
 		quantityTv.setText("Số lượng: " + book.getQuantity());
 	}

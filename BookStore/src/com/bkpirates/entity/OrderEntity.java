@@ -1,6 +1,6 @@
 package com.bkpirates.entity;
 
-public class OrderAdminEntity {
+public class OrderEntity {
 	
 	private String oid;
 	private String date;

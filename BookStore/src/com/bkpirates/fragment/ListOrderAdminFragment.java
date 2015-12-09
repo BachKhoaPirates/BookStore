@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.bkpirates.adapter.OrderAdminAdapter;
 import com.bkpirates.bookstore.R;
-import com.bkpirates.entity.OrderAdminEntity;
+import com.bkpirates.entity.OrderEntity;
 import com.bkpirates.webservice.DataLoader;
 import com.bkpirates.webservice.DataLoaderListener;
 
@@ -43,7 +43,7 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 	private DatePickerDialog.OnDateSetListener endDateCallBack;
 	private DatePickerDialog dateDialog;
 
-	private ArrayList<OrderAdminEntity> orderArray;
+	private ArrayList<OrderEntity> orderArray;
 
 	private DataLoader bld;
 	private ProgressDialog dialog;
@@ -67,6 +67,9 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 		listview = (ListView) view.findViewById(R.id.lView);
 		View header = getActivity().getLayoutInflater().inflate(R.layout.divider, null);
 		listview.addHeaderView(header);
+		if (orderArray != null) {
+			setListView();
+		}
 
 		beginBtn = (Button) view.findViewById(R.id.begin_btn);
 		endBtn = (Button) view.findViewById(R.id.end_btn);
@@ -129,11 +132,11 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 					try {
 						switch (type) {
 						case 0:
-							orderArray = (ArrayList<OrderAdminEntity>) bld
+							orderArray = (ArrayList<OrderEntity>) bld
 									.execute(getString(R.string.ADMIN_GET_LIST_BOUGHT) + str).get();
 							break;
 						case 1:
-							orderArray = (ArrayList<OrderAdminEntity>) bld
+							orderArray = (ArrayList<OrderEntity>) bld
 									.execute(getString(R.string.ADMIN_GET_LIST_ORDER) + str).get();
 							break;
 						}
@@ -178,36 +181,48 @@ public class ListOrderAdminFragment extends Fragment implements DataLoaderListen
 		}
 
 		if (orderArray != null) {
-			OrderAdminAdapter adapter = new OrderAdminAdapter(getContext(), orderArray);
-			listview.setAdapter(adapter);
-
-			switch (type) {
-			case 0:
-
-				listview.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					}
-				});
-				break;
-			case 1:
-				listview.setOnItemClickListener(new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						position = position - 1;
-						FragmentManager fm = getActivity().getSupportFragmentManager();
-						FragmentTransaction ft = fm.beginTransaction();
-						ft.replace(R.id.containerAdmin, new OrderFragment(orderArray.get(position).getOid(),
-								orderArray.get(position).getTotalMoney()));
-						ft.addToBackStack(null);
-						ft.commit();
-						fm.executePendingTransactions();
-					}
-				});
-				break;
-			}
+			setListView();
 		} else {
 			Toast.makeText(getContext(), "Không tìm thấy đơn hàng nào!", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void setListView() {
+		OrderAdminAdapter adapter = new OrderAdminAdapter(getContext(), orderArray);
+		listview.setAdapter(adapter);
+
+		switch (type) {
+		case 0:
+
+			listview.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					position = position - 1;
+					FragmentManager fm = getActivity().getSupportFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					ft.replace(R.id.containerAdmin, new OrderFragmentAccount(orderArray.get(position).getOid(),
+							orderArray.get(position).getTotalMoney()));
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
+				}
+			});
+			break;
+		case 1:
+			listview.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					position = position - 1;
+					FragmentManager fm = getActivity().getSupportFragmentManager();
+					FragmentTransaction ft = fm.beginTransaction();
+					ft.replace(R.id.containerAdmin, new OrderFragmentAdmin(orderArray.get(position).getOid(),
+							orderArray.get(position).getTotalMoney()));
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
+				}
+			});
+			break;
 		}
 	}
 }

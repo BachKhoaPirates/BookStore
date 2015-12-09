@@ -76,6 +76,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 		listview = (ListView) view.findViewById(R.id.lView);
 		View header = getActivity().getLayoutInflater().inflate(R.layout.divider, null);
 		listview.addHeaderView(header);
+		setListView();
 
 		beginBtn = (Button) view.findViewById(R.id.begin_btn);
 		endBtn = (Button) view.findViewById(R.id.end_btn);
@@ -188,6 +189,18 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 		// TODO Auto-generated method stub
 		resultNotNULL = false;
 
+		setListView();
+		if (dialog.isShowing()) {
+			dialog.dismiss();
+		}
+
+		if (resultNotNULL == false) {
+			Toast.makeText(getContext(), "Không tìm thấy tài khoản nào!", Toast.LENGTH_LONG).show();
+		}
+
+	}
+
+	private void setListView() {
 		switch (type) {
 		case 0:
 			if (arrAcc != null) {
@@ -198,7 +211,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						position = position -1;
+						position = position - 1;
 						AppController.getInstance().initiatePopupWindow(arrAcc.get(position), getActivity());
 					}
 				});
@@ -213,7 +226,7 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 				listview.setOnItemClickListener(new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						position = position -1;
+						position = position - 1;
 						Log.d("POSITION: ", "" + position);
 						startBookFragment(arrBook.get(position));
 					}
@@ -234,14 +247,6 @@ public class RankAdminFragment extends Fragment implements DataLoaderListener {
 				});
 			}
 			break;
-		}
-
-		if (dialog.isShowing()) {
-			dialog.dismiss();
-		}
-
-		if (resultNotNULL == false) {
-			Toast.makeText(getContext(), "Không tìm thấy tài khoản nào!", Toast.LENGTH_LONG).show();
 		}
 
 	}

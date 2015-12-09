@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OrderFragment extends Fragment implements DataLoaderListener {
+public class OrderFragmentAdmin extends Fragment implements DataLoaderListener {
 
 	private ListView listview;
 	private TextView moneyTv, oidTv;
@@ -38,7 +38,7 @@ public class OrderFragment extends Fragment implements DataLoaderListener {
 	private Button confirmBtn, delBtn;
 	private SendRequest rq;
 
-	public OrderFragment(String oid, String totalMoney) {
+	public OrderFragmentAdmin(String oid, String totalMoney) {
 		// TODO Auto-generated constructor stub
 		this.oid = oid;
 		this.totalMoney = totalMoney;
@@ -46,7 +46,7 @@ public class OrderFragment extends Fragment implements DataLoaderListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_order, container, false);
+		View view = inflater.inflate(R.layout.fragment_order_admin, container, false);
 		listview = (ListView) view.findViewById(R.id.list_book);
 		moneyTv = (TextView) view.findViewById(R.id.subTotal);
 		oidTv = (TextView) view.findViewById(R.id.oid);
