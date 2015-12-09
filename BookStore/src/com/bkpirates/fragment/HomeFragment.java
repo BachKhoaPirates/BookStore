@@ -18,6 +18,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 
-public class HomeFragment extends Fragment implements DataLoaderListener {
+public class HomeFragment extends Fragment implements DataLoaderListener, OnRefreshListener {
 
 	private HorizontalListView hotBookList, newBookList, favoriteBookList;
 	private ArrayList<BookEntity> hotBookArray, newBookArray, favoriteBookArray;
@@ -38,30 +40,32 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 	private Handler handler;
 	private Runnable runnable;
 	private final int TIMER = 3000;
+	private SwipeRefreshLayout swipeContainer;
+	
+	private int finishedDownloader =0;
 
 	// private int downloadSuccess = 0;
-//	 private ProgressDialog loadDialog;
+	// private ProgressDialog loadDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-
 		try {
 			if (hotBookArray == null) {
 				DataLoader bld1 = new DataLoader();
-				bld1.listener = this;
+				// bld1.listener = this;
 				hotBookArray = (ArrayList<BookEntity>) bld1.execute(DataLoader.HOT_BOOK_LINK).get();
 			}
 			if (newBookArray == null) {
 				DataLoader bld2 = new DataLoader();
-				bld2.listener = this;
+				// bld2.listener = this;
 				newBookArray = (ArrayList<BookEntity>) bld2.execute(DataLoader.NEW_BOOK_LINK).get();
 			}
 			if (favoriteBookArray == null) {
 				DataLoader bld3 = new DataLoader();
-				bld3.listener = this;
+				// bld3.listener = this;
 				favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(DataLoader.TOP_FAVORITE_BOOK_LINK).get();
 			}
 		} catch (Exception e) {
@@ -79,7 +83,11 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
-		
+
+		swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+		swipeContainer.setOnRefreshListener(HomeFragment.this);
+		swipeContainer.setRefreshing(false);
+
 		hotBookList = (HorizontalListView) view.findViewById(R.id.hotbooklist);
 		newBookList = (HorizontalListView) view.findViewById(R.id.newbooklist);
 		favoriteBookList = (HorizontalListView) view.findViewById(R.id.favoritebooklist);
@@ -89,11 +97,10 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 		setAdapter(newBookList, newBookArray);
 		setAdapter(favoriteBookList, favoriteBookArray);
 
-
 		ViewPagerBannerAdapter bannerAdapter = new ViewPagerBannerAdapter(getFragmentManager(), bannerArray);
 		banner.setAdapter(bannerAdapter);
 		controlBanner(view, banner);
-		//auto slide viewpager
+		// auto slide viewpager
 		handler = new Handler();
 		runnable = new Runnable() {
 
@@ -111,7 +118,6 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 				handler.postDelayed(runnable, TIMER);
 			}
 		};
-		
 
 		hotBookList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -134,8 +140,6 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 			}
 		});
 
-		
-		
 		return view;
 	}
 
@@ -156,7 +160,7 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 				ImageView icon = (ImageView) view.findViewById(
 						getResources().getIdentifier("banner_icon" + position, "id", getContext().getPackageName()));
 				icon.setImageResource(R.drawable.selected_banner);
-				if (position == 0){
+				if (position == 0) {
 					icon = (ImageView) view.findViewById(R.id.banner_icon4);
 					icon.setImageResource(R.drawable.unselected_banner);
 				}
@@ -184,31 +188,58 @@ public class HomeFragment extends Fragment implements DataLoaderListener {
 
 	@Override
 	public void onPause() {
-	    super.onPause();
-	    if (handler!= null) {
-	        handler.removeCallbacks(runnable);
-	    }
+		super.onPause();
+		if (handler != null) {
+			handler.removeCallbacks(runnable);
+		}
 	}
-	
+
 	@Override
 	public void onResume() {
-	    super.onResume();  // Always call the superclass method first
-	    handler.postDelayed(runnable, TIMER);
-	}
-	
-	@Override
-	public void onDownloadSuccess() {
-		// TODO Auto-generated method stub
+		super.onResume(); // Always call the superclass method first
+		handler.postDelayed(runnable, TIMER);
 	}
 
 	private void startBookFragment(BookEntity book) {
 		FragmentManager fm = getActivity().getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-//		trans.replace(((ViewGroup) getView().getParent()).getId(), new BookFragment(getContext(), book));
+		// trans.replace(((ViewGroup) getView().getParent()).getId(), new
+		// BookFragment(getContext(), book));
 		ft.replace(R.id.container, new BookFragment(getContext(), book));
 		ft.addToBackStack(null);
 		ft.commit();
 		fm.executePendingTransactions();
+	}
+
+	@Override
+	public void onRefresh() {
+		// TODO Auto-generated method stub
+		finishedDownloader =0;
+		try {
+			DataLoader bld1 = new DataLoader();
+			bld1.listener = this;
+			hotBookArray = (ArrayList<BookEntity>) bld1.execute(DataLoader.HOT_BOOK_LINK).get();
+			DataLoader bld2 = new DataLoader();
+			bld2.listener = this;
+			newBookArray = (ArrayList<BookEntity>) bld2.execute(DataLoader.NEW_BOOK_LINK).get();
+			DataLoader bld3 = new DataLoader();
+			bld3.listener = this;
+			favoriteBookArray = (ArrayList<BookEntity>) bld3.execute(DataLoader.TOP_FAVORITE_BOOK_LINK).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onDownloadSuccess() {
+		// TODO Auto-generated method stub
+		finishedDownloader++;
+		if (finishedDownloader ==3){
+			setAdapter(hotBookList, hotBookArray);
+			setAdapter(newBookList, newBookArray);
+			setAdapter(favoriteBookList, favoriteBookArray);
+			swipeContainer.setRefreshing(false);
+		}
 	}
 
 }
