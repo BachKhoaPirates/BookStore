@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,6 +110,20 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 			}
 		});
 
+		searchEdit.setFocusableInTouchMode(true);
+		searchEdit.requestFocus();
+		searchEdit.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+					onSearchButtonClick();
+					return true;
+				}
+				return false;
+			}
+		});
+		
 		return view;
 	}
 
@@ -118,7 +133,7 @@ public class InsertQuantityBookAdminFragment extends Fragment implements DataLoa
 		if (arrayBook != null) {
 			FragmentManager fm = getActivity().getSupportFragmentManager();
 			FragmentTransaction ft = fm.beginTransaction();
-			ft.replace(R.id.containerAdmin, new BookGridViewAdmin(arrayBook));
+			ft.replace(R.id.containerAdmin, new BookGridViewAdmin(arrayBook, "INSERT"));
 			ft.addToBackStack(null);
 			ft.commit();
 			fm.executePendingTransactions();

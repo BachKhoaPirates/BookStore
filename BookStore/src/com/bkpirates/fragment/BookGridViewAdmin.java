@@ -24,15 +24,17 @@ import android.widget.Toast;
 public class BookGridViewAdmin extends Fragment{
 	
 	public interface OnItemSelectedListener {
-		public void onItemSelected(BookEntity book);
+		public void onItemSelected(BookEntity book, String str);
 	}
 	
 	private GridView gView;
 	private ArrayList<BookEntity> arr;
+	private String TAG;
 	OnItemSelectedListener listener;
 	
-	public BookGridViewAdmin(ArrayList<BookEntity> arr){
+	public BookGridViewAdmin(ArrayList<BookEntity> arr, String str){
 		this.arr = arr;
+		this.TAG = str;
 	}
 	
 	
@@ -66,7 +68,7 @@ public class BookGridViewAdmin extends Fragment{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// TODO Auto-generated method stub
-				listener.onItemSelected(arr.get(position));
+				listener.onItemSelected(arr.get(position), TAG);
 			}
 		});
 		return view;

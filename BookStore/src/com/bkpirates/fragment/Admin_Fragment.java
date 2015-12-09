@@ -20,7 +20,8 @@ import android.widget.ListView;
 
 public class Admin_Fragment extends Fragment {
 	ListView listview;
-	final String[] str = { "Xếp hạng", "Danh sách đơn hàng", "Update số lượng sách","Nhập thêm sách", "Thoát" };
+	final String[] str = { "Xếp hạng", "Danh sách đơn hàng", "Cập nhật số lượng sách", "Nhập thêm sách mới",
+			"Sửa thông tin sách", "Tính toán lợi nhuận", "Thoát" };
 	private ArrayAdapter<String> adapter = null;
 
 	@Override
@@ -56,11 +57,23 @@ public class Admin_Fragment extends Fragment {
 					ft.addToBackStack(null);
 					ft.commit();
 					fm.executePendingTransactions();
-				}else if(position == 3){
+				} else if (position == 3) {
+					MainActivity.customerActivity.finish();
 					Intent intent = new Intent(getActivity(), InsertNewBooksFragment.class);
 					startActivity(intent);
-				}
-				else if (position == 4) {
+				} else if (position == 4){
+					EditBookAdminFragment frag = new EditBookAdminFragment();
+					ft.replace(R.id.containerAdmin, frag);
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
+				} else if (position == 5){
+					ProfitAdminFragment frag = new ProfitAdminFragment();
+					ft.replace(R.id.containerAdmin, frag);
+					ft.addToBackStack(null);
+					ft.commit();
+					fm.executePendingTransactions();
+				} else if (position == 6) {
 					AdminActivity.adminActivity.finish();
 				}
 			}
