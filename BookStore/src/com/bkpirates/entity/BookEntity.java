@@ -4,6 +4,15 @@ public class BookEntity {
 	private String bid;
 	private String name;
 	private int price;
+	private int price_add;
+	public int getPrice_add() {
+		return price_add;
+	}
+
+	public void setPrice_add(int price_add) {
+		this.price_add = price_add;
+	}
+
 	private int quantity;
 	private String author;
 	private String pulisher;

@@ -57,7 +57,6 @@ public class Admin_Fragment extends Fragment {
 					ft.commit();
 					fm.executePendingTransactions();
 				}else if(position == 3){
-				    MainActivity.customerActivity.finish();
 					Intent intent = new Intent(getActivity(), InsertNewBooksFragment.class);
 					startActivity(intent);
 				}

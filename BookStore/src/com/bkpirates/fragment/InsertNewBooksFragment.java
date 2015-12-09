@@ -18,7 +18,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -26,15 +25,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class InsertNewBooksFragment extends FragmentActivity implements OnClickListener {
 
-	public static final String UPLOAD_URL = "http://thachpn.name.vn/books/test.php";
+	public static final String UPLOAD_URL = "http://thachpn.name.vn/books/add_book.php";
 	public static final String UPLOAD_KEY = "image";
 	public static final String TAG = "MY MESSAGE";
 
 	private int PICK_IMAGE_REQUEST = 1;
-	EditText editName, editQuantity, editAuthor, editPushlier, editGenre, editContent, editPrice;
+	EditText editName, editQuantity, editAuthor, editPushlier, editGenre, editContent, editPrice, editPriceAdd;
+	
 	ImageView image;
 	Button btnChoose, btnUpload;
 	BookEntity book = new BookEntity();
@@ -67,7 +68,8 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 		editQuantity = (EditText) findViewById(R.id.editQuantity);
 		editPrice = (EditText) findViewById(R.id.editPrice);
 		editGenre = (EditText) findViewById(R.id.editGenre);
-
+		editPriceAdd = (EditText) findViewById(R.id.price_add);
+		
 		btnChoose = (Button) findViewById(R.id.btnChoose);
 		btnUpload = (Button) findViewById(R.id.btnUpload);
 
@@ -87,11 +89,18 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 			book.setPulisher(editPushlier.getText() + "");
 			book.setQuantity(Integer.parseInt(editQuantity.getText() + ""));
 			book.setGenre(editGenre.getText() + "");
+			book.setPrice_add(Integer.parseInt(editPriceAdd.getText() + ""));
 			netWorkAdmin.setBookEntity(book);
 			uploadImage();
 		}
 	}
-
+	private boolean checkInteger(int a, int b, int c){
+		if( a<= 0 || b <= 0 || c<= 0){
+			Toast.makeText(InsertNewBooksFragment.this, "Please check quantity or price_add or price", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return true;
+	}
 	private void showFileChooser() {
 		Intent intent = new Intent();
 		intent.setType("image/*");
@@ -137,21 +146,26 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 
 		@Override
 		protected void onPreExecute() {
-			// pb = new ProgressDialog(MainActivity.this);
-			// pb.setMessage("Loading...");
-			// pb.show();
-			// super.onPreExecute();
+			 pb = new ProgressDialog(InsertNewBooksFragment.this);
+			 pb.setMessage("Uploading...");
+			 pb.show();
+			 super.onPreExecute();
 		}
 
 		@Override
 		protected void onPostExecute(String s) {
 			if (pb != null) {
-				// pb.dismiss();
+				 pb.dismiss();
 			}
 			if (s != null) {
-				// check = netWorkAdmin.check(s);
-				// Log.d(TAG, check + "");
-				// Toast.makeText(, check + "", Toast.LENGTH_LONG).show();
+				 check = netWorkAdmin.check(s);
+				 Log.d(TAG, check + "");
+				 if ( check == 1){
+					 
+					 Toast.makeText(InsertNewBooksFragment.this," Upload success", Toast.LENGTH_LONG).show();
+				 }else {
+					 Toast.makeText(InsertNewBooksFragment.this," Upload fail", Toast.LENGTH_LONG).show();
+				 }
 			}
 			super.onPostExecute(s);
 		}

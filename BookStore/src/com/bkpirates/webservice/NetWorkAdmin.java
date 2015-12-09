@@ -67,10 +67,11 @@ public class NetWorkAdmin {
 		nameValuePairList.add(new BasicNameValuePair("name", bookEntity.getName()));
 		nameValuePairList.add(new BasicNameValuePair("author", bookEntity.getAuthor()));
 		nameValuePairList.add(new BasicNameValuePair("price", bookEntity.getPrice() + ""));
+		nameValuePairList.add(new BasicNameValuePair("price_add", bookEntity.getPrice_add() + ""));
 		nameValuePairList.add(new BasicNameValuePair("content", bookEntity.getContent()));
 		nameValuePairList.add(new BasicNameValuePair("quantity", bookEntity.getQuantity()+ ""));
-		nameValuePairList.add(new BasicNameValuePair("pulisher", bookEntity.getPulisher()));
-		nameValuePairList.add(new BasicNameValuePair("genre", bookEntity.getGenre()));
+		nameValuePairList.add(new BasicNameValuePair("nid", bookEntity.getPulisher()));
+		nameValuePairList.add(new BasicNameValuePair("pid", bookEntity.getGenre()));
 		
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
