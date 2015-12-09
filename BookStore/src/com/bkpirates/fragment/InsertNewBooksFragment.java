@@ -27,7 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class InsertNewBooksFragment extends AppCompatActivity implements OnClickListener {
+public class InsertNewBooksFragment extends FragmentActivity implements OnClickListener {
 
 	public static final String UPLOAD_URL = "http://thachpn.name.vn/books/test.php";
 	public static final String UPLOAD_KEY = "image";
@@ -52,34 +52,27 @@ public class InsertNewBooksFragment extends AppCompatActivity implements OnClick
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_insert_new_book);
-//		setWidgets();
-//		book.setAuthor(editAuthor.getText() + "");
-//		book.setContent(editContent.getText() + "");
-//		book.setName(editName.getText() + "");
-//		book.setPrice(Integer.parseInt(editPrice.getText() + ""));
-//		book.setPulisher(editPushlier.getText() + "");
-//		book.setQuantity(Integer.parseInt(editQuantity.getText() + ""));
-//		book.setGenre(editGenre.getText() + "");
-//		netWorkAdmin.setBookEntity(book);
-//		btnChoose.setOnClickListener(this);
-//		btnUpload.setOnClickListener(this);
+		setWidgets();
+		
+		btnChoose.setOnClickListener(this);
+		btnUpload.setOnClickListener(this);
 		
 	}
 
-//	private void setWidgets() {
-//		editName = (EditText) findViewById(R.id.editName);
-//		editAuthor = (EditText) findViewById(R.id.editAuthor);
-//		editContent = (EditText) findViewById(R.id.editContent);
-//		editPushlier = (EditText) findViewById(R.id.editPushlier);
-//		editQuantity = (EditText) findViewById(R.id.editQuantity);
-//		editPrice = (EditText) findViewById(R.id.editPrice);
-//		editGenre = (EditText) findViewById(R.id.editGenre);
-//
-//		btnChoose = (Button) findViewById(R.id.btnChoose);
-//		btnUpload = (Button) findViewById(R.id.btnUpload);
-//
-//		image = (ImageView) findViewById(R.id.imageView);
-//	}
+	private void setWidgets() {
+		editName = (EditText) findViewById(R.id.editName);
+		editAuthor = (EditText) findViewById(R.id.editAuthor);
+		editContent = (EditText) findViewById(R.id.editContent);
+		editPushlier = (EditText) findViewById(R.id.editPushlier);
+		editQuantity = (EditText) findViewById(R.id.editQuantity);
+		editPrice = (EditText) findViewById(R.id.editPrice);
+		editGenre = (EditText) findViewById(R.id.editGenre);
+
+		btnChoose = (Button) findViewById(R.id.btnChoose);
+		btnUpload = (Button) findViewById(R.id.btnUpload);
+
+		image = (ImageView) findViewById(R.id.imageView);
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -87,6 +80,14 @@ public class InsertNewBooksFragment extends AppCompatActivity implements OnClick
 			showFileChooser();
 		}
 		if (v == btnUpload) {
+			book.setAuthor(editAuthor.getText() + "");
+			book.setContent(editContent.getText() + "");
+			book.setName(editName.getText() + "");
+			book.setPrice(Integer.parseInt(editPrice.getText() + ""));
+			book.setPulisher(editPushlier.getText() + "");
+			book.setQuantity(Integer.parseInt(editQuantity.getText() + ""));
+			book.setGenre(editGenre.getText() + "");
+			netWorkAdmin.setBookEntity(book);
 			uploadImage();
 		}
 	}
