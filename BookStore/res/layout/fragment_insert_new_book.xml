@@ -4,165 +4,188 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10" >
-     
-    <TableLayout 
+
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
-        >
-        <TableRow 
+        android:stretchColumns="*" >
+
+        <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên sách:"/>
-            <EditText 
-                 android:id="@+id/editName"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	
-            	/>
-            
+                android:text="Tên sách:" />
+
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tác giả:"/>
-            <EditText 
-                 android:id="@+id/editAuthor"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	/>
-            
+                android:text="Tác giả:" />
+
+            <EditText
+                android:id="@+id/editAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số lượng:"/>
-            <EditText 
-                 android:id="@+id/editQuantity"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:inputType="number"
-            />
-            
+                android:text="Số lượng:" />
+
+            <EditText
+                android:id="@+id/editQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtPushlier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NXB:"/>
-            <EditText 
-                 android:id="@+id/editPushlier"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	/>
-            
+                android:text="NXB:" />
+
+            <EditText
+                android:id="@+id/editPushlier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
+
+            <CheckBox
+                android:id="@+id/checkNewPushlier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </TableRow>
-        
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtGenre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thể loại:"/>
-            <EditText 
-                 android:id="@+id/editGenre"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	/>
-            
+                android:text="Thể loại:" />
+
+            <EditText
+                android:id="@+id/editGenre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
+
+            <CheckBox
+                android:id="@+id/checkNewGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Giá :"/>
-            <EditText 
-                 android:id="@+id/editPrice"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:inputType="number"
-            	/>
-            
+                android:text="Giá :" />
+
+            <EditText
+                android:id="@+id/editPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow7"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtPriceAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gía nhập:"/>
-            <EditText 
-                 android:id="@+id/editPriceAdd"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	/>
-            
+                android:text="Giá nhập :" />
+
+            <EditText
+                android:id="@+id/editPriceAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4"
+                android:inputType="number" />
         </TableRow>
-        <TableRow 
+
+        <TableRow
             android:id="@+id/tableRow8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView 
+            android:layout_height="wrap_content" >
+
+            <TextView
                 android:id="@+id/txtContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nội dung:"/>
-            <EditText 
-                 android:id="@+id/editContent"
-           		 android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	/>
-            
+                android:text="Nội dung :" />
+
+            <EditText
+                android:id="@+id/editContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="4" />
         </TableRow>
     </TableLayout>
-    <Button 
+
+    <Button
         android:id="@+id/btnChoose"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="Chọn ảnh"
-        android:layout_gravity="center"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Chọn ảnh" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="9.82" />
-
-    <Button android:id="@+id/btnUpload"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Upload"/>
-     
+        android:layout_weight="9.82"
+        android:background="#ffffff" />
+
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Upload" />
 
 </LinearLayout>

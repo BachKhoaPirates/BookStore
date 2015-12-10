@@ -53,6 +53,10 @@ public class EditBookAdminFragment extends Fragment implements DataLoaderListene
 					Toast.makeText(getContext(), "Chưa chọn sách!", Toast.LENGTH_SHORT).show();
 				} else {
 					
+					
+					
+					
+					
 				}
 
 			}

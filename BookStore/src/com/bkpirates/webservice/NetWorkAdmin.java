@@ -33,6 +33,24 @@ public class NetWorkAdmin {
 	private AccountEntity accEntity;
 	private BookEntity bookEntity;
 	private String encodedImage;
+	private String newPushlier;
+	private String newGenre;
+
+	public String getNewPushlier() {
+		return newPushlier;
+	}
+
+	public void setNewPushlier(String newPushlier) {
+		this.newPushlier = newPushlier;
+	}
+
+	public String getNewGenre() {
+		return newGenre;
+	}
+
+	public void setNewGenre(String newGenre) {
+		this.newGenre = newGenre;
+	}
 
 	public AccountEntity getAccEntity() {
 		return accEntity;
@@ -58,7 +76,6 @@ public class NetWorkAdmin {
 		this.encodedImage = encodedImage;
 	}
 
-
 	public HttpResponse makeRequestUpload(String url) throws ClientProtocolException, IOException {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
@@ -69,10 +86,29 @@ public class NetWorkAdmin {
 		nameValuePairList.add(new BasicNameValuePair("price", bookEntity.getPrice() + ""));
 		nameValuePairList.add(new BasicNameValuePair("price_add", bookEntity.getPrice_add() + ""));
 		nameValuePairList.add(new BasicNameValuePair("content", bookEntity.getContent()));
-		nameValuePairList.add(new BasicNameValuePair("quantity", bookEntity.getQuantity()+ ""));
+		nameValuePairList.add(new BasicNameValuePair("quantity", bookEntity.getQuantity() + ""));
 		nameValuePairList.add(new BasicNameValuePair("nid", bookEntity.getPulisher()));
 		nameValuePairList.add(new BasicNameValuePair("pid", bookEntity.getGenre()));
-		
+//		
+//		if (newPushlier == null) {
+//			Log.d(TAG, bookEntity.getPulisher());
+//			nameValuePairList.add(new BasicNameValuePair("nid", bookEntity.getPulisher()));
+//
+//		} else {
+//			// insert new pub and distribute
+//			Log.d(TAG + "checked", newPushlier);
+//			nameValuePairList.add(new BasicNameValuePair("publisher", newPushlier));
+//
+//		}
+//		if (newGenre == null) {
+//			Log.d(TAG, bookEntity.getGenre());
+//			nameValuePairList.add(new BasicNameValuePair("pid", bookEntity.getGenre()));
+//		} else
+//		{
+//			Log.d(TAG + "checked", newGenre);
+//			nameValuePairList.add(new BasicNameValuePair("distribute", newGenre));
+//			
+//		}
 		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
 		httpPost.setEntity(entity);
 		return httpClient.execute(httpPost);

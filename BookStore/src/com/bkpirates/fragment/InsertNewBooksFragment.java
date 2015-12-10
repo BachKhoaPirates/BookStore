@@ -3,11 +3,16 @@ package com.bkpirates.fragment;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 
 import com.bkpirates.bookstore.R;
 import com.bkpirates.entity.BookEntity;
+import com.bkpirates.entity.DistributeBookEntity;
+import com.bkpirates.webservice.DataLoader;
+import com.bkpirates.webservice.DataLoaderListener;
 import com.bkpirates.webservice.NetWorkAdmin;
 
 import android.app.ProgressDialog;
@@ -22,9 +27,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class InsertNewBooksFragment extends FragmentActivity implements OnClickListener {
@@ -35,29 +43,29 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 
 	private int PICK_IMAGE_REQUEST = 1;
 	EditText editName, editQuantity, editAuthor, editPushlier, editGenre, editContent, editPrice, editPriceAdd;
-	
+
 	ImageView image;
 	Button btnChoose, btnUpload;
 	BookEntity book = new BookEntity();
 
+	private CheckBox checkPushlier;
+	private CheckBox checkGenre;
 	private Bitmap bitmap;
 
 	int check = 0;
 
 	private Uri filePath;
-
 	private NetWorkAdmin netWorkAdmin = new NetWorkAdmin();
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_insert_new_book);
 		setWidgets();
-		
+
 		btnChoose.setOnClickListener(this);
 		btnUpload.setOnClickListener(this);
-		
+
 	}
 
 	private void setWidgets() {
@@ -68,8 +76,11 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 		editQuantity = (EditText) findViewById(R.id.editQuantity);
 		editPrice = (EditText) findViewById(R.id.editPrice);
 		editGenre = (EditText) findViewById(R.id.editGenre);
-		editPriceAdd = (EditText) findViewById(R.id.price_add);
-		
+		editPriceAdd = (EditText) findViewById(R.id.editPriceAdd);
+
+		checkGenre = (CheckBox) findViewById(R.id.checkNewGenre);
+		checkPushlier = (CheckBox) findViewById(R.id.checkNewPushlier);
+
 		btnChoose = (Button) findViewById(R.id.btnChoose);
 		btnUpload = (Button) findViewById(R.id.btnUpload);
 
@@ -87,20 +98,29 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 			book.setName(editName.getText() + "");
 			book.setPrice(Integer.parseInt(editPrice.getText() + ""));
 			book.setPulisher(editPushlier.getText() + "");
-			book.setQuantity(Integer.parseInt(editQuantity.getText() + ""));
 			book.setGenre(editGenre.getText() + "");
+//			if(!checkPushlier.isChecked())
+//				book.setPulisher(editPushlier.getText() + "");
+//			else netWorkAdmin.setNewPushlier(editPushlier.getText() + "");
+//			if(!checkGenre.isChecked())
+//				book.setGenre(editGenre.getText() + "");
+//			else netWorkAdmin.setNewGenre(editGenre.getText() + "");
 			book.setPrice_add(Integer.parseInt(editPriceAdd.getText() + ""));
+			book.setQuantity(Integer.parseInt(editQuantity.getText() + ""));
 			netWorkAdmin.setBookEntity(book);
 			uploadImage();
 		}
 	}
-	private boolean checkInteger(int a, int b, int c){
-		if( a<= 0 || b <= 0 || c<= 0){
-			Toast.makeText(InsertNewBooksFragment.this, "Please check quantity or price_add or price", Toast.LENGTH_LONG).show();
+
+	private boolean checkInteger(int a, int b, int c) {
+		if (a <= 0 || b <= 0 || c <= 0) {
+			Toast.makeText(InsertNewBooksFragment.this, "Please check quantity or price_add or price",
+					Toast.LENGTH_LONG).show();
 			return false;
 		}
 		return true;
 	}
+
 	private void showFileChooser() {
 		Intent intent = new Intent();
 		intent.setType("image/*");
@@ -112,8 +132,7 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 		String uploadImage = getStringImage(bitmap);
 		netWorkAdmin.setEncodedImage(uploadImage);
 		Log.d(TAG + " Son ", netWorkAdmin.getEncodedImage());
-		GetUserBooksAsyncTask order = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask()
-					.execute(UPLOAD_URL);
+		GetUserBooksAsyncTask order = (GetUserBooksAsyncTask) new GetUserBooksAsyncTask().execute(UPLOAD_URL);
 
 	}
 
@@ -146,26 +165,26 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 
 		@Override
 		protected void onPreExecute() {
-			 pb = new ProgressDialog(InsertNewBooksFragment.this);
-			 pb.setMessage("Uploading...");
-			 pb.show();
-			 super.onPreExecute();
+			pb = new ProgressDialog(InsertNewBooksFragment.this);
+			pb.setMessage("Uploading...");
+			pb.show();
+			super.onPreExecute();
 		}
 
 		@Override
 		protected void onPostExecute(String s) {
 			if (pb != null) {
-				 pb.dismiss();
+				pb.dismiss();
 			}
 			if (s != null) {
-				 check = netWorkAdmin.check(s);
-				 Log.d(TAG, check + "");
-				 if ( check == 1){
-					 
-					 Toast.makeText(InsertNewBooksFragment.this," Upload success", Toast.LENGTH_LONG).show();
-				 }else {
-					 Toast.makeText(InsertNewBooksFragment.this," Upload fail", Toast.LENGTH_LONG).show();
-				 }
+				check = netWorkAdmin.check(s);
+				Log.d(TAG, check + "");
+				if (check == 1) {
+
+					Toast.makeText(InsertNewBooksFragment.this, " Upload success", Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(InsertNewBooksFragment.this, " Upload fail", Toast.LENGTH_LONG).show();
+				}
 			}
 			super.onPostExecute(s);
 		}
@@ -173,26 +192,31 @@ public class InsertNewBooksFragment extends FragmentActivity implements OnClickL
 		@Override
 		protected String doInBackground(String... params) {
 			String url = params[0];
-			HttpResponse response = null;
-
+			HttpResponse response;
+			Log.d(TAG, "ssssssssssssssssssssssssssssssssss");
 			try {
-
+				Log.d(TAG, "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
 				response = netWorkAdmin.makeRequestUpload(url);
 			} catch (IOException e) {
 				return null;
 			}
+			Log.d(TAG, "?????????????");
 			if (response != null) {
 
 				String content = null;
 				try {
+					Log.d(TAG, "ddmmm");
 					content = netWorkAdmin.processHTTPResponce(response);
-
+					Log.d(TAG + TAG, "ddmmm");
 					return content;
 				} catch (IOException e) {
 					return null;
 				} catch (ParseException e) {
 					return null;
 				}
+			}
+			else {
+				Log.d(TAG, "deo hieu sao lai nhu the");
 			}
 			return null;
 
