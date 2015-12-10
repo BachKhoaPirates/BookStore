@@ -16,7 +16,7 @@
         $date = date('Ymd');
 
 
-        $sql = "UPDATE Book SET Quantity_Book = $quantity + $quantity_add, Price_Add = $price_add, Date_Add = $date, Price = $price  WHERE BID = $bid";
+        $sql = "UPDATE Book SET Quantity_Book = $quantity + $quantity_add, Price_Add = $price_add, Date_Add = $date WHERE BID = $bid";
         $result = mysqli_query($con, $sql);
         if($result){
             $response['success'] = 1;
