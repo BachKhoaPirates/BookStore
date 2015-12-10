@@ -26,5 +26,6 @@
     <string name="ADMIN_DELETE_ORDER">http://thachpn.name.vn/books/admin_delete_order.php</string>
     <string name="ADMIN_UPDATE_QUANTITY">http://thachpn.name.vn/books/admin_import_book.php</string>
     <string name="ADMIN_SEARCH">http://thachpn.name.vn/books/admin_search.php</string>
+    <string name="ADMIN_PROFIT">http://thachpn.name.vn/books/admin_get_profit.php</string>
 
 </resources>

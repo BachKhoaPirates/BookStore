@@ -20,6 +20,7 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 	private ArrayList<DistributeBookEntity> distributeArray;
 	private ArrayList<AccountEntity> accountArray;
 	private ArrayList<OrderEntity> orderArray;
+	private ArrayList<String> profit;
 	
 	public DataLoaderListener listener = null;
 
@@ -150,6 +151,10 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 						}
 						distributeArray.add(distributeBook);
 					}
+				} else if (jsonObj.has("profit")){
+					profit = new ArrayList<String>();
+					profit.add(jsonObj.getString("profit"));
+					
 				}
 
 			}
@@ -166,6 +171,8 @@ public class DataLoader extends AsyncTask<String, JSONObject, ArrayList<?>> {
 			return distributeArray;
 		} else if (orderArray != null){
 			return orderArray;
+		} else if (profit != null){
+			return profit;
 		} else {
 			return null;
 		}
